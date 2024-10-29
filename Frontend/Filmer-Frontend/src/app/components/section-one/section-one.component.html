@@ -1,0 +1,15 @@
+<div class="section-one">
+  <div class="navbar">
+    <app-menu></app-menu>
+  </div>
+  <div class="content">
+    <div class="left-text">
+      <h1>Nie wiesz co obejrzeć?</h1>
+      <span>Utwórz poczekalnię sam lub ze znajomymi i pozwól<br>nam dopasować film pod Twoje oczekiwania!</span>
+      <button>Utwórz poczekalnię!</button>
+    </div>
+    <div class="right-cards" #rightCards (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave()">
+      <img src="assets/images/cards.png" alt="Obrazek" #parallaxImage>
+    </div>
+  </div>
+</div>

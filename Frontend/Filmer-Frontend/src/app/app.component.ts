@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { SectionOneComponent} from './components/section-one/section-one.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, SectionOneComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

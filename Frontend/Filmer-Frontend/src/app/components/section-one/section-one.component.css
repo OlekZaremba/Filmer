@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #222222;
+  font-family: "Oswald", sans-serif;
+  overflow-x: hidden; /* Dodane, aby ukryć poziomy pasek przewijania, jeśli się pojawia */
+}
+
+.section-one {
+  height: 100vh;
+  background-image: url('../../../assets/images/section-one-background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding-left: 5rem;
+  padding-right: 5rem;
+  font-family: "Oswald", sans-serif;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2rem;
+  height: 80vh;
+  overflow: hidden;
+}
+
+.left-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 50%;
+  color: #fff;
+}
+
+.left-text h1 {
+  font-size: 4rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  margin-top: 0;
+}
+
+.left-text span {
+  font-size: 1.8rem;
+  font-weight: 100;
+  margin-bottom: 2rem;
+}
+
+.left-text button {
+  width: 50%;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  outline: none;
+  border: none;
+  background-color: darkred;
+  border-radius: 25px;
+  color: #fff;
+  font-family: "Oswald", sans-serif;
+  font-size: 1.2rem;
+  transition: .2s all ease-in-out;
+}
+
+.left-text button:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+.right-cards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 50%;
+  overflow: hidden;
+  position: relative;
+}
+
+.right-cards img {
+  height: 120%;
+  transition: transform 0.1s ease;
+  position: relative;
+}
+
