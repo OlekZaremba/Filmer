@@ -5,7 +5,7 @@ body {
   padding: 0;
   background-color: #222222;
   font-family: "Oswald", sans-serif;
-  overflow-x: hidden; /* Dodane, aby ukryć poziomy pasek przewijania, jeśli się pojawia */
+  overflow-x: hidden;
 }
 
 .section-one {
@@ -80,7 +80,7 @@ body {
 }
 
 .right-cards img {
-  height: 120%;
+  height: 40rem;
   transition: transform 0.1s ease;
   position: relative;
 }

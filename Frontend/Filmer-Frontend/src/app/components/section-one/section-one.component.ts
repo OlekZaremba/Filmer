@@ -1,12 +1,13 @@
 import {Component, AfterViewInit, ElementRef, ViewChild} from '@angular/core';
 import {MenuComponent} from '../menu/menu.component';
+import {RouterModule} from '@angular/router';
 
 @Component({
   selector: 'app-section-one',
   templateUrl: './section-one.component.html',
   styleUrl: './section-one.component.css',
   standalone: true,
-  imports: [MenuComponent]
+  imports: [RouterModule, MenuComponent]
 })
 export class SectionOneComponent implements AfterViewInit {
   @ViewChild('parallaxImage') parallaxImage!: ElementRef;
