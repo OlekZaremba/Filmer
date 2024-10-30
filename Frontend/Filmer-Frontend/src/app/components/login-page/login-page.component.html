@@ -2,23 +2,19 @@
   <div class="main">
     <input type="checkbox" id="checkbox">
     <div class="sign-up">
-      <form action="/">
-        <label for="checkbox">Rejestracja</label>
-        <input type="text" name="text" placeholder="Nazwa użytkownika" required="">
-        <input type="email" name="email" placeholder="E-mail" required="">
-        <input type="password" name="password" placeholder="Hasło" required="">
-        <input type="password" name="password" placeholder="Potwierdź hasło" required="">
-        <button>Zarejestruj się!</button>
-      </form>
+      <label for="checkbox">Rejestracja</label>
+      <input type="text" [(ngModel)]="username" placeholder="Nazwa użytkownika" required>
+      <input type="email" [(ngModel)]="email" placeholder="E-mail" required>
+      <input type="password" [(ngModel)]="password" placeholder="Hasło" required>
+      <input type="password" [(ngModel)]="confirmPassword" placeholder="Potwierdź hasło" required>
+      <button (click)="register()">Zarejestruj się!</button>
     </div>
     <div class="login">
-      <form action="/">
-        <label for="checkbox">Mam konto</label>
-        <input type="email" name="email" placeholder="Email lub nazwa użytkownika" required="">
-        <input type="password" name="password" placeholder="Hasło" required="">
-        <button>Zaloguj się</button>
-        <p>TU BĘDZIE CAPTCHA</p>
-      </form>
+      <label for="checkbox">Mam konto</label>
+      <input type="email" [(ngModel)]="email" placeholder="Email lub nazwa użytkownika" required>
+      <input type="password" [(ngModel)]="password" placeholder="Hasło" required>
+      <button (click)="login()">Zaloguj się</button>
+      <p>TU BĘDZIE CAPTCHA</p>
     </div>
   </div>
 </div>
