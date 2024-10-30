@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface UserSensitiveDataRepository extends JpaRepository<UserSensitiveData, Long> {
+public interface UserSensitiveDataRepository extends JpaRepository<UserSensitiveData, Integer> {
     Optional<UserSensitiveData> findByEmail(String email);
 }

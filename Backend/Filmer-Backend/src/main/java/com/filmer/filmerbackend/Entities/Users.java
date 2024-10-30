@@ -15,7 +15,7 @@ public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_user;
+    private int id_user;
 
     @Column(nullable = false, length = 45)
     private String nick;
