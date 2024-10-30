@@ -1,13 +1,33 @@
-import { Component } from '@angular/core';
-import {RouterModule} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { AuthService } from '../../auth.service';
+import { AsyncPipe, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, AsyncPipe, NgIf],
   templateUrl: './menu.component.html',
-  styleUrl: './menu.component.css'
+  styleUrls: ['./menu.component.css']
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit{
+  isLoggedIn$;
 
+  constructor(private authService: AuthService) {
+    this.isLoggedIn$ = this.authService.isLoggedIn$;
+  }
+
+  login() {
+    this.authService.login('email@example.com', 'password');
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
+  ngOnInit() {
+    this.isLoggedIn$.subscribe((isLoggedIn) => {
+      console.log('Stan isLoggedIn w menu po aktualizacji:', isLoggedIn);
+    });
+  }
 }

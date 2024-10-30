@@ -1,27 +1,28 @@
 import { Component } from '@angular/core';
-import {AuthService} from '../../auth.service';
-import {FormsModule} from '@angular/forms';
+import { AuthService } from '../../auth.service';
+import { FormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [ FormsModule],
+  imports: [FormsModule, RouterModule],
   templateUrl: './login-page.component.html',
-  styleUrl: './login-page.component.css'
+  styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent {
-
   email: string = '';
   password: string = '';
   username: string = '';
   confirmPassword: string = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   login() {
     this.authService.login(this.email, this.password).subscribe({
       next: (response) => {
         console.log(response.message);
+        this.router.navigate(['/']);
       },
       error: (error) => {
         if (error.status === 401) {

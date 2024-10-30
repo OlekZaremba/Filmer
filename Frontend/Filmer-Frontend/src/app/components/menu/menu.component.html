@@ -8,6 +8,9 @@
     <button routerLink="/random-movie" routerLinkActive="active">LOSUJ FILM</button>
     <button routerLink="/your-reviews" routerLinkActive="active">TWOJE RECENZJE</button>
     <button routerLink="/contact" routerLinkActive="active">KONTAKT</button>
-    <button routerLink="/login" routerLinkActive="active">PROFIL</button>
+    <button *ngIf="!(isLoggedIn$ | async); else logoutBtn" (click)="login()" routerLink="/login" routerLinkActive="active">ZALOGUJ SIĘ</button>
+    <ng-template #logoutBtn>
+      <button (click)="logout()">WYLOGUJ SIĘ</button>
+    </ng-template>
   </div>
 </div>

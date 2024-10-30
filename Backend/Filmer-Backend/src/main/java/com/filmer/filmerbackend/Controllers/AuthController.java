@@ -1,8 +1,7 @@
 package com.filmer.filmerbackend.Controllers;
-
-
 import com.filmer.filmerbackend.Helpers.LoginRequest;
 import com.filmer.filmerbackend.Helpers.RegistrationRequest;
+import com.filmer.filmerbackend.Helpers.JwtUtil;
 import com.filmer.filmerbackend.Services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,16 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 
-
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
     private final UsersService userService;
+    private final JwtUtil jwtUtil;
 
     @Autowired
-    public AuthController(UsersService userService) {
+    public AuthController(UsersService userService, JwtUtil jwtUtil) {
         this.userService = userService;
+        this.jwtUtil = jwtUtil;
     }
 
     @PostMapping("/register")
@@ -44,6 +44,8 @@ public class AuthController {
         Map<String, String> response = new HashMap<>();
         boolean isAuthenticated = userService.authenticateUser(loginRequest.getEmail(), loginRequest.getPassword());
         if (isAuthenticated) {
+            String token = jwtUtil.generateToken(loginRequest.getEmail());
+            response.put("token", token);
             response.put("message", "Login successful!");
             return ResponseEntity.status(HttpStatus.OK).body(response);
         } else {
