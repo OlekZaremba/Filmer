@@ -8,6 +8,7 @@ import com.filmer.filmerbackend.Repositories.UsersRepository;
 import com.filmer.filmerbackend.Services.UsersService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,11 +18,13 @@ public class UsersServiceImpl implements UsersService {
 
     private final UsersRepository usersRepository;
     private final UserSensitiveDataRepository userSensitiveDataRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UsersServiceImpl(UsersRepository usersRepository, UserSensitiveDataRepository userSensitiveDataRepository) {
+    public UsersServiceImpl(UsersRepository usersRepository, UserSensitiveDataRepository userSensitiveDataRepository, BCryptPasswordEncoder passwordEncoder) {
         this.usersRepository = usersRepository;
         this.userSensitiveDataRepository = userSensitiveDataRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -38,7 +41,26 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public boolean authenticateUser(String email, String password) {
         Optional<UserSensitiveData> userSensitiveData = userSensitiveDataRepository.findByEmail(email);
-        return userSensitiveData.isPresent() && userSensitiveData.get().getPassword().equals(password);
+        return userSensitiveData.isPresent() && passwordEncoder.matches(password, userSensitiveData.get().getPassword());
+    }
+
+    @Override
+    public String registerUser(String username, String email, String password) {
+        if (usersRepository.findByNick(username).isPresent() || userSensitiveDataRepository.findByEmail(email).isPresent()) {
+            return "User already exists";
+        }
+
+        Users user = new Users();
+        user.setNick(username);
+        Users savedUser = usersRepository.save(user);
+
+        UserSensitiveData sensitiveData = new UserSensitiveData();
+        sensitiveData.setEmail(email);
+        sensitiveData.setPassword(passwordEncoder.encode(password));
+        sensitiveData.setUser(savedUser);
+        userSensitiveDataRepository.save(sensitiveData);
+
+        return "User registered successfully";
     }
 
 }

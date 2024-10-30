@@ -8,4 +8,5 @@ public interface UsersService {
     Optional<Users> findUserByNick(String nick);
     Optional<Users> findUserByEmail(String email);
     boolean authenticateUser(String email, String password);
+    String registerUser(String username, String email, String password);
 }
