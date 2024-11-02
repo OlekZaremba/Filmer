@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -66,5 +67,11 @@ public class AuthController {
             String userEmail = u.getUserSensitiveData().getEmail();
             return ResponseEntity.ok(new UserDTO(u.getId_user(), u.getNick(), userEmail));
         }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/friends")
+    public ResponseEntity<List<Users>> getFriendsList(@RequestParam int userId) {
+        List<Users> friends = userService.getFriendsByUserId(userId);
+        return ResponseEntity.ok(friends);
     }
 }
