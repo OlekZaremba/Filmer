@@ -20,10 +20,13 @@ export class AuthService {
   login(email: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, { email, password }).pipe(
       tap((response: any) => {
+        console.log('Odpowiedź serwera:', response);
         if (response && response.token) {
           localStorage.setItem('authToken', response.token);
+          localStorage.setItem('nick', response.nick);
+          localStorage.setItem('email', response.email);
           this.loggedIn.next(true);
-          console.log('Stan loggedIn w AuthService po zalogowaniu:', this.loggedIn.value);
+          console.log('Zalogowano użytkownika. Nick:', response.nick, 'Email:', response.email);
         }
       })
     );
@@ -31,6 +34,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('authToken');
+    localStorage.removeItem('email');
     this.loggedIn.next(false);
     this.router.navigate(['/']);
   }

@@ -1,0 +1,72 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #222222;
+  font-family: "Oswald", sans-serif;
+  overflow-x: hidden;
+}
+
+.section-user {
+  height: 100vh;
+  background-image: url('../../../assets/images/section-one-background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding-left: 5rem;
+  padding-right: 5rem;
+  font-family: "Oswald", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  width: 80%;
+  height: 70vh;
+  display: flex;
+  flex-direction: row;
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.user-info-left {
+  padding-top: 5rem;
+  height: 100%;
+  width: 25%;
+  background-color: #222;
+  margin-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-info-left img {
+  height: 7rem;
+  width: 7rem;
+  filter: invert();
+}
+
+.user-info-left span {
+  color: white;
+  font-family: "Oswald", sans-serif;
+  font-size: 1.2rem;
+  text-align: start;
+}
+
+.user-info-left input {
+  width: 80%;
+  height: 2rem;
+  background-color: #3e3e3e;
+  color: #fff;
+  font-family: "Oswald", sans-serif;
+  font-size: 1rem;
+  border-radius: 7px;
+}
+
+.user-info-right {
+  margin-left: 1rem;
+  height: 100%;
+  width: 75%;
+  background-color: #222;
+}

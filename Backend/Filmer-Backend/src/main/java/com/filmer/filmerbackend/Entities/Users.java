@@ -1,5 +1,6 @@
 package com.filmer.filmerbackend.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,5 +22,6 @@ public class Users {
     private String nick;
 
     @OneToOne(mappedBy = "user")
+    @JsonIgnore
     private UserSensitiveData userSensitiveData;
 }

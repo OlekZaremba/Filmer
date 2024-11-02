@@ -1,18 +1,19 @@
 package com.filmer.filmerbackend.Controllers;
+
+import com.filmer.filmerbackend.Dtos.UserDTO;
+import com.filmer.filmerbackend.Entities.Users;
+import com.filmer.filmerbackend.Helpers.JwtUtil;
 import com.filmer.filmerbackend.Helpers.LoginRequest;
 import com.filmer.filmerbackend.Helpers.RegistrationRequest;
-import com.filmer.filmerbackend.Helpers.JwtUtil;
 import com.filmer.filmerbackend.Services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -45,12 +46,25 @@ public class AuthController {
         boolean isAuthenticated = userService.authenticateUser(loginRequest.getEmail(), loginRequest.getPassword());
         if (isAuthenticated) {
             String token = jwtUtil.generateToken(loginRequest.getEmail());
-            response.put("token", token);
-            response.put("message", "Login successful!");
+            Optional<Users> user = userService.findUserByEmail(loginRequest.getEmail());
+            user.ifPresent(u -> {
+                response.put("token", token);
+                response.put("nick", u.getNick());
+                response.put("email", u.getUserSensitiveData().getEmail());
+                response.put("message", "Login successful!");
+            });
             return ResponseEntity.status(HttpStatus.OK).body(response);
         } else {
             response.put("message", "Invalid email or password");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
+    }
+    @GetMapping("/details")
+    public ResponseEntity<UserDTO> getUserDetails(@RequestParam String email) {
+        Optional<Users> user = userService.findUserByEmail(email);
+        return user.map(u -> {
+            String userEmail = u.getUserSensitiveData().getEmail();
+            return ResponseEntity.ok(new UserDTO(u.getId_user(), u.getNick(), userEmail));
+        }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
