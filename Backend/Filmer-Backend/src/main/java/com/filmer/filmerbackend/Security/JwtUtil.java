@@ -1,4 +1,4 @@
-package com.filmer.filmerbackend.Helpers;
+package com.filmer.filmerbackend.Security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

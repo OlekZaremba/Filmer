@@ -1,6 +1,5 @@
 package com.filmer.filmerbackend.Security;
 
-import com.filmer.filmerbackend.Helpers.JwtUtil;
 import com.filmer.filmerbackend.Services.UsersService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

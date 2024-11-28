@@ -1,4 +1,4 @@
-package com.filmer.filmerbackend.Helpers;
+package com.filmer.filmerbackend.Requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

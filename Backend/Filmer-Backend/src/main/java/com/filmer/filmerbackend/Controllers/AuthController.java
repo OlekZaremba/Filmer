@@ -2,9 +2,9 @@ package com.filmer.filmerbackend.Controllers;
 
 import com.filmer.filmerbackend.Dtos.UserDTO;
 import com.filmer.filmerbackend.Entities.Users;
-import com.filmer.filmerbackend.Helpers.JwtUtil;
-import com.filmer.filmerbackend.Helpers.LoginRequest;
-import com.filmer.filmerbackend.Helpers.RegistrationRequest;
+import com.filmer.filmerbackend.Security.JwtUtil;
+import com.filmer.filmerbackend.Requests.LoginRequest;
+import com.filmer.filmerbackend.Requests.RegistrationRequest;
 import com.filmer.filmerbackend.Services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
