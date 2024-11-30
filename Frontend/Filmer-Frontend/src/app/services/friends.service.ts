@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,14 @@ export class FriendsService {
 
   getFriends(userId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/${userId}/list`);
+  }
+
+  uploadProfilePicture(userId: number, formData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${userId}/uploadProfilePicture`, formData);
+  }
+
+  getProfilePicture(userId: number): Observable<Blob> {
+    return this.http.get(`${this.apiUrl}/${userId}/profilePicture`, { responseType: 'blob' });
   }
 
   searchUsers(nick: string): Observable<any[]> {

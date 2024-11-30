@@ -4,6 +4,7 @@ import com.filmer.filmerbackend.Entities.Users;
 import com.filmer.filmerbackend.Services.FriendsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -38,4 +39,29 @@ public class FriendsController {
         List<Users> users = friendsService.searchUsersByNick(nick);
         return ResponseEntity.ok(users);
     }
+
+    @PostMapping("/{userId}/uploadProfilePicture")
+    public ResponseEntity<String> uploadProfilePicture(
+            @PathVariable int userId,
+            @RequestParam("file") MultipartFile file) {
+        try {
+            friendsService.uploadProfilePicture(userId, file);
+            return ResponseEntity.ok("Zdjęcie profilowe zostało zaktualizowane.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{userId}/profilePicture")
+    public ResponseEntity<byte[]> getProfilePicture(@PathVariable int userId) {
+        byte[] profilePicture = friendsService.getProfilePicture(userId);
+        if (profilePicture == null || profilePicture.length == 0) {
+            return ResponseEntity.noContent().build(); // Jeśli użytkownik nie ma zdjęcia
+        }
+
+        return ResponseEntity.ok()
+                .header("Content-Type", "image/jpeg") // Możesz dynamicznie ustawić typ na podstawie formatu
+                .body(profilePicture);
+    }
+
 }

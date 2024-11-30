@@ -1,7 +1,22 @@
 <div class="section-user">
   <div class="content">
     <div class="user-info-left">
-      <img src="assets/images/user.png" alt="">
+      <div class="profile-picture-container">
+        <img
+          src="assets/images/user.png"
+          alt="Zdjęcie profilowe"
+          class="profile-picture"
+          (click)="triggerFileInput()"
+        >
+        <input
+          type="file"
+          id="fileInput"
+          accept="image/*"
+          (change)="onFileSelected($event)"
+          hidden
+        />
+      </div>
+
       <span>Nazwa użytkownika</span>
       <input type="text" [value]="userName" placeholder="Nazwa użytkownika" disabled>
       <span>Adres e-mail</span>
@@ -40,7 +55,8 @@
           <li *ngFor="let friend of friends" class="friend-item">
             <img
               [src]="friend.avatar || 'assets/images/default-avatar.png'"
-              class="friend-avatar">
+              class="friend-avatar"
+              alt="Zdjęcie znajomego">
             <div class="friend-info">
               <span class="friend-nick">{{ friend.nick }}</span>
             </div>

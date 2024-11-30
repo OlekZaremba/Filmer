@@ -6,6 +6,7 @@ import com.filmer.filmerbackend.Repositories.FriendsListRepository;
 import com.filmer.filmerbackend.Repositories.UsersRepository;
 import com.filmer.filmerbackend.Services.FriendsService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -56,4 +57,27 @@ public class FriendsServiceImpl implements FriendsService {
 
         friendsListRepository.save(friendsList);
     }
+
+    @Override
+    public void uploadProfilePicture(int userId, MultipartFile file) {
+        Users user = usersRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Użytkownik nie istnieje."));
+
+        try {
+            byte[] imageBytes = file.getBytes();
+            user.setProfilePicture(imageBytes);
+            usersRepository.save(user);
+        } catch (Exception e) {
+            throw new RuntimeException("Nie udało się zapisać zdjęcia profilowego.", e);
+        }
+    }
+
+    @Override
+    public byte[] getProfilePicture(int userId) {
+        Users user = usersRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Użytkownik nie istnieje."));
+
+        return user.getProfilePicture();
+    }
+
 }
