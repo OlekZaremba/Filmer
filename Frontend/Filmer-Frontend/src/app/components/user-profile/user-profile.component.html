@@ -6,8 +6,30 @@
       <input type="text" [value]="userName" placeholder="Nazwa użytkownika" disabled>
       <span>Adres e-mail</span>
       <input type="text" [value]="email" placeholder="Adres e-mail" disabled>
-    </div>
 
+      <h2>Dodaj znajomego</h2>
+      <input
+        type="text"
+        placeholder="Wpisz nick znajomego"
+        [(ngModel)]="searchTerm"
+        (input)="searchUsers()">
+
+      <div class="search-results" *ngIf="searchResults.length > 0">
+        <ul>
+          <li *ngFor="let user of searchResults" class="search-item">
+            <img
+              [src]="user.avatar || 'assets/images/default-avatar.png'"
+              class="friend-avatar">
+            <div class="friend-info">
+              <span class="friend-nick">{{ user.nick }}</span>
+              <button (click)="addFriend(user.id)">Dodaj</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div *ngIf="searchResults.length === 0 && searchTerm" class="no-results">Brak wyników wyszukiwania.</div>
+    </div>
 
     <div class="user-info-right">
       <h1>Twoi znajomi</h1>

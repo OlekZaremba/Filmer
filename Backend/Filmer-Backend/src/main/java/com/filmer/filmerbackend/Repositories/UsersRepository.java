@@ -15,4 +15,7 @@ public interface UsersRepository extends JpaRepository<Users, Integer> {
     @Query("SELECT u FROM users u JOIN friends_list f ON u.id_user = f.user2 WHERE f.user1 = :userId")
     List<Users> findFriendsByUserId(@Param("userId") int userId);
 
+    @Query("SELECT u FROM users u WHERE LOWER(u.nick) LIKE LOWER(CONCAT('%', :nick, '%'))")
+    List<Users> findByPartialNick(@Param("nick") String nick);
+
 }

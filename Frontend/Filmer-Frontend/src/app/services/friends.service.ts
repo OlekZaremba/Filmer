@@ -13,4 +13,12 @@ export class FriendsService {
   getFriends(userId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/${userId}/list`);
   }
+
+  searchUsers(nick: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/search?nick=${nick}`);
+  }
+
+  addFriend(userId: number, friendId: number): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/${userId}/addFriend/${friendId}`, {});
+  }
 }

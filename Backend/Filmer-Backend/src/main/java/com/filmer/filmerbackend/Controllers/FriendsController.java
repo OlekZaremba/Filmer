@@ -3,10 +3,7 @@ package com.filmer.filmerbackend.Controllers;
 import com.filmer.filmerbackend.Entities.Users;
 import com.filmer.filmerbackend.Services.FriendsService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +21,21 @@ public class FriendsController {
     public ResponseEntity<List<Users>> getFriends(@PathVariable int userId) {
         List<Users> friends = friendsService.getFriendsByUserId(userId);
         return ResponseEntity.ok(friends);
+    }
+
+    @PostMapping("/{userId}/addFriend/{friendId}")
+    public ResponseEntity<String> addFriend(@PathVariable int userId, @PathVariable int friendId) {
+        try {
+            friendsService.addFriend(userId, friendId);
+            return ResponseEntity.ok("Użytkownik został dodany do znajomych.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Users>> searchUsers(@RequestParam String nick) {
+        List<Users> users = friendsService.searchUsersByNick(nick);
+        return ResponseEntity.ok(users);
     }
 }
