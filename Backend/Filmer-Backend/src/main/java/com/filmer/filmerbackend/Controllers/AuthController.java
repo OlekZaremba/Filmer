@@ -2,9 +2,9 @@ package com.filmer.filmerbackend.Controllers;
 
 import com.filmer.filmerbackend.Dtos.UserDTO;
 import com.filmer.filmerbackend.Entities.Users;
-import com.filmer.filmerbackend.Security.JwtUtil;
 import com.filmer.filmerbackend.Requests.LoginRequest;
 import com.filmer.filmerbackend.Requests.RegistrationRequest;
+import com.filmer.filmerbackend.Security.JwtUtil;
 import com.filmer.filmerbackend.Services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -52,6 +51,7 @@ public class AuthController {
                 response.put("token", token);
                 response.put("nick", u.getNick());
                 response.put("email", u.getUserSensitiveData().getEmail());
+                response.put("userId", String.valueOf(u.getId_user()));
                 response.put("message", "Login successful!");
             });
             return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -60,6 +60,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
     }
+
     @GetMapping("/details")
     public ResponseEntity<UserDTO> getUserDetails(@RequestParam String email) {
         Optional<Users> user = userService.findUserByEmail(email);
@@ -69,9 +70,4 @@ public class AuthController {
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/friends")
-    public ResponseEntity<List<Users>> getFriendsList(@RequestParam int userId) {
-        List<Users> friends = userService.getFriendsByUserId(userId);
-        return ResponseEntity.ok(friends);
-    }
 }

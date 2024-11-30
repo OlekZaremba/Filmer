@@ -25,12 +25,14 @@ export class AuthService {
           localStorage.setItem('authToken', response.token);
           localStorage.setItem('nick', response.nick);
           localStorage.setItem('email', response.email);
+          localStorage.setItem('userId', response.userId);
           this.loggedIn.next(true);
           console.log('Zalogowano użytkownika. Nick:', response.nick, 'Email:', response.email);
         }
       })
     );
   }
+
 
   logout(): void {
     localStorage.removeItem('authToken');

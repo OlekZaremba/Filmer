@@ -14,8 +14,4 @@ export class UserService {
   getUserDetails(email: string): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/details?email=${email}`);
   }
-
-  getFriends(userId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/friends?userId=${userId}`);
-  }
 }
