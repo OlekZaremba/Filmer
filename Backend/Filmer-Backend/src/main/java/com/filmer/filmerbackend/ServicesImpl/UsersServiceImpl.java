@@ -6,7 +6,6 @@ import com.filmer.filmerbackend.Entities.Users;
 import com.filmer.filmerbackend.Repositories.UserSensitiveDataRepository;
 import com.filmer.filmerbackend.Repositories.UsersRepository;
 import com.filmer.filmerbackend.Services.UsersService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
