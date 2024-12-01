@@ -93,15 +93,28 @@ export class UserProfileComponent implements OnInit {
       this.friendsService.searchUsers(this.searchTerm).subscribe({
         next: (results) => {
           this.searchResults = results;
+
+          this.searchResults.forEach(user => {
+            this.friendsService.getProfilePicture(user.id).subscribe({
+              next: (blob) => {
+                const objectURL = URL.createObjectURL(blob);
+                user.avatar = objectURL;
+              },
+              error: () => {
+                user.avatar = 'assets/images/user.png';
+              }
+            });
+          });
         },
         error: (err) => {
           console.error('Błąd podczas wyszukiwania użytkowników:', err);
-        },
+        }
       });
     } else {
       this.searchResults = [];
     }
   }
+
 
   addFriend(friendId: number): void {
     const userId = localStorage.getItem('userId');
