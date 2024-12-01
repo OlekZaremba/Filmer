@@ -43,10 +43,12 @@ export class UserProfileComponent implements OnInit {
   loadFriends(userId: number): void {
     this.friendsService.getFriends(userId).subscribe({
       next: (friends) => {
-        this.friends = friends.map(friend => ({
-          ...friend,
-          avatar: friend.avatar ? friend.avatar + '?t=' + new Date().getTime() : 'assets/images/default-avatar.png'
-        }));
+        this.friends = friends;
+
+        // Dla każdego znajomego pobierz jego zdjęcie profilowe
+        this.friends.forEach(friend => {
+          this.loadFriendPicture(friend);
+        });
       },
       error: (err) => {
         console.error('Nie udało się pobrać listy znajomych:', err);
@@ -54,18 +56,37 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  loadFriendPicture(friend: any): void {
+    this.friendsService.getProfilePicture(friend.id).subscribe({
+      next: (blob) => {
+        const objectURL = URL.createObjectURL(blob);
+        friend.avatar = objectURL;
+      },
+      error: (err) => {
+        console.error(`Nie udało się pobrać zdjęcia dla użytkownika ${friend.id}:`, err);
+        friend.avatar = 'assets/images/user.png';
+      },
+    });
+  }
+
+
+
   loadProfilePicture(userId: number): void {
     this.friendsService.getProfilePicture(userId).subscribe({
       next: (blob) => {
         const objectURL = URL.createObjectURL(blob);
         const imgElement = document.querySelector('.profile-picture') as HTMLImageElement;
-        imgElement.src = objectURL;
+        if (imgElement) {
+          imgElement.src = objectURL;
+        }
       },
       error: (err) => {
         console.error('Błąd podczas ładowania zdjęcia profilowego:', err);
       },
     });
   }
+
+
 
   searchUsers(): void {
     if (this.searchTerm.trim()) {
