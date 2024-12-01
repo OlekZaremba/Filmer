@@ -50,13 +50,21 @@ public class FriendsServiceImpl implements FriendsService {
             throw new IllegalArgumentException("Relacja już istnieje między tymi użytkownikami.");
         }
 
-        FriendsList friendsList = new FriendsList();
-        friendsList.setUser1(userId);
-        friendsList.setUser2(friendId);
-        friendsList.setCreatedAt(new Date());
+        Date now = new Date();
 
-        friendsListRepository.save(friendsList);
+        FriendsList friendsList1 = new FriendsList();
+        friendsList1.setUser1(userId);
+        friendsList1.setUser2(friendId);
+        friendsList1.setCreatedAt(now);
+        friendsListRepository.save(friendsList1);
+
+        FriendsList friendsList2 = new FriendsList();
+        friendsList2.setUser1(friendId);
+        friendsList2.setUser2(userId);
+        friendsList2.setCreatedAt(now);
+        friendsListRepository.save(friendsList2);
     }
+
 
     @Override
     public void uploadProfilePicture(int userId, MultipartFile file) {

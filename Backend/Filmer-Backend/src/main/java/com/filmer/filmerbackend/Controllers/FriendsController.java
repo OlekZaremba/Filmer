@@ -56,11 +56,11 @@ public class FriendsController {
     public ResponseEntity<byte[]> getProfilePicture(@PathVariable int userId) {
         byte[] profilePicture = friendsService.getProfilePicture(userId);
         if (profilePicture == null || profilePicture.length == 0) {
-            return ResponseEntity.noContent().build(); // Jeśli użytkownik nie ma zdjęcia
+            return ResponseEntity.noContent().build();
         }
 
         return ResponseEntity.ok()
-                .header("Content-Type", "image/jpeg") // Możesz dynamicznie ustawić typ na podstawie formatu
+                .header("Content-Type", "image/jpeg")
                 .body(profilePicture);
     }
 

@@ -33,7 +33,7 @@
         <ul>
           <li *ngFor="let user of searchResults" class="search-item">
             <img
-              [src]="user.avatar || 'assets/images/default-avatar.png'"
+              [src]="user.avatar || 'assets/images/user.png'"
               class="friend-avatar">
             <div class="friend-info">
               <span class="friend-nick">{{ user.nick }}</span>
@@ -54,7 +54,7 @@
         <ul *ngIf="friends.length > 0">
           <li *ngFor="let friend of friends" class="friend-item">
             <img
-              [src]="friend.avatar || 'assets/images/default-avatar.png'"
+              [src]="friend.avatar || 'assets/images/user.png'"
               class="friend-avatar"
               alt="Zdjęcie znajomego">
             <div class="friend-info">

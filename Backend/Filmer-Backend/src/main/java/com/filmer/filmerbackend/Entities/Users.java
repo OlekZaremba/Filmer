@@ -23,7 +23,7 @@ public class Users {
     @Column(nullable = false, length = 45)
     private String nick;
 
-    @Lob // Adnotacja wskazująca na dużą wartość binarną lub tekstową
+    @Lob
     private byte[] profilePicture;
 
     @OneToOne(mappedBy = "user")
