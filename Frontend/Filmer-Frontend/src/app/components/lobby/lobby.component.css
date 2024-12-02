@@ -149,3 +149,28 @@ input {
   width: 95%;
   height: 2rem;
 }
+
+.submit-buttons {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.submit-buttons button {
+  width: 50%;
+  height: 3rem;
+  background-color: dodgerblue;
+  border-radius: 7px;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 500;
+  transition: .2s all ease-in-out;
+}
+
+.submit-buttons button:hover {
+  cursor: pointer;
+  background-color: steelblue;
+}
