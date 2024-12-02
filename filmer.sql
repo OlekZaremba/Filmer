@@ -1,360 +1,307 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Lis 27, 2024 at 12:11 PM
--- Wersja serwera: 10.4.32-MariaDB
--- Wersja PHP: 8.2.12
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `filmer`
---
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `films`
---
-
-CREATE TABLE `films` (
-  `id_film` int(11) NOT NULL,
-  `film_name` varchar(45) NOT NULL,
-  `film_image` mediumblob NOT NULL,
-  `film_desc` text NOT NULL,
-  `film_director_id` int(11) NOT NULL,
-  `film_studio_id` int(11) NOT NULL,
-  `film_type_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `film_director`
---
-
-CREATE TABLE `film_director` (
-  `id_film_director` int(11) NOT NULL,
-  `name` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `film_studio`
---
-
-CREATE TABLE `film_studio` (
-  `id_film_studio` int(11) NOT NULL,
-  `studio_name` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `film_type`
---
-
-CREATE TABLE `film_type` (
-  `id_film_type` int(11) NOT NULL,
-  `film_type` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `friends_list`
---
-
-CREATE TABLE `friends_list` (
-  `id_friends_list` int(11) NOT NULL,
-  `user1` int(11) NOT NULL,
-  `user2` int(11) NOT NULL,
-  `created_at` datetime(6) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `lobby`
---
-
-CREATE TABLE `lobby` (
-  `id_lobby` int(11) NOT NULL,
-  `first_place` int(11) NOT NULL,
-  `second_place` int(11) NOT NULL,
-  `third_place` int(11) NOT NULL,
-  `users_id_user` int(11) NOT NULL,
-  `lobby_creation_date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `lobby_has_films`
---
-
-CREATE TABLE `lobby_has_films` (
-  `id_lobby_has_films` int(11) NOT NULL,
-  `lobby_id_lobby` int(11) NOT NULL,
-  `films_id_film` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `users`
---
-
-CREATE TABLE `users` (
-  `id_user` int(11) NOT NULL,
-  `nick` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id_user`, `nick`) VALUES
-(1, '111'),
-(2, '555'),
-(3, '999');
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `user_sensitive_data`
---
-
-CREATE TABLE `user_sensitive_data` (
-  `id_user_sensitive_data` int(11) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `password` varchar(300) NOT NULL,
-  `users_id_user` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `user_sensitive_data`
---
-
-INSERT INTO `user_sensitive_data` (`id_user_sensitive_data`, `email`, `password`, `users_id_user`) VALUES
-(1, '111', '$2a$10$D5Lu.U.K4wKFNH2SFbe6w.MF8aGem6qJviSlBZmonKRZUp73pGuSe', 1),
-(2, '555', '$2a$10$toUeH8TIL19Z8jQfwlC5AOiHINtw7sjqY1uku/gkSDsjO2G/9d4Xu', 2),
-(3, '999', '$2a$10$axPou7ms.NWvxCaEZwkoh.HCU.eTbNjFEykgNXGA8yh.S3c.y5Z5O', 3);
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `watched_movies`
---
-
-CREATE TABLE `watched_movies` (
-  `id_watched_movies` int(11) NOT NULL,
-  `films_id_film` int(11) NOT NULL,
-  `users_id_user` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Indeksy dla zrzutów tabel
---
-
---
--- Indeksy dla tabeli `films`
---
-ALTER TABLE `films`
-  ADD PRIMARY KEY (`id_film`),
-  ADD KEY `idx_film_director_id` (`film_director_id`),
-  ADD KEY `idx_film_studio_id` (`film_studio_id`),
-  ADD KEY `idx_film_type_id` (`film_type_id`);
-
---
--- Indeksy dla tabeli `film_director`
---
-ALTER TABLE `film_director`
-  ADD PRIMARY KEY (`id_film_director`);
-
---
--- Indeksy dla tabeli `film_studio`
---
-ALTER TABLE `film_studio`
-  ADD PRIMARY KEY (`id_film_studio`);
-
---
--- Indeksy dla tabeli `film_type`
---
-ALTER TABLE `film_type`
-  ADD PRIMARY KEY (`id_film_type`);
-
---
--- Indeksy dla tabeli `friends_list`
---
-ALTER TABLE `friends_list`
-  ADD PRIMARY KEY (`id_friends_list`,`user2`,`user1`),
-  ADD KEY `idx_user1` (`user1`),
-  ADD KEY `idx_user2` (`user2`);
-
---
--- Indeksy dla tabeli `lobby`
---
-ALTER TABLE `lobby`
-  ADD PRIMARY KEY (`id_lobby`),
-  ADD KEY `idx_users_id_user` (`users_id_user`),
-  ADD KEY `idx_first_place` (`first_place`),
-  ADD KEY `idx_second_place` (`second_place`),
-  ADD KEY `idx_third_place` (`third_place`);
-
---
--- Indeksy dla tabeli `lobby_has_films`
---
-ALTER TABLE `lobby_has_films`
-  ADD PRIMARY KEY (`id_lobby_has_films`),
-  ADD KEY `idx_lobby_id_lobby` (`lobby_id_lobby`),
-  ADD KEY `idx_films_id_film` (`films_id_film`);
-
---
--- Indeksy dla tabeli `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id_user`);
-
---
--- Indeksy dla tabeli `user_sensitive_data`
---
-ALTER TABLE `user_sensitive_data`
-  ADD PRIMARY KEY (`id_user_sensitive_data`,`users_id_user`),
-  ADD KEY `idx_users_id_user` (`users_id_user`);
-
---
--- Indeksy dla tabeli `watched_movies`
---
-ALTER TABLE `watched_movies`
-  ADD PRIMARY KEY (`id_watched_movies`),
-  ADD KEY `idx_films_id_film` (`films_id_film`),
-  ADD KEY `idx_users_id_user` (`users_id_user`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `films`
---
-ALTER TABLE `films`
-  MODIFY `id_film` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `film_director`
---
-ALTER TABLE `film_director`
-  MODIFY `id_film_director` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `film_studio`
---
-ALTER TABLE `film_studio`
-  MODIFY `id_film_studio` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `film_type`
---
-ALTER TABLE `film_type`
-  MODIFY `id_film_type` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `friends_list`
---
-ALTER TABLE `friends_list`
-  MODIFY `id_friends_list` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `lobby`
---
-ALTER TABLE `lobby`
-  MODIFY `id_lobby` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `lobby_has_films`
---
-ALTER TABLE `lobby_has_films`
-  MODIFY `id_lobby_has_films` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `user_sensitive_data`
---
-ALTER TABLE `user_sensitive_data`
-  MODIFY `id_user_sensitive_data` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `watched_movies`
---
-ALTER TABLE `watched_movies`
-  MODIFY `id_watched_movies` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `films`
---
-ALTER TABLE `films`
-  ADD CONSTRAINT `fk_films_film_director` FOREIGN KEY (`film_director_id`) REFERENCES `film_director` (`id_film_director`),
-  ADD CONSTRAINT `fk_films_film_studio` FOREIGN KEY (`film_studio_id`) REFERENCES `film_studio` (`id_film_studio`),
-  ADD CONSTRAINT `fk_films_film_type` FOREIGN KEY (`film_type_id`) REFERENCES `film_type` (`id_film_type`);
-
---
--- Constraints for table `friends_list`
---
-ALTER TABLE `friends_list`
-  ADD CONSTRAINT `fk_friends_list_user1` FOREIGN KEY (`user1`) REFERENCES `users` (`id_user`),
-  ADD CONSTRAINT `fk_friends_list_user2` FOREIGN KEY (`user2`) REFERENCES `users` (`id_user`);
-
---
--- Constraints for table `lobby`
---
-ALTER TABLE `lobby`
-  ADD CONSTRAINT `fk_lobby_films1` FOREIGN KEY (`first_place`) REFERENCES `films` (`id_film`),
-  ADD CONSTRAINT `fk_lobby_films2` FOREIGN KEY (`second_place`) REFERENCES `films` (`id_film`),
-  ADD CONSTRAINT `fk_lobby_films3` FOREIGN KEY (`third_place`) REFERENCES `films` (`id_film`),
-  ADD CONSTRAINT `fk_lobby_user` FOREIGN KEY (`users_id_user`) REFERENCES `users` (`id_user`);
-
---
--- Constraints for table `lobby_has_films`
---
-ALTER TABLE `lobby_has_films`
-  ADD CONSTRAINT `fk_lobby_has_films_film` FOREIGN KEY (`films_id_film`) REFERENCES `films` (`id_film`),
-  ADD CONSTRAINT `fk_lobby_has_films_lobby` FOREIGN KEY (`lobby_id_lobby`) REFERENCES `lobby` (`id_lobby`);
-
---
--- Constraints for table `user_sensitive_data`
---
-ALTER TABLE `user_sensitive_data`
-  ADD CONSTRAINT `fk_user_sensitive_data_user` FOREIGN KEY (`users_id_user`) REFERENCES `users` (`id_user`);
-
---
--- Constraints for table `watched_movies`
---
-ALTER TABLE `watched_movies`
-  ADD CONSTRAINT `fk_watched_movies_film` FOREIGN KEY (`films_id_film`) REFERENCES `films` (`id_film`),
-  ADD CONSTRAINT `fk_watched_movies_user` FOREIGN KEY (`users_id_user`) REFERENCES `users` (`id_user`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema filmer
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema filmer
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `filmer` DEFAULT CHARACTER SET latin1 ;
+USE `filmer` ;
+
+-- -----------------------------------------------------
+-- Table `filmer`.`film_director`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `filmer`.`film_director` (
+                                                        `id_film_director` INT(11) NOT NULL AUTO_INCREMENT,
+                                                        `name` VARCHAR(45) NOT NULL,
+                                                        PRIMARY KEY (`id_film_director`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `filmer`.`film_studio`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `filmer`.`film_studio` (
+                                                      `id_film_studio` INT(11) NOT NULL AUTO_INCREMENT,
+                                                      `studio_name` VARCHAR(45) NOT NULL,
+                                                      PRIMARY KEY (`id_film_studio`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `filmer`.`film_type`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `filmer`.`film_type` (
+                                                    `id_film_type` INT(11) NOT NULL AUTO_INCREMENT,
+                                                    `film_type` VARCHAR(45) NOT NULL,
+                                                    PRIMARY KEY (`id_film_type`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `filmer`.`movie_sources`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `filmer`.`movie_sources` (
+                                                        `id_movie_source` INT(11) NOT NULL AUTO_INCREMENT,
+                                                        `source_name` VARCHAR(45) NOT NULL,
+                                                        PRIMARY KEY (`id_movie_source`),
+                                                        UNIQUE INDEX `source_name` (`source_name` ASC))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `filmer`.`films`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `filmer`.`films` (
+                                                `id_film` INT(11) NOT NULL AUTO_INCREMENT,
+                                                `film_name` VARCHAR(45) NOT NULL,
+                                                `film_image` MEDIUMBLOB NOT NULL,
+                                                `film_desc` TEXT NOT NULL,
+                                                `film_director_id` INT(11) NOT NULL,
+                                                `film_studio_id` INT(11) NOT NULL,
+                                                `film_type_id` INT(11) NOT NULL,
+                                                `source_id` INT(11) NOT NULL,
+                                                PRIMARY KEY (`id_film`),
+                                                INDEX `idx_film_director_id` (`film_director_id` ASC),
+                                                INDEX `idx_film_studio_id` (`film_studio_id` ASC),
+                                                INDEX `idx_film_type_id` (`film_type_id` ASC),
+                                                INDEX `fk_films_source` (`source_id` ASC),
+                                                CONSTRAINT `fk_films_film_director`
+                                                    FOREIGN KEY (`film_director_id`)
+                                                        REFERENCES `filmer`.`film_director` (`id_film_director`),
+                                                CONSTRAINT `fk_films_film_studio`
+                                                    FOREIGN KEY (`film_studio_id`)
+                                                        REFERENCES `filmer`.`film_studio` (`id_film_studio`),
+                                                CONSTRAINT `fk_films_film_type`
+                                                    FOREIGN KEY (`film_type_id`)
+                                                        REFERENCES `filmer`.`film_type` (`id_film_type`),
+                                                CONSTRAINT `fk_films_source`
+                                                    FOREIGN KEY (`source_id`)
+                                                        REFERENCES `filmer`.`movie_sources` (`id_movie_source`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `filmer`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `filmer`.`users` (
+                                                `id_user` INT(11) NOT NULL AUTO_INCREMENT,
+                                                `nick` VARCHAR(45) NOT NULL,
+                                                `profile_picture` LONGBLOB NULL DEFAULT NULL,
+                                                PRIMARY KEY (`id_user`))
+    ENGINE = InnoDB
+    AUTO_INCREMENT = 3
+    DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `filmer`.`lobby`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `filmer`.`lobby` (
+                                                `id_lobby` INT(11) NOT NULL AUTO_INCREMENT,
+                                                `first_place` INT(11) NOT NULL,
+                                                `second_place` INT(11) NOT NULL,
+                                                `third_place` INT(11) NOT NULL,
+                                                `users_id_user` INT(11) NOT NULL,
+                                                `lobby_creation_date` DATE NOT NULL,
+                                                PRIMARY KEY (`id_lobby`),
+                                                INDEX `idx_users_id_user` (`users_id_user` ASC),
+                                                INDEX `idx_first_place` (`first_place` ASC),
+                                                INDEX `idx_second_place` (`second_place` ASC),
+                                                INDEX `idx_third_place` (`third_place` ASC),
+                                                CONSTRAINT `fk_lobby_films1`
+                                                    FOREIGN KEY (`first_place`)
+                                                        REFERENCES `filmer`.`films` (`id_film`),
+                                                CONSTRAINT `fk_lobby_films2`
+                                                    FOREIGN KEY (`second_place`)
+                                                        REFERENCES `filmer`.`films` (`id_film`),
+                                                CONSTRAINT `fk_lobby_films3`
+                                                    FOREIGN KEY (`third_place`)
+                                                        REFERENCES `filmer`.`films` (`id_film`),
+                                                CONSTRAINT `fk_lobby_user`
+                                                    FOREIGN KEY (`users_id_user`)
+                                                        REFERENCES `filmer`.`users` (`id_user`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `filmer`.`film_bans`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `filmer`.`film_bans` (
+                                                    `id_film_ban` INT(11) NOT NULL AUTO_INCREMENT,
+                                                    `lobby_id` INT(11) NOT NULL,
+                                                    `film_id` INT(11) NOT NULL,
+                                                    `user_id` INT(11) NOT NULL,
+                                                    `ban_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+                                                    PRIMARY KEY (`id_film_ban`),
+                                                    UNIQUE INDEX `lobby_id` (`lobby_id` ASC, `film_id` ASC, `user_id` ASC),
+                                                    INDEX `film_id` (`film_id` ASC),
+                                                    INDEX `user_id` (`user_id` ASC),
+                                                    CONSTRAINT `film_bans_ibfk_1`
+                                                        FOREIGN KEY (`lobby_id`)
+                                                            REFERENCES `filmer`.`lobby` (`id_lobby`),
+                                                    CONSTRAINT `film_bans_ibfk_2`
+                                                        FOREIGN KEY (`film_id`)
+                                                            REFERENCES `filmer`.`films` (`id_film`),
+                                                    CONSTRAINT `film_bans_ibfk_3`
+                                                        FOREIGN KEY (`user_id`)
+                                                            REFERENCES `filmer`.`users` (`id_user`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `filmer`.`friends_list`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `filmer`.`friends_list` (
+                                                       `id_friends_list` INT(11) NOT NULL AUTO_INCREMENT,
+                                                       `user1` INT(11) NOT NULL,
+                                                       `user2` INT(11) NOT NULL,
+                                                       `created_at` DATETIME(6) NULL DEFAULT NULL,
+                                                       PRIMARY KEY (`id_friends_list`, `user2`, `user1`),
+                                                       INDEX `idx_user1` (`user1` ASC),
+                                                       INDEX `idx_user2` (`user2` ASC),
+                                                       CONSTRAINT `fk_friends_list_user1`
+                                                           FOREIGN KEY (`user1`)
+                                                               REFERENCES `filmer`.`users` (`id_user`),
+                                                       CONSTRAINT `fk_friends_list_user2`
+                                                           FOREIGN KEY (`user2`)
+                                                               REFERENCES `filmer`.`users` (`id_user`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `filmer`.`lobby_has_films`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `filmer`.`lobby_has_films` (
+                                                          `id_lobby_has_films` INT(11) NOT NULL AUTO_INCREMENT,
+                                                          `lobby_id_lobby` INT(11) NOT NULL,
+                                                          `films_id_film` INT(11) NOT NULL,
+                                                          PRIMARY KEY (`id_lobby_has_films`),
+                                                          INDEX `idx_lobby_id_lobby` (`lobby_id_lobby` ASC),
+                                                          INDEX `idx_films_id_film` (`films_id_film` ASC),
+                                                          CONSTRAINT `fk_lobby_has_films_film`
+                                                              FOREIGN KEY (`films_id_film`)
+                                                                  REFERENCES `filmer`.`films` (`id_film`),
+                                                          CONSTRAINT `fk_lobby_has_films_lobby`
+                                                              FOREIGN KEY (`lobby_id_lobby`)
+                                                                  REFERENCES `filmer`.`lobby` (`id_lobby`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `filmer`.`lobby_results`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `filmer`.`lobby_results` (
+                                                        `id_lobby_result` INT(11) NOT NULL AUTO_INCREMENT,
+                                                        `lobby_id` INT(11) NOT NULL,
+                                                        `film_id` INT(11) NOT NULL,
+                                                        `position` ENUM('first', 'second', 'third') NOT NULL,
+                                                        PRIMARY KEY (`id_lobby_result`),
+                                                        UNIQUE INDEX `lobby_id` (`lobby_id` ASC, `position` ASC),
+                                                        INDEX `film_id` (`film_id` ASC),
+                                                        CONSTRAINT `lobby_results_ibfk_1`
+                                                            FOREIGN KEY (`lobby_id`)
+                                                                REFERENCES `filmer`.`lobby` (`id_lobby`),
+                                                        CONSTRAINT `lobby_results_ibfk_2`
+                                                            FOREIGN KEY (`film_id`)
+                                                                REFERENCES `filmer`.`films` (`id_film`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `filmer`.`lobby_sources`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `filmer`.`lobby_sources` (
+                                                        `id_lobby_source` INT(11) NOT NULL AUTO_INCREMENT,
+                                                        `lobby_id` INT(11) NOT NULL,
+                                                        `source_id` INT(11) NOT NULL,
+                                                        PRIMARY KEY (`id_lobby_source`),
+                                                        UNIQUE INDEX `lobby_id` (`lobby_id` ASC, `source_id` ASC),
+                                                        INDEX `source_id` (`source_id` ASC),
+                                                        CONSTRAINT `lobby_sources_ibfk_1`
+                                                            FOREIGN KEY (`lobby_id`)
+                                                                REFERENCES `filmer`.`lobby` (`id_lobby`),
+                                                        CONSTRAINT `lobby_sources_ibfk_2`
+                                                            FOREIGN KEY (`source_id`)
+                                                                REFERENCES `filmer`.`movie_sources` (`id_movie_source`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `filmer`.`lobby_users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `filmer`.`lobby_users` (
+                                                      `id_lobby_user` INT(11) NOT NULL AUTO_INCREMENT,
+                                                      `lobby_id` INT(11) NOT NULL,
+                                                      `user_id` INT(11) NOT NULL,
+                                                      PRIMARY KEY (`id_lobby_user`),
+                                                      UNIQUE INDEX `lobby_id` (`lobby_id` ASC, `user_id` ASC),
+                                                      INDEX `user_id` (`user_id` ASC),
+                                                      CONSTRAINT `lobby_users_ibfk_1`
+                                                          FOREIGN KEY (`lobby_id`)
+                                                              REFERENCES `filmer`.`lobby` (`id_lobby`),
+                                                      CONSTRAINT `lobby_users_ibfk_2`
+                                                          FOREIGN KEY (`user_id`)
+                                                              REFERENCES `filmer`.`users` (`id_user`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `filmer`.`user_sensitive_data`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `filmer`.`user_sensitive_data` (
+                                                              `id_user_sensitive_data` INT(11) NOT NULL AUTO_INCREMENT,
+                                                              `email` VARCHAR(45) NOT NULL,
+                                                              `password` VARCHAR(300) NOT NULL,
+                                                              `users_id_user` INT(11) NOT NULL,
+                                                              PRIMARY KEY (`id_user_sensitive_data`, `users_id_user`),
+                                                              INDEX `idx_users_id_user` (`users_id_user` ASC),
+                                                              CONSTRAINT `fk_user_sensitive_data_user`
+                                                                  FOREIGN KEY (`users_id_user`)
+                                                                      REFERENCES `filmer`.`users` (`id_user`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `filmer`.`watched_movies`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `filmer`.`watched_movies` (
+                                                         `id_watched_movies` INT(11) NOT NULL AUTO_INCREMENT,
+                                                         `films_id_film` INT(11) NOT NULL,
+                                                         `users_id_user` INT(11) NOT NULL,
+                                                         PRIMARY KEY (`id_watched_movies`),
+                                                         INDEX `idx_films_id_film` (`films_id_film` ASC),
+                                                         INDEX `idx_users_id_user` (`users_id_user` ASC),
+                                                         INDEX `idx_user_film` (`users_id_user` ASC, `films_id_film` ASC),
+                                                         CONSTRAINT `fk_watched_movies_film`
+                                                             FOREIGN KEY (`films_id_film`)
+                                                                 REFERENCES `filmer`.`films` (`id_film`),
+                                                         CONSTRAINT `fk_watched_movies_user`
+                                                             FOREIGN KEY (`users_id_user`)
+                                                                 REFERENCES `filmer`.`users` (`id_user`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
