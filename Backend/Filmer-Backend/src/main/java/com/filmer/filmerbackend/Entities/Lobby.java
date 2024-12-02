@@ -29,4 +29,7 @@ public class Lobby {
     @Column(name = "lobby_creation_date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date creationDate;
+
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive;
 }
