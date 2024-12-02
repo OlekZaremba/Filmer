@@ -44,7 +44,7 @@ body {
 .user-info-left img {
   height: 7rem;
   width: 7rem;
-  filter: invert();
+  /*filter: invert();*/
 }
 
 .user-info-left span {

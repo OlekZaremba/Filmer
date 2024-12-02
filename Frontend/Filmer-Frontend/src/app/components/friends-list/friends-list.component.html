@@ -1,0 +1,11 @@
+<div class="friends-list">
+  <h2>Twoi znajomi</h2>
+  <ul *ngIf="friends.length > 0; else noFriends">
+    <li *ngFor="let friend of friends">
+      {{ friend.nick }}
+    </li>
+  </ul>
+  <ng-template #noFriends>
+    <p>Brak znajomych do wyświetlenia.</p>
+  </ng-template>
+</div>

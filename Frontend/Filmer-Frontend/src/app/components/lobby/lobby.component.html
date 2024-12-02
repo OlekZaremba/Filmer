@@ -1,0 +1,71 @@
+<div class="bg">
+  <div class="main-container">
+    <div class="joining-users">
+      <h2>Uczestnicy 5/5</h2>
+      <span>Dupa 1</span>
+      <span>Dupa 2</span>
+      <span>Dupa 3</span>
+      <span>Dupa 4</span>
+      <span>Dupa 5</span>
+    </div>
+    <div class="friends-component">
+      <div class="initial-settings">
+        <h2>Wstępne ustawienia</h2>
+
+        <div class="streaming-platform">
+          <h3>Platforma streamingowa:</h3>
+          <input list="streaming-platform" onfocus="this.value=''">
+        </div>
+
+        <div class="genre">
+          <h3>Gatunek filmu:</h3>
+          <input list="genre" onfocus="this.value=''">
+        </div>
+
+        <div class="type">
+          <h3>Typ</h3>
+          <input list="type" onfocus="this.value=''">
+        </div>
+      </div>
+      <div class="friends-list">
+        <div *ngIf="friends.length === 0" class="no-friends">Brak znajomych do wyświetlenia.</div>
+        <h2>Twoi znajomi</h2>
+        <ul *ngIf="friends.length > 0">
+          <li *ngFor="let friend of friends" class="friend-item">
+            <img
+              [src]="friend.avatar || 'assets/images/user.png'"
+              class="friend-avatar"
+              alt="Zdjęcie znajomego">
+            <div class="friend-info">
+              <span class="friend-nick">{{ friend.nick }}</span>
+            </div>
+            <div class="invite-button">
+              <button>Wyślij zaproszenie e-mailem</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<datalist id="streaming-platform">
+  <option value="Netflix">
+  <option value="Disney+">
+  <option value="Max">
+  <option value="Showtime">
+  <option value="Amazon">
+</datalist>
+
+<datalist id="genre">
+  <option value="Dramat">
+  <option value="Komedia">
+  <option value="Horror">
+  <option value="Thriller">
+  <option value="Psychologiczny">
+</datalist>
+
+<datalist id="type">
+  <option value="Film">
+  <option value="Serial">
+</datalist>

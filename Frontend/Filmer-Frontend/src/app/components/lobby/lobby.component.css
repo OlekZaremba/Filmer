@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.bg{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-color: #fff;
+}
+
+.main-container {
+  padding: 1rem;
+  width: 80%;
+  height: 80vh;
+  background-color: #EFECF3;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  font-family: "Oswald", sans-serif;
+}
+
+.joining-users {
+  padding: 15px;
+  height: 90%;
+  width: 20rem;
+  border-radius: 15px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.friends-component {
+  padding: 15px;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  width: 70%;
+  height: 90%;
+  border-radius: 15px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+}
+
+.friends-list {
+  border: 1px solid #3e3e3e;
+  width: 60%;
+  height: 100%;
+  border-radius: 15px;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border: none;
+  overflow-y: auto;
+}
+
+.friends-list img {
+  height: 85px;
+  width: 85px;
+  border-radius: 100px;
+}
+.no-friends {
+  font-size: 14px;
+  color: #888;
+  text-align: center;
+  padding: 20px;
+}
+
+.friend-item {
+  width: 87%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  margin-bottom: 10px;
+  background: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.friend-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 2px solid #ddd;
+  object-fit: cover;
+}
+
+.friend-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.friend-nick {
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}
+
+.friend-email {
+  font-size: 12px;
+  color: #777;
+}
+.invite-button button {
+  background-color: dodgerblue;
+  padding: 0.7rem;
+  border-radius: 7px;
+  border: none;
+  color: #ffffff;
+  font-weight: 500;
+  transition: 0.2s all ease-in-out;
+}
+
+.invite-button {
+  margin-left: auto;
+}
+
+.invite-button button {
+  cursor: pointer;
+}
+
+.invite-button button:hover {
+  background-color: steelblue;
+}
+
+.initial-settings {
+  border: 1px solid #3e3e3e;
+  width: 60%;
+  height: 100%;
+  border-radius: 15px;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border: none;
+  overflow-y: auto;
+}
+
+input {
+  width: 95%;
+  height: 2rem;
+}
