@@ -15,6 +15,35 @@ CREATE SCHEMA IF NOT EXISTS `filmer` DEFAULT CHARACTER SET latin1 ;
 USE `filmer` ;
 
 -- -----------------------------------------------------
+-- Table `filmer`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `filmer`.`users` (
+                                                `id_user` INT(11) NOT NULL AUTO_INCREMENT,
+                                                `nick` VARCHAR(45) NOT NULL,
+                                                `profile_picture` LONGBLOB NULL DEFAULT NULL,
+                                                PRIMARY KEY (`id_user`))
+    ENGINE = InnoDB
+    AUTO_INCREMENT = 7
+    DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `filmer`.`lobby`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `filmer`.`lobby` (
+                                                `id_lobby` INT(11) NOT NULL AUTO_INCREMENT,
+                                                `users_id_user` INT(11) NOT NULL,
+                                                `lobby_creation_date` DATE NOT NULL,
+                                                PRIMARY KEY (`id_lobby`),
+                                                INDEX `idx_users_id_user` (`users_id_user` ASC),
+                                                CONSTRAINT `fk_lobby_user`
+                                                    FOREIGN KEY (`users_id_user`)
+                                                        REFERENCES `filmer`.`users` (`id_user`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
 -- Table `filmer`.`film_director`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `filmer`.`film_director` (
@@ -93,50 +122,6 @@ CREATE TABLE IF NOT EXISTS `filmer`.`films` (
 
 
 -- -----------------------------------------------------
--- Table `filmer`.`users`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `filmer`.`users` (
-                                                `id_user` INT(11) NOT NULL AUTO_INCREMENT,
-                                                `nick` VARCHAR(45) NOT NULL,
-                                                `profile_picture` LONGBLOB NULL DEFAULT NULL,
-                                                PRIMARY KEY (`id_user`))
-    ENGINE = InnoDB
-    AUTO_INCREMENT = 3
-    DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `filmer`.`lobby`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `filmer`.`lobby` (
-                                                `id_lobby` INT(11) NOT NULL AUTO_INCREMENT,
-                                                `first_place` INT(11) NOT NULL,
-                                                `second_place` INT(11) NOT NULL,
-                                                `third_place` INT(11) NOT NULL,
-                                                `users_id_user` INT(11) NOT NULL,
-                                                `lobby_creation_date` DATE NOT NULL,
-                                                PRIMARY KEY (`id_lobby`),
-                                                INDEX `idx_users_id_user` (`users_id_user` ASC),
-                                                INDEX `idx_first_place` (`first_place` ASC),
-                                                INDEX `idx_second_place` (`second_place` ASC),
-                                                INDEX `idx_third_place` (`third_place` ASC),
-                                                CONSTRAINT `fk_lobby_films1`
-                                                    FOREIGN KEY (`first_place`)
-                                                        REFERENCES `filmer`.`films` (`id_film`),
-                                                CONSTRAINT `fk_lobby_films2`
-                                                    FOREIGN KEY (`second_place`)
-                                                        REFERENCES `filmer`.`films` (`id_film`),
-                                                CONSTRAINT `fk_lobby_films3`
-                                                    FOREIGN KEY (`third_place`)
-                                                        REFERENCES `filmer`.`films` (`id_film`),
-                                                CONSTRAINT `fk_lobby_user`
-                                                    FOREIGN KEY (`users_id_user`)
-                                                        REFERENCES `filmer`.`users` (`id_user`))
-    ENGINE = InnoDB
-    DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `filmer`.`film_bans`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `filmer`.`film_bans` (
@@ -180,6 +165,7 @@ CREATE TABLE IF NOT EXISTS `filmer`.`friends_list` (
                                                            FOREIGN KEY (`user2`)
                                                                REFERENCES `filmer`.`users` (`id_user`))
     ENGINE = InnoDB
+    AUTO_INCREMENT = 11
     DEFAULT CHARACTER SET = utf8;
 
 
@@ -278,6 +264,7 @@ CREATE TABLE IF NOT EXISTS `filmer`.`user_sensitive_data` (
                                                                   FOREIGN KEY (`users_id_user`)
                                                                       REFERENCES `filmer`.`users` (`id_user`))
     ENGINE = InnoDB
+    AUTO_INCREMENT = 5
     DEFAULT CHARACTER SET = utf8;
 
 

@@ -1,0 +1,32 @@
+package com.filmer.filmerbackend.Entities;
+
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.Date;
+
+@Entity
+@Table(name = "lobby")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Lobby {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_lobby")
+    private Integer idLobby;
+
+    @ManyToOne
+    @JoinColumn(name = "users_id_user", nullable = false)
+    private Users owner;
+
+    @Column(name = "lobby_creation_date", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date creationDate;
+}
