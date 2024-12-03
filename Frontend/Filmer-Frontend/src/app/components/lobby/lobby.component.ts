@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {FriendsService} from '../../services/friends.service';
-import {LobbyService} from '../../services/lobby.service';
-import {ActivatedRoute} from '@angular/router';
-import {NgForOf, NgIf} from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FriendsService } from '../../services/friends.service';
+import { LobbyService } from '../../services/lobby.service';
+import { NgForOf, NgIf } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lobby',
   standalone: true,
   templateUrl: './lobby.component.html',
   imports: [NgForOf, NgIf],
-  styleUrl: './lobby.component.css'
+  styleUrl: './lobby.component.css',
 })
 export class LobbyComponent implements OnInit {
   userName: string = '';
@@ -17,19 +17,16 @@ export class LobbyComponent implements OnInit {
   friends: any[] = [];
   lobbyLink: string = '';
   participants: any[] = [];
-  lobbyCode: string = '';
+  canSendInvites: boolean = false;
+  isGeneratingLobby: boolean = false;
 
-  constructor(private friendsService: FriendsService,
-              private lobbyService: LobbyService,
-              private route: ActivatedRoute) {}
+  constructor(
+    private friendsService: FriendsService,
+    private lobbyService: LobbyService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.lobbyCode = this.route.snapshot.paramMap.get('lobbyCode') || '';
-
-    if (this.lobbyCode) {
-      this.updateParticipants();
-    }
-
     const email = localStorage.getItem('email');
     const nick = localStorage.getItem('nick');
     const userId = localStorage.getItem('userId');
@@ -52,16 +49,28 @@ export class LobbyComponent implements OnInit {
   generateLink(): void {
     const userId = localStorage.getItem('userId');
     if (userId) {
+      this.isGeneratingLobby = true; // Ustawiamy flagę na true, gdy generowanie linku się rozpoczyna
       this.lobbyService.createLobby(+userId).subscribe({
         next: (lobby) => {
-          this.lobbyCode = lobby.lobbyCode;
-          this.lobbyLink = `http://localhost:4200/lobby/${this.lobbyCode}`;
+          this.lobbyLink = `http://localhost:4200/lobby/${lobby.lobbyCode}`;
+          this.canSendInvites = true; // Ustawiamy flagę na true, gdy link został wygenerowany
+          this.isGeneratingLobby = false; // Zakończenie procesu generowania linku
+
+          // Uaktualniamy widok po zakończeniu generowania lobby
+          setTimeout(() => {
+            this.router.navigate([`/lobby/${lobby.lobbyCode}`]);
+          }, 0);
         },
         error: (err) => {
           console.error('Nie udało się utworzyć lobby:', err);
+          this.isGeneratingLobby = false; // Zakończenie procesu generowania linku w przypadku błędu
         },
       });
     }
+  }
+
+  isCreatingNewLobbyDisabled(): boolean {
+    return this.isGeneratingLobby || !!this.lobbyLink;
   }
 
   loadFriends(userId: number): void {
@@ -69,7 +78,8 @@ export class LobbyComponent implements OnInit {
       next: (friends) => {
         this.friends = friends;
 
-        this.friends.forEach(friend => {
+        // Dla każdego znajomego pobierz jego zdjęcie profilowe
+        this.friends.forEach((friend) => {
           this.loadFriendPicture(friend);
         });
       },
@@ -108,7 +118,7 @@ export class LobbyComponent implements OnInit {
   }
 
   sendInvite(friend: any): void {
-    if (this.lobbyLink) {
+    if (this.canSendInvites && this.lobbyLink) {
       this.friendsService.sendInviteEmail(friend.id, this.lobbyLink).subscribe({
         next: () => {
           console.log(`Zaproszenie wysłane do ${friend.nick}`);
@@ -118,13 +128,14 @@ export class LobbyComponent implements OnInit {
         },
       });
     } else {
-      console.error('Link do lobby nie został jeszcze wygenerowany.');
+      console.error('Link do lobby nie został jeszcze wygenerowany lub wysyłanie zaproszeń jest zablokowane.');
     }
   }
 
   updateParticipants(): void {
-    if (this.lobbyCode) {
-      this.lobbyService.getParticipants(this.lobbyCode).subscribe({
+    const lobbyCode = this.extractLobbyCodeFromUrl();
+    if (lobbyCode) {
+      this.lobbyService.getParticipants(lobbyCode).subscribe({
         next: (participants) => {
           this.participants = participants;
         },
@@ -133,5 +144,11 @@ export class LobbyComponent implements OnInit {
         },
       });
     }
+  }
+
+  extractLobbyCodeFromUrl(): string | null {
+    const url = window.location.href;
+    const parts = url.split('/');
+    return parts[parts.length - 1] || null;
   }
 }
