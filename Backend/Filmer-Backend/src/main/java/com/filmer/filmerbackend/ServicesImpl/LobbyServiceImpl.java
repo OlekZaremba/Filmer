@@ -36,10 +36,7 @@ public class LobbyServiceImpl implements LobbyService {
         lobby.setCreationDate(new Date());
         lobby.setActive(true);
         lobby.setLobbyCode(UUID.randomUUID().toString());
-
         Lobby savedLobby = lobbyRepository.save(lobby);
-
-        // Dodanie właściciela jako uczestnika lobby
         lobbyUsersRepository.save(new LobbyUsers(null, savedLobby, owner));
 
         return savedLobby;
@@ -61,14 +58,14 @@ public class LobbyServiceImpl implements LobbyService {
 
         Users user = usersRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Użytkownik nie istnieje."));
-
         boolean alreadyInLobby = lobbyUsersRepository.findByLobbyAndUser(lobby.getIdLobby(), userId).isPresent();
         if (alreadyInLobby) {
             throw new IllegalArgumentException("Użytkownik jest już w lobby.");
         }
-
         lobbyUsersRepository.save(new LobbyUsers(null, lobby, user));
+        System.out.println("Użytkownik " + user.getNick() + " został dodany do lobby " + lobby.getLobbyCode());
     }
+
 
     @Override
     public List<Users> getParticipants(String lobbyCode) {
