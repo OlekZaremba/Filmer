@@ -9,5 +9,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
   { path: 'user-profile', component: UserProfileComponent},
   { path: 'create-lobby', component: LobbyComponent},
-  { path: 'create-lobby2', component: LobbyComponent}
+  { path: 'create-lobby2', component: LobbyComponent},
+  { path: 'lobby/:lobbyCode', component: LobbyComponent }
 ];

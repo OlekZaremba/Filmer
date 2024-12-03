@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FriendsService} from '../../services/friends.service';
 import {LobbyService} from '../../services/lobby.service';
+import {ActivatedRoute} from '@angular/router';
 import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
@@ -16,10 +17,19 @@ export class LobbyComponent implements OnInit {
   friends: any[] = [];
   lobbyLink: string = '';
   participants: any[] = [];
+  lobbyCode: string = '';
 
-  constructor(private friendsService: FriendsService, private lobbyService: LobbyService) {}
+  constructor(private friendsService: FriendsService,
+              private lobbyService: LobbyService,
+              private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.lobbyCode = this.route.snapshot.paramMap.get('lobbyCode') || '';
+
+    if (this.lobbyCode) {
+      this.updateParticipants();
+    }
+
     const email = localStorage.getItem('email');
     const nick = localStorage.getItem('nick');
     const userId = localStorage.getItem('userId');
@@ -44,7 +54,8 @@ export class LobbyComponent implements OnInit {
     if (userId) {
       this.lobbyService.createLobby(+userId).subscribe({
         next: (lobby) => {
-          this.lobbyLink = `http://localhost:4200/lobby/${lobby.lobbyCode}`;
+          this.lobbyCode = lobby.lobbyCode;
+          this.lobbyLink = `http://localhost:4200/lobby/${this.lobbyCode}`;
         },
         error: (err) => {
           console.error('Nie udało się utworzyć lobby:', err);
@@ -58,7 +69,6 @@ export class LobbyComponent implements OnInit {
       next: (friends) => {
         this.friends = friends;
 
-        // Dla każdego znajomego pobierz jego zdjęcie profilowe
         this.friends.forEach(friend => {
           this.loadFriendPicture(friend);
         });
@@ -112,11 +122,9 @@ export class LobbyComponent implements OnInit {
     }
   }
 
-
   updateParticipants(): void {
-    const lobbyCode = this.extractLobbyCodeFromUrl();
-    if (lobbyCode) {
-      this.lobbyService.getParticipants(lobbyCode).subscribe({
+    if (this.lobbyCode) {
+      this.lobbyService.getParticipants(this.lobbyCode).subscribe({
         next: (participants) => {
           this.participants = participants;
         },
@@ -126,17 +134,4 @@ export class LobbyComponent implements OnInit {
       });
     }
   }
-
-  extractLobbyCodeFromUrl(): string | null {
-    const url = window.location.href;
-    const parts = url.split('/');
-    return parts[parts.length - 1] || null;
-  }
-
-  // ngAfterViewInit(): void {
-  //   this.updateParticipants();
-  //   setInterval(() => {
-  //     this.updateParticipants();
-  //   }, 5000);
-  // }
 }
