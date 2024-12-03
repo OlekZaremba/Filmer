@@ -30,6 +30,12 @@ export class LobbyComponent implements OnInit {
     const email = localStorage.getItem('email');
     const nick = localStorage.getItem('nick');
     const userId = localStorage.getItem('userId');
+    const storedLobbyLink = localStorage.getItem('lobbyLink');
+
+    if (storedLobbyLink) {
+      this.lobbyLink = storedLobbyLink; // Pobierz zapisany link do lobby
+      this.canSendInvites = true; // Pozwól na wysyłanie zaproszeń
+    }
 
     if (email && nick) {
       this.userName = nick;
@@ -53,6 +59,7 @@ export class LobbyComponent implements OnInit {
       this.lobbyService.createLobby(+userId).subscribe({
         next: (lobby) => {
           this.lobbyLink = `http://localhost:4200/lobby/${lobby.lobbyCode}`;
+          localStorage.setItem('lobbyLink', this.lobbyLink); // Zapisz link do localStorage
           this.canSendInvites = true; // Ustawiamy flagę na true, gdy link został wygenerowany
           this.isGeneratingLobby = false; // Zakończenie procesu generowania linku
 
@@ -66,7 +73,6 @@ export class LobbyComponent implements OnInit {
       });
     }
   }
-
 
   startLobby(): void {
     if (this.lobbyLink) {
