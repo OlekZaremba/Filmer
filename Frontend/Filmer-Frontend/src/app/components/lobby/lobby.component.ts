@@ -1,23 +1,24 @@
 import {Component, OnInit} from '@angular/core';
-import {NgForOf, NgIf} from '@angular/common';
 import {FriendsService} from '../../services/friends.service';
+import {LobbyService} from '../../services/lobby.service';
+import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-lobby',
   standalone: true,
-  imports: [
-    NgForOf,
-    NgIf
-  ],
   templateUrl: './lobby.component.html',
+  imports: [NgForOf, NgIf],
   styleUrl: './lobby.component.css'
 })
 export class LobbyComponent implements OnInit {
   userName: string = '';
   email: string = '';
   friends: any[] = [];
+  lobbyLink: string = '';
+  participants: any[] = [];
 
-  constructor(private friendsService: FriendsService) {}
+  constructor(private friendsService: FriendsService, private lobbyService: LobbyService) {}
+
   ngOnInit(): void {
     const email = localStorage.getItem('email');
     const nick = localStorage.getItem('nick');
@@ -37,6 +38,21 @@ export class LobbyComponent implements OnInit {
       console.error('E-mail lub nick użytkownika nie są dostępne w localStorage.');
     }
   }
+
+  generateLink(): void {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      this.lobbyService.createLobby(+userId).subscribe({
+        next: (lobby) => {
+          this.lobbyLink = `http://localhost:4200/lobby/${lobby.lobbyCode}`;
+        },
+        error: (err) => {
+          console.error('Nie udało się utworzyć lobby:', err);
+        },
+      });
+    }
+  }
+
   loadFriends(userId: number): void {
     this.friendsService.getFriends(userId).subscribe({
       next: (friends) => {
@@ -81,4 +97,45 @@ export class LobbyComponent implements OnInit {
     });
   }
 
+  sendInvite(friend: any): void {
+    if (this.lobbyLink) {
+      this.friendsService.sendInviteEmail(friend.email, this.lobbyLink).subscribe({
+        next: () => {
+          console.log(`Zaproszenie wysłane do ${friend.nick}`);
+        },
+        error: (err) => {
+          console.error('Nie udało się wysłać zaproszenia:', err);
+        },
+      });
+    } else {
+      console.error('Link do lobby nie został jeszcze wygenerowany.');
+    }
+  }
+
+  updateParticipants(): void {
+    const lobbyCode = this.extractLobbyCodeFromUrl();
+    if (lobbyCode) {
+      this.lobbyService.getParticipants(lobbyCode).subscribe({
+        next: (participants) => {
+          this.participants = participants;
+        },
+        error: (err) => {
+          console.error('Nie udało się pobrać listy uczestników:', err);
+        },
+      });
+    }
+  }
+
+  extractLobbyCodeFromUrl(): string | null {
+    const url = window.location.href;
+    const parts = url.split('/');
+    return parts[parts.length - 1] || null;
+  }
+
+  // ngAfterViewInit(): void {
+  //   this.updateParticipants();
+  //   setInterval(() => {
+  //     this.updateParticipants();
+  //   }, 5000);
+  // }
 }

@@ -29,4 +29,9 @@ export class FriendsService {
   addFriend(userId: number, friendId: number): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/${userId}/addFriend/${friendId}`, {});
   }
+
+  sendInviteEmail(friendEmail: string, lobbyLink: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/sendInvite`, { friendEmail, lobbyLink });
+  }
+
 }

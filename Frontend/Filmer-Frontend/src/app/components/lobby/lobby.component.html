@@ -1,7 +1,12 @@
 <div class="bg">
   <div class="main-container">
     <div class="joining-users">
-      <h2>Uczestnicy 0/5</h2>
+      <h2>Uczestnicy {{participants.length}}/5</h2>
+      <ul>
+        <li *ngFor="let participant of participants">
+          {{ participant.nick }}
+        </li>
+      </ul>
     </div>
     <div class="friends-component">
       <div class="initial-settings">
@@ -23,8 +28,12 @@
         </div>
 
         <div class="submit-buttons">
-          <button class="submit">Generuj link</button>
+          <button class="submit" (click)="generateLink()">Generuj link</button>
           <button class="submit">Rozpocznij</button>
+        </div>
+
+        <div *ngIf="lobbyLink" class="lobby-link">
+          <p>Twój link do lobby: <a [href]="lobbyLink" target="_blank">{{ lobbyLink }}</a></p>
         </div>
       </div>
       <div class="friends-list">
@@ -40,7 +49,7 @@
               <span class="friend-nick">{{ friend.nick }}</span>
             </div>
             <div class="invite-button">
-              <button>Wyślij zaproszenie e-mailem</button>
+              <button (click)="sendInvite(friend)">Wyślij zaproszenie e-mailem</button>
             </div>
           </li>
         </ul>
@@ -48,6 +57,7 @@
     </div>
   </div>
 </div>
+
 
 <datalist id="streaming-platform">
   <option value="Netflix">
