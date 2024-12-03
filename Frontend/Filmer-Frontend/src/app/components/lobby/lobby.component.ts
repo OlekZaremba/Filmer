@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FriendsService } from '../../services/friends.service';
 import { LobbyService } from '../../services/lobby.service';
 import { NgForOf, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-lobby',
   standalone: true,
   templateUrl: './lobby.component.html',
   imports: [NgForOf, NgIf],
-  styleUrl: './lobby.component.css',
+  styleUrls: ['./lobby.component.css'],
 })
-export class LobbyComponent implements OnInit {
+export class LobbyComponent implements OnInit, OnDestroy {
   userName: string = '';
   email: string = '';
   friends: any[] = [];
@@ -19,6 +20,7 @@ export class LobbyComponent implements OnInit {
   participants: any[] = [];
   canSendInvites: boolean = false;
   isGeneratingLobby: boolean = false;
+  private participantSubscription: Subscription | undefined;
 
   constructor(
     private friendsService: FriendsService,
@@ -33,8 +35,8 @@ export class LobbyComponent implements OnInit {
     const storedLobbyLink = localStorage.getItem('lobbyLink');
 
     if (storedLobbyLink) {
-      this.lobbyLink = storedLobbyLink;
-      this.canSendInvites = true;
+      this.lobbyLink = storedLobbyLink; // Pobierz zapisany link do lobby
+      this.canSendInvites = true; // Pozwól na wysyłanie zaproszeń
     }
 
     if (email && nick) {
@@ -50,23 +52,40 @@ export class LobbyComponent implements OnInit {
     } else {
       console.error('E-mail lub nick użytkownika nie są dostępne w localStorage.');
     }
+
+    // Uruchamiamy automatyczne odświeżanie uczestników co 5 sekund
+    this.participantSubscription = interval(5000).subscribe(() => {
+      this.loadParticipants();
+    });
+
+    // Początkowe wczytanie uczestników
+    this.loadParticipants();
+  }
+
+  ngOnDestroy(): void {
+    // Zatrzymujemy odświeżanie, kiedy komponent jest niszczony
+    if (this.participantSubscription) {
+      this.participantSubscription.unsubscribe();
+    }
   }
 
   generateLink(): void {
     const userId = localStorage.getItem('userId');
     if (userId) {
-      this.isGeneratingLobby = true;
+      this.isGeneratingLobby = true; // Ustawiamy flagę na true, gdy generowanie linku się rozpoczyna
       this.lobbyService.createLobby(+userId).subscribe({
         next: (lobby) => {
           this.lobbyLink = `http://localhost:4200/lobby/${lobby.lobbyCode}`;
-          localStorage.setItem('lobbyLink', this.lobbyLink);
-          this.canSendInvites = true;
-          this.isGeneratingLobby = false;
+          localStorage.setItem('lobbyLink', this.lobbyLink); // Zapisz link do localStorage
+          this.canSendInvites = true; // Ustawiamy flagę na true, gdy link został wygenerowany
+          this.isGeneratingLobby = false; // Zakończenie procesu generowania linku
+
+          // Automatyczne przeniesienie admina do wygenerowanego lobby
           this.router.navigate([`/lobby/${lobby.lobbyCode}`]);
         },
         error: (err) => {
           console.error('Nie udało się utworzyć lobby:', err);
-          this.isGeneratingLobby = false;
+          this.isGeneratingLobby = false; // Zakończenie procesu generowania linku w przypadku błędu
         },
       });
     }
@@ -90,6 +109,7 @@ export class LobbyComponent implements OnInit {
       next: (friends) => {
         this.friends = friends;
 
+        // Dla każdego znajomego pobierz jego zdjęcie profilowe
         this.friends.forEach((friend) => {
           this.loadFriendPicture(friend);
         });
@@ -143,11 +163,12 @@ export class LobbyComponent implements OnInit {
     }
   }
 
-  updateParticipants(): void {
+  loadParticipants(): void {
     const lobbyCode = this.extractLobbyCodeFromUrl();
     if (lobbyCode) {
       this.lobbyService.getParticipants(lobbyCode).subscribe({
         next: (participants) => {
+          console.log('Pobrani uczestnicy:', participants);
           this.participants = participants;
         },
         error: (err) => {

@@ -14,11 +14,15 @@ export class LobbyService {
     return this.http.post<any>(`${this.apiUrl}/${ownerId}/create`, {});
   }
 
-  getParticipants(lobbyCode: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/${lobbyCode}/participants`);
+  closeLobby(lobbyId: number): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/${lobbyId}/close`, {});
   }
 
   addUserToLobby(lobbyCode: string, userId: number): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/${lobbyCode}/addUser/${userId}`, {});
+  }
+
+  getParticipants(lobbyCode: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/participants?lobbyCode=${lobbyCode}`);
   }
 }

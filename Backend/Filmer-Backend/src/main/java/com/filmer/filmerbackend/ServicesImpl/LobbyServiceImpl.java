@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class LobbyServiceImpl implements LobbyService {
@@ -39,7 +37,12 @@ public class LobbyServiceImpl implements LobbyService {
         lobby.setActive(true);
         lobby.setLobbyCode(UUID.randomUUID().toString());
 
-        return lobbyRepository.save(lobby);
+        Lobby savedLobby = lobbyRepository.save(lobby);
+
+        // Dodanie właściciela jako uczestnika lobby
+        lobbyUsersRepository.save(new LobbyUsers(null, savedLobby, owner));
+
+        return savedLobby;
     }
 
     @Override
@@ -64,11 +67,7 @@ public class LobbyServiceImpl implements LobbyService {
             throw new IllegalArgumentException("Użytkownik jest już w lobby.");
         }
 
-        LobbyUsers lobbyUser = new LobbyUsers();
-        lobbyUser.setLobby(lobby);
-        lobbyUser.setUser(user);
-
-        lobbyUsersRepository.save(lobbyUser);
+        lobbyUsersRepository.save(new LobbyUsers(null, lobby, user));
     }
 
     @Override
@@ -76,7 +75,6 @@ public class LobbyServiceImpl implements LobbyService {
         Lobby lobby = lobbyRepository.findByLobbyCode(lobbyCode)
                 .orElseThrow(() -> new IllegalArgumentException("Lobby nie istnieje."));
 
-        List<LobbyUsers> lobbyUsers = lobbyUsersRepository.findByLobby(lobby.getIdLobby());
-        return lobbyUsers.stream().map(LobbyUsers::getUser).collect(Collectors.toList());
+        return lobbyUsersRepository.findUsersByLobbyId(lobby.getIdLobby());
     }
 }

@@ -36,8 +36,8 @@ public class LobbyController {
         return ResponseEntity.ok("Użytkownik został dodany do lobby.");
     }
 
-    @GetMapping("/{lobbyCode}/participants")
-    public ResponseEntity<List<Users>> getParticipants(@PathVariable String lobbyCode) {
+    @GetMapping("/participants")
+    public ResponseEntity<List<Users>> getParticipants(@RequestParam String lobbyCode) {
         List<Users> participants = lobbyService.getParticipants(lobbyCode);
         return ResponseEntity.ok(participants);
     }
