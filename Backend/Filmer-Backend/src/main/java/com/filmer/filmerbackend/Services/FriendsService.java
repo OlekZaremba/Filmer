@@ -11,5 +11,5 @@ public interface FriendsService {
     void addFriend(int userId, int friendId);
     void uploadProfilePicture(int userId, MultipartFile file);
     byte[] getProfilePicture(int userId);
-
+    void sendInviteEmail(int friendId, String lobbyLink);
 }

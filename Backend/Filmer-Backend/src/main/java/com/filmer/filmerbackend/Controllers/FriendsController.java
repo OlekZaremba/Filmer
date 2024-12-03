@@ -64,4 +64,13 @@ public class FriendsController {
                 .body(profilePicture);
     }
 
+    @PostMapping("/sendInvite")
+    public ResponseEntity<String> sendInvite(@RequestParam int friendId, @RequestParam String lobbyLink) {
+        try {
+            friendsService.sendInviteEmail(friendId, lobbyLink);
+            return ResponseEntity.ok("Zaproszenie zostało wysłane.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
