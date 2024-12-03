@@ -99,7 +99,7 @@ export class LobbyComponent implements OnInit {
 
   sendInvite(friend: any): void {
     if (this.lobbyLink) {
-      this.friendsService.sendInviteEmail(friend.email, this.lobbyLink).subscribe({
+      this.friendsService.sendInviteEmail(friend.id, this.lobbyLink).subscribe({
         next: () => {
           console.log(`Zaproszenie wysłane do ${friend.nick}`);
         },
@@ -111,6 +111,7 @@ export class LobbyComponent implements OnInit {
       console.error('Link do lobby nie został jeszcze wygenerowany.');
     }
   }
+
 
   updateParticipants(): void {
     const lobbyCode = this.extractLobbyCodeFromUrl();

@@ -30,8 +30,10 @@ export class FriendsService {
     return this.http.post<void>(`${this.apiUrl}/${userId}/addFriend/${friendId}`, {});
   }
 
-  sendInviteEmail(friendEmail: string, lobbyLink: string): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/sendInvite`, { friendEmail, lobbyLink });
+  sendInviteEmail(friendId: number, lobbyLink: string): Observable<void> {
+    console.log({ friendId, lobbyLink });
+    return this.http.post<void>(`${this.apiUrl}/sendInvite`, { friendId, lobbyLink });
   }
+
 
 }

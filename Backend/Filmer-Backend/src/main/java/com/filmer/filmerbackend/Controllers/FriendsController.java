@@ -1,5 +1,6 @@
 package com.filmer.filmerbackend.Controllers;
 
+import com.filmer.filmerbackend.Dtos.SendInviteRequest;
 import com.filmer.filmerbackend.Entities.Users;
 import com.filmer.filmerbackend.Services.FriendsService;
 import org.springframework.http.ResponseEntity;
@@ -65,12 +66,15 @@ public class FriendsController {
     }
 
     @PostMapping("/sendInvite")
-    public ResponseEntity<String> sendInvite(@RequestParam int friendId, @RequestParam String lobbyLink) {
+    public ResponseEntity<String> sendInvite(@RequestBody SendInviteRequest request) {
+        System.out.println("Odebrano żądanie z parametrami: friendId=" + request.getFriendId() + ", lobbyLink=" + request.getLobbyLink());
         try {
-            friendsService.sendInviteEmail(friendId, lobbyLink);
+            friendsService.sendInviteEmail(request.getFriendId(), request.getLobbyLink());
             return ResponseEntity.ok("Zaproszenie zostało wysłane.");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+
 }

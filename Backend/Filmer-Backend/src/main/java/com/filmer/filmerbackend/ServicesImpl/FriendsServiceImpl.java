@@ -98,13 +98,21 @@ public class FriendsServiceImpl implements FriendsService {
 
     @Override
     public void sendInviteEmail(int friendId, String lobbyLink) {
+
         Users user = usersRepository.findById(friendId)
-                .orElseThrow(() -> new IllegalArgumentException("Użytkownik nie istnieje."));
+                .orElseThrow(() -> {
+                    System.out.println("Użytkownik nie istnieje: " + friendId);
+                    return new IllegalArgumentException("Użytkownik nie istnieje.");
+                });
 
         UserSensitiveData userSensitiveData = userSensitiveDataRepository.findById(user.getUserSensitiveData().getId_user_sensitive_data())
-                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono danych wrażliwych użytkownika."));
+                .orElseThrow(() -> {
+                    System.out.println("Nie znaleziono danych wrażliwych dla użytkownika: " + friendId);
+                    return new IllegalArgumentException("Nie znaleziono danych wrażliwych użytkownika.");
+                });
 
         String friendEmail = userSensitiveData.getEmail();
+        System.out.println("E-mail użytkownika: " + friendEmail);
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(friendEmail);
@@ -113,10 +121,11 @@ public class FriendsServiceImpl implements FriendsService {
 
         try {
             mailSender.send(message);
-            System.out.println("Zaproszenie wysłane do " + friendEmail);
         } catch (Exception e) {
+            System.out.println("Błąd przy wysyłaniu e-maila: " + e.getMessage());
             throw new RuntimeException("Nie udało się wysłać zaproszenia e-mailem.", e);
         }
     }
+
 
 }
