@@ -10,6 +10,7 @@ import com.filmer.filmerbackend.Services.LobbyService;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class LobbyServiceImpl implements LobbyService {
@@ -33,6 +34,7 @@ public class LobbyServiceImpl implements LobbyService {
         lobby.setOwner(owner);
         lobby.setCreationDate(new Date());
         lobby.setActive(true);
+        lobby.setLobbyCode(UUID.randomUUID().toString());
 
         return lobbyRepository.save(lobby);
     }
@@ -47,14 +49,14 @@ public class LobbyServiceImpl implements LobbyService {
     }
 
     @Override
-    public void addUserToLobby(int lobbyId, int userId) {
-        Lobby lobby = lobbyRepository.findById(lobbyId)
+    public void addUserToLobby(String lobbyCode, int userId) {
+        Lobby lobby = lobbyRepository.findByLobbyCode(lobbyCode)
                 .orElseThrow(() -> new IllegalArgumentException("Lobby nie istnieje."));
 
         Users user = usersRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Użytkownik nie istnieje."));
 
-        boolean alreadyInLobby = lobbyUsersRepository.findByLobbyAndUser(lobbyId, userId).isPresent();
+        boolean alreadyInLobby = lobbyUsersRepository.findByLobbyAndUser(lobby.getIdLobby(), userId).isPresent();
         if (alreadyInLobby) {
             throw new IllegalArgumentException("Użytkownik jest już w lobby.");
         }

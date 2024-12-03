@@ -27,9 +27,9 @@ public class LobbyController {
         return ResponseEntity.ok("Lobby zostało zamknięte.");
     }
 
-    @PostMapping("/{lobbyId}/addUser/{userId}")
-    public ResponseEntity<String> addUserToLobby(@PathVariable int lobbyId, @PathVariable int userId) {
-        lobbyService.addUserToLobby(lobbyId, userId);
+    @PostMapping("/{lobbyCode}/addUser/{userId}")
+    public ResponseEntity<String> addUserToLobby(@PathVariable String lobbyCode, @PathVariable int userId) {
+        lobbyService.addUserToLobby(lobbyCode, userId);
         return ResponseEntity.ok("Użytkownik został dodany do lobby.");
     }
 }

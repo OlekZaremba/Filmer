@@ -10,9 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface LobbyRepository extends JpaRepository<Lobby, Integer> {
-    @Query("SELECT l FROM Lobby l WHERE l.owner.id_user = :userId AND l.isActive = true")
-    Optional<Lobby> findActiveLobbyByUserId(@Param("userId") int userId);
-
+    @Query("SELECT l FROM Lobby l WHERE l.lobbyCode = :lobbyCode AND l.isActive = true")
+    Optional<Lobby> findByLobbyCode(@Param("lobbyCode") String lobbyCode);
 }
-
-

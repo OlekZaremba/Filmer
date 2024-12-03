@@ -1,6 +1,5 @@
 package com.filmer.filmerbackend.Entities;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,4 +31,7 @@ public class Lobby {
 
     @Column(name = "is_active", nullable = false)
     private boolean isActive;
+
+    @Column(name = "lobby_code", nullable = false, unique = true)
+    private String lobbyCode;
 }

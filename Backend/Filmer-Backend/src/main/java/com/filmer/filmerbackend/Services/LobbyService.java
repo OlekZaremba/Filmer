@@ -5,5 +5,5 @@ import com.filmer.filmerbackend.Entities.Lobby;
 public interface LobbyService {
     Lobby createLobby(int ownerId);
     void closeLobby(int lobbyId);
-    void addUserToLobby(int lobbyId, int userId);
+    void addUserToLobby(String lobbyCode, int userId);
 }
