@@ -56,16 +56,24 @@ export class LobbyComponent implements OnInit {
           this.canSendInvites = true; // Ustawiamy flagę na true, gdy link został wygenerowany
           this.isGeneratingLobby = false; // Zakończenie procesu generowania linku
 
-          // Uaktualniamy widok po zakończeniu generowania lobby
-          setTimeout(() => {
-            this.router.navigate([`/lobby/${lobby.lobbyCode}`]);
-          }, 0);
+          // Automatyczne przeniesienie admina do wygenerowanego lobby
+          this.router.navigate([`/lobby/${lobby.lobbyCode}`]);
         },
         error: (err) => {
           console.error('Nie udało się utworzyć lobby:', err);
           this.isGeneratingLobby = false; // Zakończenie procesu generowania linku w przypadku błędu
         },
       });
+    }
+  }
+
+
+  startLobby(): void {
+    if (this.lobbyLink) {
+      const lobbyCode = this.lobbyLink.split('/').pop();
+      if (lobbyCode) {
+        this.router.navigate([`/lobby/${lobbyCode}`]);
+      }
     }
   }
 

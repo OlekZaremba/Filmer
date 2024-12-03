@@ -34,6 +34,4 @@ export class FriendsService {
     console.log({ friendId, lobbyLink });
     return this.http.post<void>(`${this.apiUrl}/sendInvite`, { friendId, lobbyLink });
   }
-
-
 }
