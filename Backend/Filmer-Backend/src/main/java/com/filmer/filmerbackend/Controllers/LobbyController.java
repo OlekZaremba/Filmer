@@ -1,9 +1,12 @@
 package com.filmer.filmerbackend.Controllers;
 
 import com.filmer.filmerbackend.Entities.Lobby;
+import com.filmer.filmerbackend.Entities.Users;
 import com.filmer.filmerbackend.Services.LobbyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/lobby/api")
@@ -31,5 +34,11 @@ public class LobbyController {
     public ResponseEntity<String> addUserToLobby(@PathVariable String lobbyCode, @PathVariable int userId) {
         lobbyService.addUserToLobby(lobbyCode, userId);
         return ResponseEntity.ok("Użytkownik został dodany do lobby.");
+    }
+
+    @GetMapping("/{lobbyCode}/participants")
+    public ResponseEntity<List<Users>> getParticipants(@PathVariable String lobbyCode) {
+        List<Users> participants = lobbyService.getParticipants(lobbyCode);
+        return ResponseEntity.ok(participants);
     }
 }

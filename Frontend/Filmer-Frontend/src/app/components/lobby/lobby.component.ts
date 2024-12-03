@@ -33,8 +33,8 @@ export class LobbyComponent implements OnInit {
     const storedLobbyLink = localStorage.getItem('lobbyLink');
 
     if (storedLobbyLink) {
-      this.lobbyLink = storedLobbyLink; // Pobierz zapisany link do lobby
-      this.canSendInvites = true; // Pozwól na wysyłanie zaproszeń
+      this.lobbyLink = storedLobbyLink;
+      this.canSendInvites = true;
     }
 
     if (email && nick) {
@@ -55,20 +55,18 @@ export class LobbyComponent implements OnInit {
   generateLink(): void {
     const userId = localStorage.getItem('userId');
     if (userId) {
-      this.isGeneratingLobby = true; // Ustawiamy flagę na true, gdy generowanie linku się rozpoczyna
+      this.isGeneratingLobby = true;
       this.lobbyService.createLobby(+userId).subscribe({
         next: (lobby) => {
           this.lobbyLink = `http://localhost:4200/lobby/${lobby.lobbyCode}`;
-          localStorage.setItem('lobbyLink', this.lobbyLink); // Zapisz link do localStorage
-          this.canSendInvites = true; // Ustawiamy flagę na true, gdy link został wygenerowany
-          this.isGeneratingLobby = false; // Zakończenie procesu generowania linku
-
-          // Automatyczne przeniesienie admina do wygenerowanego lobby
+          localStorage.setItem('lobbyLink', this.lobbyLink);
+          this.canSendInvites = true;
+          this.isGeneratingLobby = false;
           this.router.navigate([`/lobby/${lobby.lobbyCode}`]);
         },
         error: (err) => {
           console.error('Nie udało się utworzyć lobby:', err);
-          this.isGeneratingLobby = false; // Zakończenie procesu generowania linku w przypadku błędu
+          this.isGeneratingLobby = false;
         },
       });
     }
@@ -92,7 +90,6 @@ export class LobbyComponent implements OnInit {
       next: (friends) => {
         this.friends = friends;
 
-        // Dla każdego znajomego pobierz jego zdjęcie profilowe
         this.friends.forEach((friend) => {
           this.loadFriendPicture(friend);
         });

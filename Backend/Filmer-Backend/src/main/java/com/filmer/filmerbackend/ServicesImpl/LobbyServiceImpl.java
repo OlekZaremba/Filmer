@@ -10,7 +10,10 @@ import com.filmer.filmerbackend.Services.LobbyService;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class LobbyServiceImpl implements LobbyService {
@@ -66,5 +69,14 @@ public class LobbyServiceImpl implements LobbyService {
         lobbyUser.setUser(user);
 
         lobbyUsersRepository.save(lobbyUser);
+    }
+
+    @Override
+    public List<Users> getParticipants(String lobbyCode) {
+        Lobby lobby = lobbyRepository.findByLobbyCode(lobbyCode)
+                .orElseThrow(() -> new IllegalArgumentException("Lobby nie istnieje."));
+
+        List<LobbyUsers> lobbyUsers = lobbyUsersRepository.findByLobby(lobby.getIdLobby());
+        return lobbyUsers.stream().map(LobbyUsers::getUser).collect(Collectors.toList());
     }
 }
