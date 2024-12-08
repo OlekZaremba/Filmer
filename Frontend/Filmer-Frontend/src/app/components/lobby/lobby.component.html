@@ -31,15 +31,14 @@
           <button
             class="submit"
             (click)="generateLink()"
-            [disabled]="isCreatingNewLobbyDisabled()"
-          >
+            [disabled]="isCreatingNewLobbyDisabled()">
             Generuj link
           </button>
           <button class="submit">Rozpocznij</button>
         </div>
-
+        <p>Twój link do lobby:</p>
         <div *ngIf="lobbyLink" class="lobby-link">
-          <p>Twój link do lobby: <a [href]="lobbyLink" target="_blank">{{ lobbyLink }}</a></p>
+          <p><a [href]="lobbyLink" target="_blank">{{ lobbyLink }}</a></p>
         </div>
       </div>
       <div class="friends-list">

@@ -156,9 +156,11 @@ input {
 }
 
 .submit-buttons {
-  margin-top: 5rem;
+  margin-top: 2rem;
+  padding-right: 1rem;
+  padding-left: 1rem;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   gap: 2rem;
 }
@@ -178,4 +180,10 @@ input {
 .submit-buttons button:hover {
   cursor: pointer;
   background-color: firebrick;
+}
+
+.lobby-link {
+  background-color: #fff;
+  padding-left: 1rem;
+  border-radius: 7px;
 }
