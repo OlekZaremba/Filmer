@@ -1,12 +1,14 @@
 <div class="section-user">
   <div class="content">
     <div class="user-info-left">
+
+      <h1>Twój profil</h1>
+
       <div class="profile-picture-container">
         <img
           src="assets/images/user.png"
           alt="Zdjęcie profilowe"
           class="profile-picture"
-          (click)="triggerFileInput()"
         >
         <input
           type="file"
@@ -15,6 +17,7 @@
           (change)="onFileSelected($event)"
           hidden
         />
+        <button class="change-picture-button" (click)="triggerFileInput()">Zmień zdjęcie</button>
       </div>
 
       <span>Nazwa użytkownika</span>
@@ -22,12 +25,39 @@
       <span>Adres e-mail</span>
       <input type="text" [value]="email" placeholder="Adres e-mail" disabled>
 
-      <h2>Dodaj znajomego</h2>
-      <input
-        type="text"
-        placeholder="Wpisz nick znajomego"
-        [(ngModel)]="searchTerm"
-        (input)="searchUsers()">
+      <div *ngIf="searchResults.length === 0 && searchTerm" class="no-results">Brak wyników wyszukiwania.</div>
+    </div>
+
+    <div class="user-info-right">
+      <h1>Obserwowani</h1>
+      <div class="friends-list">
+        <div *ngIf="friends.length === 0" class="no-friends">Brak obserwowanych.</div>
+
+        <ul *ngIf="friends.length > 0">
+          <li *ngFor="let friend of friends" class="friend-item">
+            <img
+              [src]="friend.avatar || 'assets/images/user.png'"
+              class="friend-avatar"
+              alt="Zdjęcie obserwowanego">
+            <div class="friend-info">
+              <span class="friend-nick">{{ friend.nick }}</span>
+              <button class="delete-friend">Przestań obserwować</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="search-friend">
+      <div class="search-bar">
+        <h1>Znajdź użytkownika</h1>
+
+        <input
+          type="text"
+          placeholder="Wpisz nazwę użytkownika"
+          [(ngModel)]="searchTerm"
+          (input)="searchUsers()">
+      </div>
 
       <div class="search-results" *ngIf="searchResults.length > 0">
         <ul>
@@ -38,27 +68,6 @@
             <div class="friend-info">
               <span class="friend-nick">{{ user.nick }}</span>
               <button (click)="addFriend(user.id)">Dodaj</button>
-            </div>
-          </li>
-        </ul>
-      </div>
-
-      <div *ngIf="searchResults.length === 0 && searchTerm" class="no-results">Brak wyników wyszukiwania.</div>
-    </div>
-
-    <div class="user-info-right">
-      <h1>Twoi znajomi</h1>
-      <div class="friends-list">
-        <div *ngIf="friends.length === 0" class="no-friends">Brak znajomych do wyświetlenia.</div>
-
-        <ul *ngIf="friends.length > 0">
-          <li *ngFor="let friend of friends" class="friend-item">
-            <img
-              [src]="friend.avatar || 'assets/images/user.png'"
-              class="friend-avatar"
-              alt="Zdjęcie znajomego">
-            <div class="friend-info">
-              <span class="friend-nick">{{ friend.nick }}</span>
             </div>
           </li>
         </ul>

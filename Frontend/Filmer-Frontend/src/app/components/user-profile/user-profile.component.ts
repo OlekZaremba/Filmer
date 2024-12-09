@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import { FriendsService } from '../../services/friends.service';
+import {MenuComponent} from '../menu/menu.component';
 import { FormsModule } from '@angular/forms';
+import {RouterModule} from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [NgIf, NgFor, FormsModule],
+  imports: [NgIf, NgFor, FormsModule, RouterModule, MenuComponent],
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css'],
 })

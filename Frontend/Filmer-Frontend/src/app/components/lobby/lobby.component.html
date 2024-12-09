@@ -1,14 +1,15 @@
 <div class="bg">
   <div class="main-container">
-    <div class="joining-users">
-      <h2>Uczestnicy {{participants.length}}/5</h2>
-      <ul>
-        <li *ngFor="let participant of participants">
-          {{ participant.nick }}
-        </li>
-      </ul>
-    </div>
     <div class="friends-component">
+      <div class="joining-users">
+        <h2>Uczestnicy {{participants.length}}/5</h2>
+        <ul>
+          <li *ngFor="let participant of participants">
+            {{ participant.nick }}
+          </li>
+        </ul>
+      </div>
+
       <div class="initial-settings">
         <h2>Wstępne ustawienia</h2>
 
@@ -41,6 +42,7 @@
           <p><a [href]="lobbyLink" target="_blank">{{ lobbyLink }}</a></p>
         </div>
       </div>
+
       <div class="friends-list">
         <div *ngIf="friends.length === 0" class="no-friends">Brak znajomych do wyświetlenia.</div>
         <h2>Twoi znajomi</h2>
@@ -50,11 +52,13 @@
               [src]="friend.avatar || 'assets/images/user.png'"
               class="friend-avatar"
               alt="Zdjęcie znajomego">
-            <div class="friend-info">
-              <span class="friend-nick">{{ friend.nick }}</span>
-            </div>
-            <div class="invite-button">
-              <button (click)="sendInvite(friend)" [disabled]="!canSendInvites">Wyślij zaproszenie e-mailem</button>
+            <div class="friend-invite">
+              <div class="friend-info">
+                <span class="friend-nick">{{ friend.nick }}</span>
+              </div>
+              <div class="invite-button">
+                <button (click)="sendInvite(friend)" [disabled]="!canSendInvites">Wyślij zaproszenie</button>
+              </div>
             </div>
           </li>
         </ul>

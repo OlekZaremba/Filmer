@@ -38,7 +38,7 @@
 }
 
 .user-button img {
-  width: 1.8rem !important;
-  height: 1.8rem !important;
-  filter: invert();
+  width: 2.3rem !important;
+  height: 2.3rem !important;
+  border-radius: 50%;
 }

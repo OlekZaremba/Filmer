@@ -11,7 +11,9 @@
     <button *ngIf="!(isLoggedIn$ | async); else logoutBtn" (click)="login()" routerLink="/login" routerLinkActive="active">ZALOGUJ SIĘ</button>
     <ng-template #logoutBtn>
       <button (click)="logout()">WYLOGUJ SIĘ</button>
-      <button class="user-button" routerLink="/user-profile"><img src="assets/images/user.png" alt=""></button>
+      <button class="user-button" routerLink="/user-profile">
+        <img [src]="userPhoto || 'assets/images/user.png'" alt="Zdjęcie profilowe użytkownika">
+      </button>
     </ng-template>
   </div>
 </div>

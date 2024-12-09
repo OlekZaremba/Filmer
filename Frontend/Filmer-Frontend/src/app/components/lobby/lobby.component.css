@@ -16,8 +16,8 @@ body {
 
 .main-container {
   padding: 1rem;
-  width: 80%;
-  height: 80vh;
+  width: 90%;
+  height: 90vh;
   background-color: rgba(239, 236, 243, 0.1);
   border-radius: 15px;
   display: flex;
@@ -29,9 +29,9 @@ body {
 }
 
 .joining-users {
-  padding: 15px;
-  height: 90%;
-  width: 20rem;
+  height: 570px;
+  width: 30%;
+  padding: 5px 10px;
   border-radius: 15px;
   background-color: #2e2e2e;
   color: #fff;
@@ -40,30 +40,55 @@ body {
   align-items: center;
 }
 
+.joining-users ul {
+  width: 80%;
+}
+
+.joining-users li {
+  width: 100%;
+  height: 3rem;
+  border-radius: 7px;
+  margin-left: -10px;
+  background-color: #fff;
+  list-style-type: none;
+  color: #222222;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2px;
+  margin-top: 2px;
+}
+
 .friends-component {
-  padding: 15px;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  width: 70%;
-  height: 90%;
+  width: 100%;
+  height: 650px;
   border-radius: 15px;
   background-color: rgb(34, 34, 34);
   display: flex;
   flex-direction: row;
   gap: 20px;
   align-items: center;
+  justify-content: center;
+  padding: 15px;
   color: #fff;
 }
 
 .friends-list {
-  border: 1px solid #3e3e3e;
-  width: 60%;
-  height: 100%;
+  width: 30%;
+  height: 570px;
   border-radius: 15px;
-  padding: 10px;
+  padding: 5px 10px;
   background-color: #2e2e2e;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   border: none;
   overflow-y: auto;
+}
+
+.friends-list ul {
+  margin-left: -70px;
 }
 
 .friends-list img {
@@ -79,7 +104,7 @@ body {
 }
 
 .friend-item {
-  width: 87%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -108,6 +133,7 @@ body {
   font-weight: bold;
   font-size: 14px;
   color: #333;
+  margin-bottom: 10px;
 }
 
 .friend-email {
@@ -128,20 +154,16 @@ body {
   margin-left: auto;
 }
 
-.invite-button button {
+.invite-button button:hover {
+  background-color: firebrick;
   cursor: pointer;
 }
 
-.invite-button button:hover {
-  background-color: firebrick;
-}
-
 .initial-settings {
-  border: 1px solid #3e3e3e;
-  width: 60%;
-  height: 100%;
+  width: 40%;
+  height: 570px;
+  padding: 5px 10px;
   border-radius: 15px;
-  padding: 10px;
   background-color: #2e2e2e;
   border: none;
   overflow-y: auto;
@@ -186,4 +208,21 @@ input {
   background-color: #fff;
   padding-left: 1rem;
   border-radius: 7px;
+  text-wrap: nowrap;
+  overflow: auto;
+  color: #777777;
+}
+
+.lobby-link a {
+  text-decoration: none;
+}
+
+.lobby-link::-webkit-scrollbar{
+  display: none;
+}
+
+.friend-invite {
+  margin-left: -10px;
+  display:flex;
+  flex-direction: column;
 }
