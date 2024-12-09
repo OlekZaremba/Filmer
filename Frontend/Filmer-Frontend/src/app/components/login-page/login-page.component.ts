@@ -13,11 +13,17 @@ import { RecaptchaModule } from 'ng-recaptcha';
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent {
-  email: string = '';
-  password: string = '';
-  username: string = '';
-  confirmPassword: string = '';
-  captchaSiteKey: string = '6LfkyJYqAAAAAJ_woX_R6Ida3127aiF68n6VCQuL'; // Zamień na swój klucz witryny
+  // Logowanie
+  loginEmail: string = '';
+  loginPassword: string = '';
+
+  // Rejestracja
+  registerUsername: string = '';
+  registerEmail: string = '';
+  registerPassword: string = '';
+  registerConfirmPassword: string = '';
+
+  captchaSiteKey: string = '6LfkyJYqAAAAAJ_woX_R6Ida3127aiF68n6VCQuL';
   captchaResponse: string | null = null;
 
   constructor(private authService: AuthService, private router: Router) {}
@@ -28,7 +34,7 @@ export class LoginPageComponent {
       return;
     }
 
-    this.authService.login(this.email, this.password, this.captchaResponse).subscribe({
+    this.authService.login(this.loginEmail, this.loginPassword, this.captchaResponse).subscribe({
       next: (response) => {
         console.log(response.message);
         this.router.navigate(['/']);
@@ -44,7 +50,12 @@ export class LoginPageComponent {
   }
 
   register() {
-    this.authService.register(this.username, this.email, this.password, this.confirmPassword).subscribe({
+    this.authService.register(
+      this.registerUsername,
+      this.registerEmail,
+      this.registerPassword,
+      this.registerConfirmPassword
+    ).subscribe({
       next: (response) => {
         console.log(response.message);
       },

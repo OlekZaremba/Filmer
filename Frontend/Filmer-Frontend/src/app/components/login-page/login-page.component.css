@@ -6,107 +6,96 @@
   justify-content: center;
   height: 100vh;
   font-family: "Oswald", sans-serif;
+  background-size: cover;
+  background-position: center;
   background-image: url('../../../assets/images/login-background.png');
 }
 
 .main {
-  width: 350px;
-  height: 480px;
+  width: 80%;
+  height: 70vh;
+  background: linear-gradient(135deg, #2a2a2a, #1c1c1c);
+  border-radius: 15px;
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
   overflow: hidden;
-  background-color: #222222;
-  border-radius: 10px;
-  box-shadow: 5px 30px 50px black;
 }
 
-#checkbox {
-  display: none;
-}
-
+.login,
 .sign-up {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-label {
-  color: white;
-  font-size: 35px;
-  justify-content: center;
+  width: 50%;
   display: flex;
-  margin: 60px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: .5s ease-in-out;
-  margin-bottom: 10px;
-}
-
-input {
-  width: 70%;
-  height: 15px;
-  background: white;
-  justify-content: center;
-  display: flex;
-  margin: 18px auto;
-  padding: 10px;
-  border: none;
-  outline: none;
-  border-radius: 7px;
-}
-
-button {
-  width: 75%;
-  height: 40px;
-  margin: 10px auto;
-  justify-content: center;
-  display: block;
-  color: white;
-  background: darkred;
-  font-size: 20px;
-  font-weight: bold;
-  margin-top: 18px;
-  outline: none;
-  border: none;
-  border-radius: 10px;
-  transition: .3s ease-in;
-  cursor: pointer;
-  box-shadow: 5px 20px 40px black;
-}
-
-button:hover {
-  background: crimson;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  color: #fff;
 }
 
 .login {
-  height: 460px;
-  background: #eee;
-  border-radius: 60% / 20%;
-  transform: translateY(-180px);
-  transition: .8s ease-in-out;
+  border-right: 1px solid #444;
 }
 
-.login label {
-  padding-top: 15px;
-  color: crimson;
-  transform: scale(.6);
+h1 {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-.login p {
-  text-align: center;
-  padding: 20px;
+input {
+  width: 80%;
+  height: 45px;
+  border-radius: 25px;
+  margin-bottom: 15px;
+  outline: none;
+  border: 1px solid #444;
+  padding: 0 1.5rem;
+  background: #333;
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.3s ease-in-out;
 }
 
-re-captcha {
-  margin: 20px auto; /* Wyśrodkowanie reCAPTCHA */
+input:focus {
+  border-color: #d9534f;
+  background: #222;
+  box-shadow: 0 0 10px #d9534f;
 }
 
-#checkbox:checked ~ .login {
-  transform: translateY(-500px);
+button {
+  width: 80%;
+  height: 45px;
+  border-radius: 25px;
+  background: linear-gradient(135deg, #a80f0f, #7a0c0c);  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 10px rgba(168, 15, 15, 0.3);
 }
 
-#checkbox:checked ~ .login label {
-  transform: scale(.8);
+button:disabled {
+  background: #555;
+  cursor: not-allowed;
+  box-shadow: none;
 }
 
-#checkbox:checked ~ .sign-up label {
-  transform: scale(.3);
+button:hover:enabled {
+  background: linear-gradient(135deg, #7a0c0c, #590909);
+  box-shadow: 0 6px 15px rgba(168, 15, 15, 0.5);
+}
+
+.re-captcha {
+  margin: 20px 0;
+}
+
+.inputs {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
