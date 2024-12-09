@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, tap } from 'rxjs';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +17,8 @@ export class AuthService {
     this.loggedIn.next(!!token);
   }
 
-  login(email: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, { email, password }).pipe(
+  login(email: string, password: string, captchaResponse: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/login`, { email, password, captchaResponse }).pipe(
       tap((response: any) => {
         console.log('Odpowiedź serwera:', response);
         if (response && response.token) {
@@ -33,10 +33,11 @@ export class AuthService {
     );
   }
 
-
   logout(): void {
     localStorage.removeItem('authToken');
     localStorage.removeItem('email');
+    localStorage.removeItem('nick');
+    localStorage.removeItem('userId');
     this.loggedIn.next(false);
     this.router.navigate(['/']);
   }

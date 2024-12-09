@@ -95,6 +95,10 @@ button:hover {
   padding: 20px;
 }
 
+re-captcha {
+  margin: 20px auto; /* Wyśrodkowanie reCAPTCHA */
+}
+
 #checkbox:checked ~ .login {
   transform: translateY(-500px);
 }

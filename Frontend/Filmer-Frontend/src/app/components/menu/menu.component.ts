@@ -20,7 +20,7 @@ export class MenuComponent implements OnInit {
   }
 
   login() {
-    this.authService.login('email@example.com', 'password');
+    this.authService.login('email@example.com', 'password', 'captcha-mock-response');
   }
 
   logout() {

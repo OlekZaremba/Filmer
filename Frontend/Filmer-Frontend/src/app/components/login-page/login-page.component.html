@@ -13,8 +13,12 @@
       <label for="checkbox">Mam konto</label>
       <input type="email" [(ngModel)]="email" placeholder="Email lub nazwa użytkownika" required>
       <input type="password" [(ngModel)]="password" placeholder="Hasło" required>
-      <button (click)="login()">Zaloguj się</button>
-      <p>TU BĘDZIE CAPTCHA</p>
+
+      <!-- reCAPTCHA widget -->
+      <re-captcha (resolved)="onCaptchaResolved($event)" [siteKey]="captchaSiteKey"></re-captcha>
+
+      <button [disabled]="!captchaResponse" (click)="login()">Zaloguj się</button>
     </div>
+
   </div>
 </div>
