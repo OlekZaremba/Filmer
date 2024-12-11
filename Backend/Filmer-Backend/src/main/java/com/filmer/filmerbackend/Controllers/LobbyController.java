@@ -1,5 +1,6 @@
 package com.filmer.filmerbackend.Controllers;
 
+import com.filmer.filmerbackend.Dtos.PreferencesRequest;
 import com.filmer.filmerbackend.Entities.Lobby;
 import com.filmer.filmerbackend.Entities.Users;
 import com.filmer.filmerbackend.Services.LobbyService;
@@ -40,5 +41,17 @@ public class LobbyController {
     public ResponseEntity<List<Users>> getParticipants(@RequestParam String lobbyCode) {
         List<Users> participants = lobbyService.getParticipants(lobbyCode);
         return ResponseEntity.ok(participants);
+    }
+
+    @PostMapping("/{lobbyId}/preferences")
+    public ResponseEntity<String> savePreferences(@PathVariable int lobbyId, @RequestBody PreferencesRequest request) {
+        lobbyService.saveUserPreferences(lobbyId, request.getUserId(), request.getStreamingPlatform(), request.getGenre(), request.getType());
+        return ResponseEntity.ok("Preferencje zapisane.");
+    }
+
+    @GetMapping("/{lobbyId}/ready-status")
+    public ResponseEntity<Boolean> getReadyStatus(@PathVariable int lobbyId) {
+        boolean allReady = lobbyService.areAllUsersReady(lobbyId);
+        return ResponseEntity.ok(allReady);
     }
 }
