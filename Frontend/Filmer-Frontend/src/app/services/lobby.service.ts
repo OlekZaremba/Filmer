@@ -31,4 +31,7 @@ export class LobbyService {
     return this.http.post<void>(`${this.apiUrl}/${lobbyCode}/preferences`, body);
   }
 
+  getReadyStatus(lobbyCode: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/${lobbyCode}/ready-status`);
+  }
 }

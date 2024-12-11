@@ -53,11 +53,16 @@ public class LobbyController {
         }
     }
 
-
-
-    @GetMapping("/{lobbyId}/ready-status")
-    public ResponseEntity<Boolean> getReadyStatus(@PathVariable int lobbyId) {
-        boolean allReady = lobbyService.areAllUsersReady(lobbyId);
-        return ResponseEntity.ok(allReady);
+    @GetMapping("/{lobbyCode}/ready-status")
+    public ResponseEntity<Boolean> getReadyStatus(@PathVariable String lobbyCode) {
+        try {
+            Lobby lobby = lobbyService.getLobbyByCode(lobbyCode);
+            boolean allReady = lobbyService.areAllUsersReady(lobby.getIdLobby());
+            return ResponseEntity.ok(allReady);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(false);
+        }
     }
+
+
 }

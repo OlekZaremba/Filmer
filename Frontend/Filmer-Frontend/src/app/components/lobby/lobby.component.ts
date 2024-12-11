@@ -213,6 +213,31 @@ export class LobbyComponent implements OnInit, OnDestroy {
       });
   }
 
+  startGame(): void {
+    const lobbyCode = this.extractLobbyCodeFromUrl();
+    if (!lobbyCode) {
+      console.error('Nieprawidłowy kod lobby:', lobbyCode);
+      alert('Kod lobby jest nieprawidłowy!');
+      return;
+    }
+
+    this.lobbyService.getReadyStatus(lobbyCode).subscribe({
+      next: (allReady) => {
+        if (allReady) {
+          console.log('Wszyscy są gotowi, uruchamiam grę.');
+          this.router.navigate([`/draw/${lobbyCode}`]);
+        } else {
+          console.error('Nie wszyscy uczestnicy są gotowi.');
+          alert('Nie wszyscy uczestnicy są gotowi do rozpoczęcia gry!');
+        }
+      },
+      error: (err) => {
+        console.error('Nie udało się sprawdzić statusu gotowości uczestników:', err);
+      },
+    });
+  }
+
+
 
   extractLobbyCodeFromUrl(): string | null {
     const url = window.location.href;

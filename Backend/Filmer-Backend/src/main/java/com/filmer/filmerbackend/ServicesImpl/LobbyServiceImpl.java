@@ -124,9 +124,15 @@ public class LobbyServiceImpl implements LobbyService {
         }
     }
 
-
     @Override
     public boolean areAllUsersReady(int lobbyId) {
         return !userPreferencesRepository.existsByLobby_IdLobbyAndIsReadyFalse(lobbyId);
     }
+
+    @Override
+    public Lobby getLobbyByCode(String lobbyCode) {
+        return lobbyRepository.findByLobbyCode(lobbyCode)
+                .orElseThrow(() -> new IllegalArgumentException("Lobby nie istnieje."));
+    }
+
 }
