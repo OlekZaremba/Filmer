@@ -27,15 +27,15 @@ public class UserPreferences {
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_preferences_user"))
     private Users user;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "streaming_platform_id", foreignKey = @ForeignKey(name = "fk_user_preferences_platform"))
     private MovieSources streamingPlatform;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "genre_id", foreignKey = @ForeignKey(name = "fk_user_preferences_genre"))
     private FilmGenres genre;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "type_id", foreignKey = @ForeignKey(name = "fk_user_preferences_type"))
     private FilmType type;
 

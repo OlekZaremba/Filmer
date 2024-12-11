@@ -92,8 +92,11 @@ public class LobbyServiceImpl implements LobbyService {
     }
 
     @Override
-    public void saveUserPreferences(int lobbyId, int userId, String streamingPlatform, String genre, String type) {
-        UserPreferences preferences = userPreferencesRepository.findByLobby_IdLobby(lobbyId)
+    public void saveUserPreferences(String lobbyCode, int userId, String streamingPlatform, String genre, String type) {
+        Lobby lobby = lobbyRepository.findByLobbyCode(lobbyCode)
+                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono lobby o podanym kodzie."));
+
+        UserPreferences preferences = userPreferencesRepository.findByLobby_IdLobby(lobby.getIdLobby())
                 .stream()
                 .filter(p -> p.getUser().getId_user() == userId)
                 .findFirst()
@@ -114,13 +117,13 @@ public class LobbyServiceImpl implements LobbyService {
         preferences.setReady(true);
         userPreferencesRepository.save(preferences);
 
-        boolean allReady = !userPreferencesRepository.existsByLobby_IdLobbyAndIsReadyFalse(lobbyId);
+        boolean allReady = !userPreferencesRepository.existsByLobby_IdLobbyAndIsReadyFalse(lobby.getIdLobby());
         if (allReady) {
-            Lobby lobby = preferences.getLobby();
             lobby.setReady(true);
             lobbyRepository.save(lobby);
         }
     }
+
 
     @Override
     public boolean areAllUsersReady(int lobbyId) {

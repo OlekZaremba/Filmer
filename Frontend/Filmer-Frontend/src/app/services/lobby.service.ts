@@ -25,4 +25,10 @@ export class LobbyService {
   getParticipants(lobbyCode: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/participants?lobbyCode=${lobbyCode}`);
   }
+
+  savePreferences(lobbyCode: string, userId: number, streamingPlatform: string, genre: string, type: string): Observable<void> {
+    const body = { userId, streamingPlatform, genre, type };
+    return this.http.post<void>(`${this.apiUrl}/${lobbyCode}/preferences`, body);
+  }
+
 }

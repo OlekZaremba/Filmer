@@ -4,12 +4,13 @@ import { LobbyService } from '../../services/lobby.service';
 import { NgForOf, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { interval, Subscription } from 'rxjs';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-lobby',
   standalone: true,
   templateUrl: './lobby.component.html',
-  imports: [NgForOf, NgIf],
+  imports: [NgForOf, NgIf, FormsModule],
   styleUrls: ['./lobby.component.css'],
 })
 export class LobbyComponent implements OnInit, OnDestroy {
@@ -20,6 +21,10 @@ export class LobbyComponent implements OnInit, OnDestroy {
   participants: any[] = [];
   canSendInvites: boolean = false;
   isGeneratingLobby: boolean = false;
+  selectedPlatform: string = '';
+  selectedGenre: string = '';
+  selectedType: string = '';
+
   private participantSubscription: Subscription | undefined;
 
   constructor(
@@ -187,9 +192,34 @@ export class LobbyComponent implements OnInit, OnDestroy {
     }
   }
 
+  savePreferences(): void {
+    const userId = localStorage.getItem('userId');
+    const lobbyCode = this.extractLobbyCodeFromUrl();
+
+    if (!userId || !lobbyCode) {
+      console.error('Brak wymaganych danych: userId lub lobbyCode.');
+      return;
+    }
+
+    this.lobbyService
+      .savePreferences(lobbyCode, +userId, this.selectedPlatform, this.selectedGenre, this.selectedType)
+      .subscribe({
+        next: () => {
+          console.log('Preferencje zapisane pomyślnie.');
+        },
+        error: (err) => {
+          console.error('Nie udało się zapisać preferencji:', err);
+        },
+      });
+  }
+
+
   extractLobbyCodeFromUrl(): string | null {
     const url = window.location.href;
     const parts = url.split('/');
-    return parts[parts.length - 1] || null;
+    const code = parts[parts.length - 1];
+    console.log('Extracted lobby code:', code);
+    return code || null;
   }
+
 }

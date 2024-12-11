@@ -43,11 +43,17 @@ public class LobbyController {
         return ResponseEntity.ok(participants);
     }
 
-    @PostMapping("/{lobbyId}/preferences")
-    public ResponseEntity<String> savePreferences(@PathVariable int lobbyId, @RequestBody PreferencesRequest request) {
-        lobbyService.saveUserPreferences(lobbyId, request.getUserId(), request.getStreamingPlatform(), request.getGenre(), request.getType());
-        return ResponseEntity.ok("Preferencje zapisane.");
+    @PostMapping("/{lobbyCode}/preferences")
+    public ResponseEntity<String> savePreferences(@PathVariable String lobbyCode, @RequestBody PreferencesRequest request) {
+        try {
+            lobbyService.saveUserPreferences(lobbyCode, request.getUserId(), request.getStreamingPlatform(), request.getGenre(), request.getType());
+            return ResponseEntity.ok("Preferencje zapisane.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
+
+
 
     @GetMapping("/{lobbyId}/ready-status")
     public ResponseEntity<Boolean> getReadyStatus(@PathVariable int lobbyId) {

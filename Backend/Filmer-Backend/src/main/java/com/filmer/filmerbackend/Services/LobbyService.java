@@ -11,6 +11,7 @@ public interface LobbyService {
     void addUserToLobby(String lobbyCode, int userId);
     List<Users> getParticipants(String lobbyCode);
 
-    void saveUserPreferences(int lobbyId, int userId, String streamingPlatform, String genre, String type);
     boolean areAllUsersReady(int lobbyId);
+    void saveUserPreferences(String lobbyCode, int userId, String streamingPlatform, String genre, String type);
+
 }
