@@ -292,21 +292,30 @@ CREATE TABLE IF NOT EXISTS `filmer`.`watched_movies` (
     DEFAULT CHARACTER SET = utf8;
 
 
+CREATE TABLE IF NOT EXISTS `filmer`.`film_genre` (
+                                                     `id_genre` INT(11) NOT NULL AUTO_INCREMENT,
+                                                     `genre_name` VARCHAR(255) NOT NULL,
+                                                     PRIMARY KEY (`id_genre`)
+) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8;
+
 CREATE TABLE IF NOT EXISTS `filmer`.`user_preferences` (
                                                            `id_user_preference` INT(11) NOT NULL AUTO_INCREMENT,
                                                            `lobby_id` INT(11) NOT NULL,
                                                            `user_id` INT(11) NOT NULL,
-                                                           `streaming_platform` VARCHAR(255) NULL,
-                                                           `genre` VARCHAR(255) NULL,
-                                                           `type` VARCHAR(255) NULL,
+                                                           `streaming_platform` INT(11) NULL,
+                                                           `genre` INT(11) NULL,
+                                                           `type` INT(11) NULL,
                                                            `is_ready` BOOLEAN DEFAULT FALSE,
                                                            PRIMARY KEY (`id_user_preference`),
                                                            UNIQUE INDEX `lobby_user_unique` (`lobby_id`, `user_id`),
                                                            CONSTRAINT `fk_user_preferences_lobby` FOREIGN KEY (`lobby_id`) REFERENCES `filmer`.`lobby` (`id_lobby`),
-                                                           CONSTRAINT `fk_user_preferences_user` FOREIGN KEY (`user_id`) REFERENCES `filmer`.`users` (`id_user`)
-)
-    ENGINE = InnoDB
-    DEFAULT CHARACTER SET = utf8;
+                                                           CONSTRAINT `fk_user_preferences_user` FOREIGN KEY (`user_id`) REFERENCES `filmer`.`users` (`id_user`),
+                                                           CONSTRAINT `fk_user_preferences_streaming_platform` FOREIGN KEY (`streaming_platform`) REFERENCES `filmer`.`movie_sources` (`id_movie_source`),
+                                                           CONSTRAINT `fk_user_preferences_genre` FOREIGN KEY (`genre`) REFERENCES `filmer`.`film_genre` (`id_genre`),
+                                                           CONSTRAINT `fk_user_preferences_type` FOREIGN KEY (`type`) REFERENCES `filmer`.`film_type` (`id_film_type`)
+) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8;
+
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
