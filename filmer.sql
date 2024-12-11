@@ -34,13 +34,16 @@ CREATE TABLE IF NOT EXISTS `filmer`.`lobby` (
                                                 `id_lobby` INT(11) NOT NULL AUTO_INCREMENT,
                                                 `users_id_user` INT(11) NOT NULL,
                                                 `lobby_creation_date` DATE NOT NULL,
+                                                `is_ready` BOOLEAN DEFAULT FALSE,
                                                 PRIMARY KEY (`id_lobby`),
                                                 INDEX `idx_users_id_user` (`users_id_user` ASC),
                                                 CONSTRAINT `fk_lobby_user`
                                                     FOREIGN KEY (`users_id_user`)
-                                                        REFERENCES `filmer`.`users` (`id_user`))
+                                                        REFERENCES `filmer`.`users` (`id_user`)
+)
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8;
+
 
 
 -- -----------------------------------------------------
@@ -285,6 +288,23 @@ CREATE TABLE IF NOT EXISTS `filmer`.`watched_movies` (
                                                          CONSTRAINT `fk_watched_movies_user`
                                                              FOREIGN KEY (`users_id_user`)
                                                                  REFERENCES `filmer`.`users` (`id_user`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8;
+
+
+CREATE TABLE IF NOT EXISTS `filmer`.`user_preferences` (
+                                                           `id_user_preference` INT(11) NOT NULL AUTO_INCREMENT,
+                                                           `lobby_id` INT(11) NOT NULL,
+                                                           `user_id` INT(11) NOT NULL,
+                                                           `streaming_platform` VARCHAR(255) NULL,
+                                                           `genre` VARCHAR(255) NULL,
+                                                           `type` VARCHAR(255) NULL,
+                                                           `is_ready` BOOLEAN DEFAULT FALSE,
+                                                           PRIMARY KEY (`id_user_preference`),
+                                                           UNIQUE INDEX `lobby_user_unique` (`lobby_id`, `user_id`),
+                                                           CONSTRAINT `fk_user_preferences_lobby` FOREIGN KEY (`lobby_id`) REFERENCES `filmer`.`lobby` (`id_lobby`),
+                                                           CONSTRAINT `fk_user_preferences_user` FOREIGN KEY (`user_id`) REFERENCES `filmer`.`users` (`id_user`)
+)
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8;
 
