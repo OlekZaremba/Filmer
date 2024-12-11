@@ -1,11 +1,7 @@
 package com.filmer.filmerbackend.ServicesImpl;
 
-import com.filmer.filmerbackend.Entities.Lobby;
-import com.filmer.filmerbackend.Entities.UserPreferences;
-import com.filmer.filmerbackend.Entities.Users;
-import com.filmer.filmerbackend.Repositories.LobbyRepository;
-import com.filmer.filmerbackend.Repositories.UserPreferencesRepository;
-import com.filmer.filmerbackend.Repositories.UsersRepository;
+import com.filmer.filmerbackend.Entities.*;
+import com.filmer.filmerbackend.Repositories.*;
 import com.filmer.filmerbackend.Services.LobbyService;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +16,19 @@ public class LobbyServiceImpl implements LobbyService {
     private final LobbyRepository lobbyRepository;
     private final UsersRepository usersRepository;
     private final UserPreferencesRepository userPreferencesRepository;
+    private final MovieSourcesRepository movieSourcesRepository;
+    private final FilmGenresRepository filmGenresRepository;
+    private final FilmTypeRepository filmTypeRepository;
 
-    public LobbyServiceImpl(LobbyRepository lobbyRepository, UsersRepository usersRepository, UserPreferencesRepository userPreferencesRepository) {
+    public LobbyServiceImpl(LobbyRepository lobbyRepository, UsersRepository usersRepository,
+                            UserPreferencesRepository userPreferencesRepository, MovieSourcesRepository movieSourcesRepository,
+                            FilmGenresRepository filmGenresRepository, FilmTypeRepository filmTypeRepository) {
         this.lobbyRepository = lobbyRepository;
         this.usersRepository = usersRepository;
         this.userPreferencesRepository = userPreferencesRepository;
+        this.movieSourcesRepository = movieSourcesRepository;
+        this.filmGenresRepository = filmGenresRepository;
+        this.filmTypeRepository = filmTypeRepository;
     }
 
     @Override
@@ -95,9 +99,18 @@ public class LobbyServiceImpl implements LobbyService {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Użytkownik nie istnieje w tym lobby."));
 
-        preferences.setStreamingPlatform(streamingPlatform);
-        preferences.setGenre(genre);
-        preferences.setType(type);
+        MovieSources platform = movieSourcesRepository.findBySourceName(streamingPlatform)
+                .orElseThrow(() -> new IllegalArgumentException("Podana platforma nie istnieje: " + streamingPlatform));
+
+        FilmGenres filmGenre = filmGenresRepository.findByGenreName(genre)
+                .orElseThrow(() -> new IllegalArgumentException("Podany gatunek nie istnieje: " + genre));
+
+        FilmType filmType = filmTypeRepository.findByFilmType(type)
+                .orElseThrow(() -> new IllegalArgumentException("Podany typ filmu nie istnieje: " + type));
+
+        preferences.setStreamingPlatform(platform);
+        preferences.setGenre(filmGenre);
+        preferences.setType(filmType);
         preferences.setReady(true);
         userPreferencesRepository.save(preferences);
 

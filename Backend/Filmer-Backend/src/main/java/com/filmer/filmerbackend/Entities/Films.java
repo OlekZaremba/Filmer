@@ -44,4 +44,8 @@ public class Films {
     @ManyToOne
     @JoinColumn(name = "source_id", nullable = false)
     private MovieSources source;
+
+    @ManyToOne
+    @JoinColumn(name = "genre_id", nullable = false)
+    private FilmGenres genre;
 }

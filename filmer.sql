@@ -103,11 +103,13 @@ CREATE TABLE IF NOT EXISTS `filmer`.`films` (
                                                 `film_studio_id` INT(11) NOT NULL,
                                                 `film_type_id` INT(11) NOT NULL,
                                                 `source_id` INT(11) NOT NULL,
+                                                `genre_id` INT(11) NOT NULL,
                                                 PRIMARY KEY (`id_film`),
                                                 INDEX `idx_film_director_id` (`film_director_id` ASC),
                                                 INDEX `idx_film_studio_id` (`film_studio_id` ASC),
                                                 INDEX `idx_film_type_id` (`film_type_id` ASC),
                                                 INDEX `fk_films_source` (`source_id` ASC),
+                                                INDEX `fk_films_genre` (`genre_id` ASC),
                                                 CONSTRAINT `fk_films_film_director`
                                                     FOREIGN KEY (`film_director_id`)
                                                         REFERENCES `filmer`.`film_director` (`id_film_director`),
@@ -119,9 +121,12 @@ CREATE TABLE IF NOT EXISTS `filmer`.`films` (
                                                         REFERENCES `filmer`.`film_type` (`id_film_type`),
                                                 CONSTRAINT `fk_films_source`
                                                     FOREIGN KEY (`source_id`)
-                                                        REFERENCES `filmer`.`movie_sources` (`id_movie_source`))
-    ENGINE = InnoDB
-    DEFAULT CHARACTER SET = utf8;
+                                                        REFERENCES `filmer`.`movie_sources` (`id_movie_source`),
+                                                CONSTRAINT `fk_films_genre`
+                                                    FOREIGN KEY (`genre_id`)
+                                                        REFERENCES `filmer`.`film_genre` (`id_genre`)
+) ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -315,7 +320,23 @@ CREATE TABLE IF NOT EXISTS `filmer`.`user_preferences` (
                                                            CONSTRAINT `fk_user_preferences_type` FOREIGN KEY (`type`) REFERENCES `filmer`.`film_type` (`id_film_type`)
 ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8;
 
+INSERT INTO `filmer`.`film_genre` (`genre_name`) VALUES
+                                                     ('Dramat'),
+                                                     ('Komedia'),
+                                                     ('Horror'),
+                                                     ('Thriller'),
+                                                     ('Psychologiczny');
 
+INSERT INTO `filmer`.`movie_sources` (`source_name`) VALUES
+                                                         ('Netflix'),
+                                                         ('Disney+'),
+                                                         ('Max'),
+                                                         ('Showtime'),
+                                                         ('Amazon');
+
+INSERT INTO `filmer`.`film_type` (`film_type`) VALUES
+                                                   ('Film'),
+                                                   ('Serial');
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
