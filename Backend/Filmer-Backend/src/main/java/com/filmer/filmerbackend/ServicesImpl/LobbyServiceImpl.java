@@ -42,6 +42,7 @@ public class LobbyServiceImpl implements LobbyService {
         lobby.setActive(true);
         lobby.setLobbyCode(UUID.randomUUID().toString());
         lobby.setReady(false);
+        lobby.setStarted(false);
         Lobby savedLobby = lobbyRepository.save(lobby);
 
         return savedLobby;
@@ -133,6 +134,30 @@ public class LobbyServiceImpl implements LobbyService {
     public Lobby getLobbyByCode(String lobbyCode) {
         return lobbyRepository.findByLobbyCode(lobbyCode)
                 .orElseThrow(() -> new IllegalArgumentException("Lobby nie istnieje."));
+    }
+
+    @Override
+    public void startGame(int lobbyId) {
+        Lobby lobby = lobbyRepository.findById(lobbyId)
+                .orElseThrow(() -> new IllegalArgumentException("Lobby nie istnieje."));
+
+        System.out.println("Lobby znalezione: " + lobby.getIdLobby());
+        System.out.println("Lobby aktywne: " + lobby.isActive());
+
+        if (!lobby.isActive()) {
+            throw new IllegalArgumentException("Lobby jest zamknięte.");
+        }
+
+        boolean allReady = !userPreferencesRepository.existsByLobby_IdLobbyAndIsReadyFalse(lobbyId);
+        System.out.println("Czy wszyscy uczestnicy są gotowi? " + allReady);
+
+        if (!allReady) {
+            throw new IllegalArgumentException("Nie wszyscy uczestnicy są gotowi.");
+        }
+
+        lobby.setStarted(true);
+        lobbyRepository.save(lobby);
+        System.out.println("Gra rozpoczęta dla lobby: " + lobbyId);
     }
 
 }

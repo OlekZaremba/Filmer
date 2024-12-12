@@ -34,4 +34,13 @@ export class LobbyService {
   getReadyStatus(lobbyCode: string): Observable<boolean> {
     return this.http.get<boolean>(`${this.apiUrl}/${lobbyCode}/ready-status`);
   }
+
+  startGame(lobbyCode: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/${lobbyCode}/start`, {});
+  }
+
+  isGameStarted(lobbyCode: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/${lobbyCode}/is-started`);
+  }
+
 }

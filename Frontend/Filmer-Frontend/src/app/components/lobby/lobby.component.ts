@@ -24,6 +24,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
   selectedPlatform: string = '';
   selectedGenre: string = '';
   selectedType: string = '';
+  readyParticipantsCount: number = 0;
 
   private participantSubscription: Subscription | undefined;
 
@@ -61,6 +62,8 @@ export class LobbyComponent implements OnInit, OnDestroy {
 
     this.participantSubscription = interval(5000).subscribe(() => {
       this.loadParticipants();
+      this.loadReadyStatus();
+      this.checkGameStart();
     });
 
     this.loadParticipants();
@@ -69,6 +72,20 @@ export class LobbyComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.participantSubscription) {
       this.participantSubscription.unsubscribe();
+    }
+  }
+
+  loadReadyStatus(): void {
+    const lobbyCode = this.extractLobbyCodeFromUrl();
+    if (lobbyCode) {
+      this.lobbyService.getParticipants(lobbyCode).subscribe({
+        next: (participants) => {
+          this.readyParticipantsCount = participants.filter(p => p.isReady).length;
+        },
+        error: (err) => {
+          console.error('Nie udało się pobrać statusu gotowości:', err);
+        },
+      });
     }
   }
 
@@ -216,19 +233,24 @@ export class LobbyComponent implements OnInit, OnDestroy {
   startGame(): void {
     const lobbyCode = this.extractLobbyCodeFromUrl();
     if (!lobbyCode) {
-      console.error('Nieprawidłowy kod lobby:', lobbyCode);
-      alert('Kod lobby jest nieprawidłowy!');
+      console.error('Nieprawidłowy kod lobby.');
       return;
     }
 
     this.lobbyService.getReadyStatus(lobbyCode).subscribe({
       next: (allReady) => {
         if (allReady) {
-          console.log('Wszyscy są gotowi, uruchamiam grę.');
-          this.router.navigate([`/draw/${lobbyCode}`]);
+          this.lobbyService.startGame(lobbyCode).subscribe({
+            next: () => {
+              console.log('Gra została rozpoczęta.');
+              this.router.navigate([`/draw/${lobbyCode}`]);
+            },
+            error: (err) => {
+              console.error('Wystąpił problem podczas rozpoczynania gry:', err);
+            },
+          });
         } else {
-          console.error('Nie wszyscy uczestnicy są gotowi.');
-          alert('Nie wszyscy uczestnicy są gotowi do rozpoczęcia gry!');
+          alert('Nie wszyscy uczestnicy są gotowi!');
         }
       },
       error: (err) => {
@@ -238,6 +260,26 @@ export class LobbyComponent implements OnInit, OnDestroy {
   }
 
 
+
+  checkGameStart(): void {
+    const lobbyCode = this.extractLobbyCodeFromUrl();
+    if (!lobbyCode) {
+      console.error('Nieprawidłowy kod lobby.');
+      return;
+    }
+
+    this.lobbyService.isGameStarted(lobbyCode).subscribe({
+      next: (isStarted) => {
+        if (isStarted) {
+          console.log('Gra została rozpoczęta. Przenoszę na stronę gry.');
+          this.router.navigate([`/draw/${lobbyCode}`]);
+        }
+      },
+      error: (err) => {
+        console.error('Błąd podczas sprawdzania statusu gry:', err);
+      },
+    });
+  }
 
   extractLobbyCodeFromUrl(): string | null {
     const url = window.location.href;

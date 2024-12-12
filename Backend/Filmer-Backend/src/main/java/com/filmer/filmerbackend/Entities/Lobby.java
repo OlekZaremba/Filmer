@@ -37,4 +37,8 @@ public class Lobby {
 
     @Column(name = "is_ready", nullable = false)
     private boolean isReady;
+
+    @Column(name = "is_started", nullable = false)
+    private boolean isStarted = false;
+
 }

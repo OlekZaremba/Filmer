@@ -64,5 +64,21 @@ public class LobbyController {
         }
     }
 
+    @PostMapping("/{lobbyCode}/start")
+    public ResponseEntity<String> startGame(@PathVariable String lobbyCode) {
+        try {
+            Lobby lobby = lobbyService.getLobbyByCode(lobbyCode);
+            lobbyService.startGame(lobby.getIdLobby());
+            return ResponseEntity.ok("Gra została rozpoczęta.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{lobbyCode}/is-started")
+    public ResponseEntity<Boolean> isGameStarted(@PathVariable String lobbyCode) {
+        Lobby lobby = lobbyService.getLobbyByCode(lobbyCode);
+        return ResponseEntity.ok(lobby.isStarted());
+    }
 
 }
