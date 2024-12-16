@@ -1,10 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {NgForOf, NgIf} from "@angular/common";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-draw',
   standalone: true,
-  imports: [],
+    imports: [
+        NgForOf,
+        NgIf,
+        ReactiveFormsModule
+    ],
   templateUrl: './draw.component.html',
   styleUrl: './draw.component.css'
 })

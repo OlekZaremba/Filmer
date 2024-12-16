@@ -23,7 +23,7 @@ public class Films {
     private String filmName;
 
     @Lob
-    @Column(name = "film_image", nullable = false)
+    @Column(name = "film_image")
     private byte[] filmImage;
 
     @Column(name = "film_desc", nullable = false, columnDefinition = "TEXT")
