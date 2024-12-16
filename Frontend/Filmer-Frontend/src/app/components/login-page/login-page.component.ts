@@ -62,8 +62,13 @@ export class LoginPageComponent {
       error: (error) => {
         if (error.status === 409) {
           console.error('Conflict: User already exists');
-        } else if (error.status === 200) {
+        } else if (error.status === 201) {
           console.log('User registered successfully');
+          this.registerUsername = '';
+          this.registerEmail = '';
+          this.registerPassword = '';
+          this.registerConfirmPassword = '';
+          alert('Zarejestrowano poprawnie!')
         } else {
           console.error('Registration failed', error);
         }

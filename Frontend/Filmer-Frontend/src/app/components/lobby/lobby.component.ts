@@ -215,20 +215,38 @@ export class LobbyComponent implements OnInit, OnDestroy {
 
     if (!userId || !lobbyCode) {
       console.error('Brak wymaganych danych: userId lub lobbyCode.');
+      alert('Nie można zapisać preferencji: brakuje danych użytkownika lub kodu lobby.');
       return;
     }
 
     this.lobbyService
       .savePreferences(lobbyCode, +userId, this.selectedPlatform, this.selectedGenre, this.selectedType)
       .subscribe({
-        next: () => {
-          console.log('Preferencje zapisane pomyślnie.');
+        next: (response) => {
+          if (response.status === 200) {
+            console.log('Preferencje zapisane pomyślnie:', response.body);
+            const message = response.body?.message || 'Preferencje zostały zapisane pomyślnie.';
+            alert(message);
+          } else {
+            console.error('Nieoczekiwany status odpowiedzi:', response.status);
+            alert('Wystąpił problem z zapisywaniem preferencji. Spróbuj ponownie.');
+          }
         },
         error: (err) => {
-          console.error('Nie udało się zapisać preferencji:', err);
+          if (err.status === 400) {
+            console.error('Nie udało się zapisać preferencji:', err.error);
+            const errorMessage = err.error?.error || 'Wystąpił błąd podczas zapisywania preferencji. Sprawdź dane i spróbuj ponownie.';
+            alert(errorMessage);
+          } else {
+            console.error('Nieznany błąd:', err);
+            alert('Nieznany błąd. Skontaktuj się z administratorem.');
+          }
         },
       });
   }
+
+
+
 
   startGame(): void {
     const lobbyCode = this.extractLobbyCodeFromUrl();

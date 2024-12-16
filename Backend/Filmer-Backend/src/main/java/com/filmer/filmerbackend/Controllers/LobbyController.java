@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/lobby/api")
@@ -44,14 +45,23 @@ public class LobbyController {
     }
 
     @PostMapping("/{lobbyCode}/preferences")
-    public ResponseEntity<String> savePreferences(@PathVariable String lobbyCode, @RequestBody PreferencesRequest request) {
+    public ResponseEntity<Map<String, String>> savePreferences(
+            @PathVariable String lobbyCode,
+            @RequestBody PreferencesRequest request) {
         try {
-            lobbyService.saveUserPreferences(lobbyCode, request.getUserId(), request.getStreamingPlatform(), request.getGenre(), request.getType());
-            return ResponseEntity.ok("Preferencje zapisane.");
+            lobbyService.saveUserPreferences(
+                    lobbyCode,
+                    request.getUserId(),
+                    request.getStreamingPlatform(),
+                    request.getGenre(),
+                    request.getType()
+            );
+            return ResponseEntity.ok(Map.of("message", "Preferencje zapisane."));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
     }
+
 
     @GetMapping("/{lobbyCode}/ready-status")
     public ResponseEntity<Boolean> getReadyStatus(@PathVariable String lobbyCode) {

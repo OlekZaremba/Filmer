@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -26,10 +26,15 @@ export class LobbyService {
     return this.http.get<any[]>(`${this.apiUrl}/participants?lobbyCode=${lobbyCode}`);
   }
 
-  savePreferences(lobbyCode: string, userId: number, streamingPlatform: string, genre: string, type: string): Observable<void> {
+  savePreferences(lobbyCode: string, userId: number, streamingPlatform: string, genre: string, type: string): Observable<HttpResponse<any>> {
     const body = { userId, streamingPlatform, genre, type };
-    return this.http.post<void>(`${this.apiUrl}/${lobbyCode}/preferences`, body);
+    return this.http.post<any>(
+      `${this.apiUrl}/${lobbyCode}/preferences`,
+      body,
+      { observe: 'response' } // Dodanie opcji observe
+    );
   }
+
 
   getReadyStatus(lobbyCode: string): Observable<boolean> {
     return this.http.get<boolean>(`${this.apiUrl}/${lobbyCode}/ready-status`);
