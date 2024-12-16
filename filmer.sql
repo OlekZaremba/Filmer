@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `filmer`.`movie_sources` (
 CREATE TABLE IF NOT EXISTS `filmer`.`films` (
                                                 `id_film` INT(11) NOT NULL AUTO_INCREMENT,
                                                 `film_name` VARCHAR(45) NOT NULL,
-                                                `film_image` MEDIUMBLOB NOT NULL,
+                                                `film_image` MEDIUMBLOB,
                                                 `film_desc` TEXT NOT NULL,
                                                 `film_director_id` INT(11) NOT NULL,
                                                 `film_studio_id` INT(11) NOT NULL,
