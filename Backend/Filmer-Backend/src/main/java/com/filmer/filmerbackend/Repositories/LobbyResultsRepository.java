@@ -1,6 +1,9 @@
 package com.filmer.filmerbackend.Repositories;
 
+import com.filmer.filmerbackend.Entities.Films;
+import com.filmer.filmerbackend.Entities.Lobby;
 import com.filmer.filmerbackend.Entities.LobbyResults;
+import com.filmer.filmerbackend.Entities.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,4 +19,7 @@ public interface LobbyResultsRepository extends JpaRepository<LobbyResults, Inte
             "GROUP BY lr.film.idFilm " +
             "ORDER BY voteCount DESC")
     List<Object[]> countVotesByLobby(@Param("lobbyId") Integer lobbyId);
+
+    boolean existsByLobbyAndFilmAndUser(Lobby lobby, Films film, Users user);
+
 }

@@ -204,18 +204,24 @@ CREATE TABLE IF NOT EXISTS `filmer`.`lobby_results` (
                                                         `id_lobby_result` INT(11) NOT NULL AUTO_INCREMENT,
                                                         `lobby_id` INT(11) NOT NULL,
                                                         `film_id` INT(11) NOT NULL,
-                                                        `position` ENUM('first', 'second', 'third') NOT NULL,
+                                                        `user_id` INT(11) NOT NULL,
                                                         PRIMARY KEY (`id_lobby_result`),
-                                                        UNIQUE INDEX `lobby_id` (`lobby_id` ASC, `position` ASC),
+                                                        UNIQUE INDEX `unique_lobby_film_user` (`lobby_id`, `film_id`, `user_id`),
                                                         INDEX `film_id` (`film_id` ASC),
+                                                        INDEX `user_id` (`user_id` ASC),
                                                         CONSTRAINT `lobby_results_ibfk_1`
                                                             FOREIGN KEY (`lobby_id`)
                                                                 REFERENCES `filmer`.`lobby` (`id_lobby`),
                                                         CONSTRAINT `lobby_results_ibfk_2`
                                                             FOREIGN KEY (`film_id`)
-                                                                REFERENCES `filmer`.`films` (`id_film`))
+                                                                REFERENCES `filmer`.`films` (`id_film`),
+                                                        CONSTRAINT `lobby_results_ibfk_3`
+                                                            FOREIGN KEY (`user_id`)
+                                                                REFERENCES `filmer`.`users` (`id_user`)
+)
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8;
+
 
 
 -- -----------------------------------------------------
@@ -339,6 +345,30 @@ INSERT INTO `filmer`.`film_type` (`film_type`) VALUES
                                                    ('Film'),
                                                    ('Serial');
 
+INSERT INTO `film_studio` (`id_film_studio`, `studio_name`) VALUES
+                                                                (1, 'Warner Bros.'),
+                                                                (2, 'Universal Pictures'),
+                                                                (3, 'Paramount Pictures'),
+                                                                (4, '20th Century Fox'),
+                                                                (5, 'Disney');
+
+INSERT INTO `film_director` (`id_film_director`, `name`) VALUES
+                                                             (1, 'Christopher Nolan'),
+                                                             (2, 'Steven Spielberg'),
+                                                             (3, 'Quentin Tarantino'),
+                                                             (4, 'James Cameron'),
+                                                             (5, 'Martin Scorsese'),
+                                                             (6, 'Ridley Scott'),
+                                                             (7, 'Peter Jackson'),
+                                                             (8, 'David Fincher'),
+                                                             (9, 'Guillermo del Toro'),
+                                                             (10, 'Francis Ford Coppola'),
+                                                             (11, 'Greta Gerwig'),
+                                                             (12, 'Denis Villeneuve'),
+                                                             (13, 'Alfred Hitchcock'),
+                                                             (14, 'Stanley Kubrick'),
+                                                             (15, 'George Lucas');
+
 INSERT INTO `films` (`id_film`, `film_name`, `film_image`, `film_desc`, `film_director_id`, `film_studio_id`, `film_type_id`, `source_id`, `genre_id`) VALUES
 (1, 'Inception', NULL, 'A skilled thief is offered a chance to erase his criminal past by planting an idea into the mind of a C.E.O.', 1, 1, 1, 1, 1),
 (2, 'Pulp Fiction', NULL, 'The lives of two mob hitmen, a boxer, a gangster\'s wife, and a pair of diner bandits intertwine.', 3, 2, 1, 1, 2),
@@ -406,22 +436,6 @@ INSERT INTO `films` (`id_film`, `film_name`, `film_image`, `film_desc`, `film_di
 (64, 'The Others', NULL, 'Kobieta podejrzewa, że w jej domu znajdują się duchy.', 13, 4, 1, 2, 5),
 (65, 'Requiem for a Dream', NULL, 'Opowieść o uzależnieniach i ich wpływie na życie czterech osób.', 8, 5, 1, 5, 5);
 
-INSERT INTO `film_director` (`id_film_director`, `name`) VALUES
-(1, 'Christopher Nolan'),
-(2, 'Steven Spielberg'),
-(3, 'Quentin Tarantino'),
-(4, 'James Cameron'),
-(5, 'Martin Scorsese'),
-(6, 'Ridley Scott'),
-(7, 'Peter Jackson'),
-(8, 'David Fincher'),
-(9, 'Guillermo del Toro'),
-(10, 'Francis Ford Coppola'),
-(11, 'Greta Gerwig'),
-(12, 'Denis Villeneuve'),
-(13, 'Alfred Hitchcock'),
-(14, 'Stanley Kubrick'),
-(15, 'George Lucas');
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

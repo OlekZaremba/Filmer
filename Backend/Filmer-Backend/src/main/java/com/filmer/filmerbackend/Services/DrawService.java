@@ -5,7 +5,7 @@ import com.filmer.filmerbackend.Entities.Films;
 import java.util.List;
 
 public interface DrawService {
-    List<Films> drawFilms(Integer lobbyId);
-    void submitVote(Integer lobbyId, Integer filmId);
-    List<Object[]> getResults(Integer lobbyId);
+    List<Films> drawFilms(String lobbyCode);
+    void submitVote(String lobbyCode, Integer filmId, Integer userId);
+    List<Object[]> getResults(String lobbyCode);
 }

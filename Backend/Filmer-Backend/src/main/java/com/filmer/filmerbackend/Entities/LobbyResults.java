@@ -1,6 +1,5 @@
 package com.filmer.filmerbackend.Entities;
 
-import com.filmer.filmerbackend.Entities.Lobby;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,11 +27,8 @@ public class LobbyResults {
     @JoinColumn(name = "film_id", nullable = false)
     private Films film;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "position", nullable = false)
-    private Position position;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private Users user;
 
-    public enum Position {
-        FIRST, SECOND, THIRD
-    }
 }

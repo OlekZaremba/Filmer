@@ -1,13 +1,7 @@
 package com.filmer.filmerbackend.ServicesImpl;
 
-import com.filmer.filmerbackend.Entities.Films;
-import com.filmer.filmerbackend.Entities.Lobby;
-import com.filmer.filmerbackend.Entities.LobbyHasFilms;
-import com.filmer.filmerbackend.Entities.LobbyResults;
-import com.filmer.filmerbackend.Repositories.FilmsRepository;
-import com.filmer.filmerbackend.Repositories.LobbyHasFilmsRepository;
-import com.filmer.filmerbackend.Repositories.LobbyRepository;
-import com.filmer.filmerbackend.Repositories.LobbyResultsRepository;
+import com.filmer.filmerbackend.Entities.*;
+import com.filmer.filmerbackend.Repositories.*;
 import com.filmer.filmerbackend.Services.DrawService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,10 +17,11 @@ public class DrawServiceImpl implements DrawService {
     private final LobbyRepository lobbyRepository;
     private final LobbyHasFilmsRepository lobbyHasFilmsRepository;
     private final LobbyResultsRepository lobbyResultsRepository;
+    private final UsersRepository usersRepository;
 
     @Override
-    public List<Films> drawFilms(Integer lobbyId) {
-        Lobby lobby = lobbyRepository.findById(lobbyId)
+    public List<Films> drawFilms(String lobbyCode) {
+        Lobby lobby = lobbyRepository.findByLobbyCode(lobbyCode)
                 .orElseThrow(() -> new IllegalArgumentException("Lobby nie istnieje."));
 
         List<Films> selectedFilms = lobby.getUserPreferences().stream()
@@ -57,23 +52,32 @@ public class DrawServiceImpl implements DrawService {
     }
 
     @Override
-    public void submitVote(Integer lobbyId, Integer filmId) {
-        LobbyResults result = new LobbyResults();
-
-        Lobby lobby = lobbyRepository.findById(lobbyId)
+    public void submitVote(String lobbyCode, Integer filmId, Integer userId) {
+        Lobby lobby = lobbyRepository.findByLobbyCode(lobbyCode)
                 .orElseThrow(() -> new IllegalArgumentException("Lobby nie istnieje."));
         Films film = filmsRepository.findById(filmId)
                 .orElseThrow(() -> new IllegalArgumentException("Film nie istnieje."));
+        Users user = usersRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Użytkownik nie istnieje."));
 
+        if (lobbyResultsRepository.existsByLobbyAndFilmAndUser(lobby, film, user)) {
+            throw new IllegalStateException("Użytkownik już oddał głos na ten film w tym lobby.");
+        }
+
+        LobbyResults result = new LobbyResults();
         result.setLobby(lobby);
         result.setFilm(film);
+        result.setUser(user);
 
         lobbyResultsRepository.save(result);
     }
 
 
     @Override
-    public List<Object[]> getResults(Integer lobbyId) {
-        return lobbyResultsRepository.countVotesByLobby(lobbyId);
+    public List<Object[]> getResults(String lobbyCode) {
+        Lobby lobby = lobbyRepository.findByLobbyCode(lobbyCode)
+                .orElseThrow(() -> new IllegalArgumentException("Lobby nie istnieje."));
+        return lobbyResultsRepository.countVotesByLobby(lobby.getIdLobby());
     }
+
 }

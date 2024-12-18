@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -15,21 +16,23 @@ public class DrawController {
 
     private final DrawService drawService;
 
-    @PostMapping("/{lobbyId}/start")
-    public ResponseEntity<List<Films>> startDraw(@PathVariable Integer lobbyId) {
-        List<Films> films = drawService.drawFilms(lobbyId);
+    @PostMapping("/{lobbyCode}/start")
+    public ResponseEntity<List<Films>> startDraw(@PathVariable String lobbyCode) {
+        List<Films> films = drawService.drawFilms(lobbyCode);
         return ResponseEntity.ok(films);
     }
 
-    @PostMapping("/{lobbyId}/vote/{filmId}")
-    public ResponseEntity<String> submitVote(@PathVariable Integer lobbyId, @PathVariable Integer filmId) {
-        drawService.submitVote(lobbyId, filmId);
-        return ResponseEntity.ok("Głos został zapisany.");
+    @PostMapping("/{lobbyCode}/vote/{filmId}")
+    public ResponseEntity<?> submitVote(@PathVariable String lobbyCode, @PathVariable Integer filmId, @RequestParam Integer userId) {
+        drawService.submitVote(lobbyCode, filmId, userId);
+        return ResponseEntity.ok(Collections.singletonMap("message", "Głos zapisany"));
     }
 
-    @GetMapping("/{lobbyId}/results")
-    public ResponseEntity<List<Object[]>> getResults(@PathVariable Integer lobbyId) {
-        List<Object[]> results = drawService.getResults(lobbyId);
+
+
+    @GetMapping("/{lobbyCode}/results")
+    public ResponseEntity<List<Object[]>> getResults(@PathVariable String lobbyCode) {
+        List<Object[]> results = drawService.getResults(lobbyCode);
         return ResponseEntity.ok(results);
     }
 }
