@@ -30,4 +30,10 @@ export class DrawService {
     return this.http.post(`${this.apiUrl}/${lobbyCode}/vote/${filmId}`, {}, { params });
   }
 
+  checkVotingStatus(lobbyCode: string, userId: number): Observable<boolean> {
+    const params = { userId: userId.toString() };
+    return this.http.get<boolean>(`${this.apiUrl}/${lobbyCode}/status`, { params });
+  }
+
+
 }

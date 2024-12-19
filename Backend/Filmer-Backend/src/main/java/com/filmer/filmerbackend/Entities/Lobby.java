@@ -48,4 +48,7 @@ public class Lobby {
     @OneToMany(mappedBy = "lobby", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<LobbyHasFilms> lobbyHasFilms;
 
+    @Column(name = "voting_completed", nullable = false)
+    private Boolean votingCompleted = false;
+
 }

@@ -55,22 +55,28 @@ public class DrawServiceImpl implements DrawService {
     public void submitVote(String lobbyCode, Integer filmId, Integer userId) {
         Lobby lobby = lobbyRepository.findByLobbyCode(lobbyCode)
                 .orElseThrow(() -> new IllegalArgumentException("Lobby nie istnieje."));
+
         Films film = filmsRepository.findById(filmId)
                 .orElseThrow(() -> new IllegalArgumentException("Film nie istnieje."));
-        Users user = usersRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("Użytkownik nie istnieje."));
-
-        if (lobbyResultsRepository.existsByLobbyAndFilmAndUser(lobby, film, user)) {
-            throw new IllegalStateException("Użytkownik już oddał głos na ten film w tym lobby.");
-        }
 
         LobbyResults result = new LobbyResults();
         result.setLobby(lobby);
         result.setFilm(film);
-        result.setUser(user);
+        result.setUser(usersRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Użytkownik nie istnieje.")));
 
         lobbyResultsRepository.save(result);
+
+        long totalPlayers = lobby.getUserPreferences().size();
+        long votesCount = lobbyResultsRepository.countByLobby(lobby);
+
+        if (votesCount >= totalPlayers * lobby.getLobbyHasFilms().size()) {
+            lobby.setVotingCompleted(true);
+            lobbyRepository.save(lobby);
+        }
+
     }
+
 
 
     @Override

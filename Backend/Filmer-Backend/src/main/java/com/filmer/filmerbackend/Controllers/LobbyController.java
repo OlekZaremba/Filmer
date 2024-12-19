@@ -81,4 +81,10 @@ public class LobbyController {
         return ResponseEntity.ok(lobby.isStarted());
     }
 
+    @GetMapping("/{lobbyCode}/status")
+    public ResponseEntity<Boolean> checkVotingStatus(@PathVariable String lobbyCode) {
+        boolean isCompleted = lobbyService.checkVotingCompletion(lobbyCode);
+        return ResponseEntity.ok(isCompleted);
+    }
+
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DrawService, Film } from '../../services/draw.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgForOf, NgIf } from '@angular/common';
@@ -17,7 +17,11 @@ export class DrawComponent implements OnInit {
   films: Film[] = [];
   currentFilmIndex = 0;
 
-  constructor(private route: ActivatedRoute, private drawService: DrawService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private drawService: DrawService
+  ) {}
 
   ngOnInit(): void {
     this.lobbyCode = this.route.snapshot.paramMap.get('lobbyCode');
@@ -31,7 +35,7 @@ export class DrawComponent implements OnInit {
     }
 
     if (this.lobbyCode) {
-      this.fetchDrawFilms(); // Pobierz listę filmów
+      this.fetchDrawFilms();
     } else {
       console.error('Błąd: Brak kodu lobby w URL.');
     }
@@ -61,6 +65,10 @@ export class DrawComponent implements OnInit {
         next: () => {
           console.log(`Film ${accepted ? 'zaakceptowany' : 'odrzucony'}`);
           this.currentFilmIndex++;
+          if (this.currentFilmIndex >= this.films.length) {
+            console.log('Przenoszenie użytkownika na stronę wyników...');
+            this.router.navigate(['/results', this.lobbyCode], { queryParams: { lobbyCode: this.lobbyCode } });
+          }
         },
         error: (err) => console.error('Błąd podczas głosowania:', err)
       });

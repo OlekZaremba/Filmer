@@ -4,6 +4,7 @@ import { SectionOneComponent } from './components/section-one/section-one.compon
 import {UserProfileComponent} from './components/user-profile/user-profile.component';
 import {LobbyComponent} from './components/lobby/lobby.component';
 import {DrawComponent} from './components/draw/draw.component';
+import {ResultsComponent} from './components/results/results.component';
 
 export const routes: Routes = [
   { path: '', component: SectionOneComponent },
@@ -12,5 +13,6 @@ export const routes: Routes = [
   { path: 'create-lobby', component: LobbyComponent},
   { path: 'create-lobby2', component: LobbyComponent},
   { path: 'lobby/:lobbyCode', component: LobbyComponent },
-  { path: 'draw/:lobbyCode', component: DrawComponent}
+  { path: 'draw/:lobbyCode', component: DrawComponent},
+  { path: 'results/:lobbyCode', component: ResultsComponent }
 ];

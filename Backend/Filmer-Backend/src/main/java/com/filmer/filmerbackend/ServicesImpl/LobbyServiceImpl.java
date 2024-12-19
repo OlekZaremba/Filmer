@@ -160,4 +160,12 @@ public class LobbyServiceImpl implements LobbyService {
         System.out.println("Gra rozpoczęta dla lobby: " + lobbyId);
     }
 
+    @Override
+    public boolean checkVotingCompletion(String lobbyCode) {
+        Lobby lobby = lobbyRepository.findByLobbyCode(lobbyCode)
+                .orElseThrow(() -> new IllegalArgumentException("Lobby nie istnieje."));
+
+        return lobby.getVotingCompleted();
+    }
+
 }

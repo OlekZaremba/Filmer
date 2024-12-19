@@ -21,5 +21,5 @@ public interface LobbyResultsRepository extends JpaRepository<LobbyResults, Inte
     List<Object[]> countVotesByLobby(@Param("lobbyId") Integer lobbyId);
 
     boolean existsByLobbyAndFilmAndUser(Lobby lobby, Films film, Users user);
-
+    long countByLobby(Lobby lobby);
 }
