@@ -61,19 +61,30 @@ export class DrawComponent implements OnInit {
     if (this.lobbyCode && this.userId !== null && this.films.length > this.currentFilmIndex) {
       const filmId = this.films[this.currentFilmIndex].idFilm;
 
-      this.drawService.submitVote(this.lobbyCode, filmId, this.userId).subscribe({
-        next: () => {
-          console.log(`Film ${accepted ? 'zaakceptowany' : 'odrzucony'}`);
-          this.currentFilmIndex++;
-          if (this.currentFilmIndex >= this.films.length) {
-            console.log('Przenoszenie użytkownika na stronę wyników...');
-            this.router.navigate(['/results', this.lobbyCode], { queryParams: { lobbyCode: this.lobbyCode } });
-          }
-        },
-        error: (err) => console.error('Błąd podczas głosowania:', err)
-      });
+      if (accepted) {
+        this.drawService.submitVote(this.lobbyCode, filmId, this.userId).subscribe({
+          next: () => {
+            console.log(`Film zaakceptowany`);
+            this.currentFilmIndex++;
+            this.checkIfEndOfVoting();
+          },
+          error: (err) => console.error('Błąd podczas głosowania:', err)
+        });
+      } else {
+        console.log('Film odrzucony');
+        this.currentFilmIndex++;
+        this.checkIfEndOfVoting();
+      }
     } else {
       console.error('Błąd: Brak wymaganych danych (lobbyCode, userId lub filmId).');
     }
   }
+
+  checkIfEndOfVoting(): void {
+    if (this.currentFilmIndex >= this.films.length) {
+      console.log('Przenoszenie użytkownika na stronę wyników...');
+      this.router.navigate(['/results', this.lobbyCode], { queryParams: { lobbyCode: this.lobbyCode } });
+    }
+  }
+
 }

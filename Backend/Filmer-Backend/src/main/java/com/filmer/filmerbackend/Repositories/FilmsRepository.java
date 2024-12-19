@@ -22,4 +22,6 @@ public interface FilmsRepository extends JpaRepository<Films, Integer> {
     @Query(value = "SELECT * FROM films f WHERE f.id_film NOT IN :excludedIds ORDER BY RAND() LIMIT :limit", nativeQuery = true)
     List<Films> findRandomFilmsExcluding(@Param("excludedIds") List<Integer> excludedIds, @Param("limit") int limit);
 
+    @Query(value = "SELECT * FROM films f ORDER BY RAND() LIMIT :limit", nativeQuery = true)
+    List<Films> findRandomFilms(@Param("limit") int limit);
 }

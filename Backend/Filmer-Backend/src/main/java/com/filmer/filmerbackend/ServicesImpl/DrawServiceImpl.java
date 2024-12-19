@@ -34,11 +34,7 @@ public class DrawServiceImpl implements DrawService {
                 .limit(lobby.getUserPreferences().size())
                 .collect(Collectors.toList());
 
-        List<Integer> selectedIds = selectedFilms.stream()
-                .map(Films::getIdFilm)
-                .collect(Collectors.toList());
-
-        List<Films> randomFilms = filmsRepository.findRandomFilmsExcluding(selectedIds, 16 - selectedFilms.size());
+        List<Films> randomFilms = filmsRepository.findRandomFilms(16 - selectedFilms.size());
         selectedFilms.addAll(randomFilms);
 
         selectedFilms.forEach(film -> {
@@ -76,7 +72,6 @@ public class DrawServiceImpl implements DrawService {
         }
 
     }
-
 
 
     @Override

@@ -29,7 +29,6 @@ public class DrawController {
     }
 
 
-
     @GetMapping("/{lobbyCode}/results")
     public ResponseEntity<List<Object[]>> getResults(@PathVariable String lobbyCode) {
         List<Object[]> results = drawService.getResults(lobbyCode);
