@@ -95,7 +95,7 @@ export class DrawComponent implements OnInit {
       });
 
       console.log('Przekierowanie na wyniki dla lobbyCode:', this.lobbyCode);
-      this.router.navigate(['/results', this.lobbyCode], { queryParams: { lobbyCode: this.lobbyCode } });
+      this.router.navigate(['/results', this.lobbyCode]);
     }
   }
 
