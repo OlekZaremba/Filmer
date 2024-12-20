@@ -20,6 +20,10 @@ public interface LobbyResultsRepository extends JpaRepository<LobbyResults, Inte
             "ORDER BY voteCount DESC")
     List<Object[]> countVotesByLobby(@Param("lobbyId") Integer lobbyId);
 
+    @Query("SELECT COUNT(lr) FROM LobbyResults lr WHERE lr.lobby = :lobby AND lr.user = :user")
+    long countByLobbyAndUser(@Param("lobby") Lobby lobby, @Param("user") Users user);
+
+
     boolean existsByLobbyAndFilmAndUser(Lobby lobby, Films film, Users user);
     long countByLobby(Lobby lobby);
 }

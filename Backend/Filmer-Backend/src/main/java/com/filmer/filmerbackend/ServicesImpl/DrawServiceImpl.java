@@ -55,24 +55,36 @@ public class DrawServiceImpl implements DrawService {
         Films film = filmsRepository.findById(filmId)
                 .orElseThrow(() -> new IllegalArgumentException("Film nie istnieje."));
 
-        LobbyResults result = new LobbyResults();
-        result.setLobby(lobby);
-        result.setFilm(film);
-        result.setUser(usersRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("Użytkownik nie istnieje.")));
+        Users user = usersRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Użytkownik nie istnieje."));
 
-        lobbyResultsRepository.save(result);
-
-        long totalPlayers = lobby.getUserPreferences().size();
-        long votesCount = lobbyResultsRepository.countByLobby(lobby);
-
-        if (votesCount >= totalPlayers * lobby.getLobbyHasFilms().size()) {
-            lobby.setVotingCompleted(true);
-            lobbyRepository.save(lobby);
+        if (filmId != null) {
+            LobbyResults result = new LobbyResults();
+            result.setLobby(lobby);
+            result.setFilm(film);
+            result.setUser(user);
+            lobbyResultsRepository.save(result);
         }
 
-    }
+        long votesByUser = lobbyResultsRepository.countByLobbyAndUser(lobby, user);
+        long totalFilms = 16;
 
+        if (votesByUser >= totalFilms) {
+            lobby.setFinishedPlayersCount(lobby.getFinishedPlayersCount() + 1);
+            lobbyRepository.save(lobby);
+
+            System.out.println("Gracz zakończył głosowanie: User=" + user.getId_user() +
+                    ", FinishedPlayersCount=" + lobby.getFinishedPlayersCount());
+
+            // Jeśli wszyscy gracze zakończyli głosowanie
+            long totalPlayers = lobby.getUserPreferences().size();
+            if (lobby.getFinishedPlayersCount() >= totalPlayers) {
+                lobby.setVotingCompleted(true);
+                lobbyRepository.save(lobby);
+                System.out.println("Głosowanie zakończone! Flaga ustawiona na true.");
+            }
+        }
+    }
 
     @Override
     public List<Object[]> getResults(String lobbyCode) {
@@ -80,5 +92,4 @@ public class DrawServiceImpl implements DrawService {
                 .orElseThrow(() -> new IllegalArgumentException("Lobby nie istnieje."));
         return lobbyResultsRepository.countVotesByLobby(lobby.getIdLobby());
     }
-
 }

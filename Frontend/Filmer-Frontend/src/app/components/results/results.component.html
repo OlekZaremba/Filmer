@@ -1,1 +1,6 @@
-<p>results works!</p>
+<div *ngIf="!votingCompleted">
+  <p>Oczekiwanie na zakończenie głosowania...</p>
+</div>
+<div *ngIf="votingCompleted">
+  <p>Głosowanie zakończone! Przenoszenie do wyników...</p>
+</div>

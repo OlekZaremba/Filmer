@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/lobby/api")
@@ -86,5 +87,13 @@ public class LobbyController {
         boolean isCompleted = lobbyService.checkVotingCompletion(lobbyCode);
         return ResponseEntity.ok(isCompleted);
     }
+
+    @PostMapping("/{lobbyCode}/finish-voting")
+    public ResponseEntity<String> finishVoting(@PathVariable String lobbyCode, @RequestBody Map<String, Integer> payload) {
+        int userId = payload.get("userId");
+        lobbyService.finishVoting(lobbyCode, userId);
+        return ResponseEntity.ok("Głosowanie zakończone dla użytkownika.");
+    }
+
 
 }

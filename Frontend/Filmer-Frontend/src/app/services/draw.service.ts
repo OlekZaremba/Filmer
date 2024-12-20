@@ -32,7 +32,11 @@ export class DrawService {
 
   checkVotingStatus(lobbyCode: string, userId: number): Observable<boolean> {
     const params = { userId: userId.toString() };
-    return this.http.get<boolean>(`${this.apiUrl}/${lobbyCode}/status`, { params });
+    return this.http.get<boolean>(`http://localhost:8080/lobby/api/${lobbyCode}/status`, { params });
+  }
+
+  finishVoting(lobbyCode: string, userId: number): Observable<any> {
+    return this.http.post(`http://localhost:8080/lobby/api/${lobbyCode}/finish-voting`, { userId });
   }
 
 

@@ -51,4 +51,7 @@ public class Lobby {
     @Column(name = "voting_completed", nullable = false)
     private Boolean votingCompleted = false;
 
+    @Column(name = "finished_players_count", nullable = false)
+    private Integer finishedPlayersCount = 0;
+
 }

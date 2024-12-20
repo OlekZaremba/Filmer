@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DrawService } from '../../services/draw.service';
 import { interval, Subscription } from 'rxjs';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-results',
   standalone: true,
+  imports: [NgIf],
   templateUrl: './results.component.html',
   styleUrl: './results.component.css',
 })
@@ -19,6 +21,7 @@ export class ResultsComponent implements OnInit {
 
   ngOnInit(): void {
     this.lobbyCode = this.route.snapshot.paramMap.get('lobbyCode');
+    console.log('Lobby Code w ResultsComponent:', this.lobbyCode);
     const storedUserId = localStorage.getItem('userId');
 
     if (storedUserId) {
@@ -36,7 +39,8 @@ export class ResultsComponent implements OnInit {
   }
 
   startPolling(): void {
-    this.pollingSubscription = interval(2000).subscribe(() => {
+    this.pollingSubscription = interval(5000).subscribe(() => {
+      console.log('Wywołanie pollingu: sprawdzanie statusu głosowania...');
       this.checkVotingStatus();
     });
   }
@@ -45,14 +49,18 @@ export class ResultsComponent implements OnInit {
     if (this.lobbyCode && this.userId !== null) {
       this.drawService.checkVotingStatus(this.lobbyCode, this.userId).subscribe({
         next: (isCompleted: boolean) => {
+          console.log('Status głosowania z backendu:', isCompleted);
           this.votingCompleted = isCompleted;
           if (this.votingCompleted) {
+            console.log('Głosowanie zakończone, przerywanie polling.');
             this.pollingSubscription?.unsubscribe();
-            this.router.navigate([`/final-results`, this.lobbyCode]);
           }
         },
         error: (err) => console.error('Błąd podczas sprawdzania statusu głosowania:', err),
       });
+    } else {
+      console.error('Nie ustawiono userId lub lobbyCode.');
     }
   }
+
 }

@@ -82,9 +82,23 @@ export class DrawComponent implements OnInit {
 
   checkIfEndOfVoting(): void {
     if (this.currentFilmIndex >= this.films.length) {
-      console.log('Przenoszenie użytkownika na stronę wyników...');
+      if (!this.lobbyCode) {
+        console.error('Błąd: Brak kodu lobby.');
+        return;
+      }
+
+      console.log('Użytkownik zakończył głosowanie. Informowanie backendu...');
+
+      this.drawService.finishVoting(this.lobbyCode, this.userId!).subscribe({
+        next: (response) => console.log('Zaktualizowano backend o zakończeniu głosowania:', response),
+        error: (err) => console.error('Błąd podczas zgłaszania zakończenia głosowania:', err),
+      });
+
+      console.log('Przekierowanie na wyniki dla lobbyCode:', this.lobbyCode);
       this.router.navigate(['/results', this.lobbyCode], { queryParams: { lobbyCode: this.lobbyCode } });
     }
   }
+
+
 
 }

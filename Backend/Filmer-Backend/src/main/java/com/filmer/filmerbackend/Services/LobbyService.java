@@ -15,5 +15,7 @@ public interface LobbyService {
     Lobby getLobbyByCode(String lobbyCode);
     void startGame(int lobbyId);
     boolean checkVotingCompletion(String lobbyCode);
+    void finishVoting(String lobbyCode, int userId);
+
 }
 
