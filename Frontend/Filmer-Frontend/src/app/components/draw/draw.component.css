@@ -138,3 +138,17 @@
   color: #fff;
   box-shadow: 0 0 10px green;
 }
+
+.draw-card {
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.swipe-left {
+  transform: translateX(-100vw) rotate(-20deg);
+  opacity: 0;
+}
+
+.swipe-right {
+  transform: translateX(100vw) rotate(20deg);
+  opacity: 0;
+}

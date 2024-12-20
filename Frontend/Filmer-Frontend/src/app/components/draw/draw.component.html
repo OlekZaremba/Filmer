@@ -6,7 +6,10 @@
         <button (click)="declineFilm()">X</button>
       </div>
       <div class="cards">
-        <div class="draw-card">
+        <div
+          class="draw-card"
+          [class.swipe-left]="isSwipingLeft"
+          [class.swipe-right]="isSwipingRight">
           <h1>{{ films[currentFilmIndex].filmName }}</h1>
           <p>{{ films[currentFilmIndex].filmDesc }}</p>
 

@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {ActivatedRoute, Router, RouterLink, RouterLinkActive} from '@angular/router';
 import { DrawService } from '../../services/draw.service';
 import { interval, Subscription } from 'rxjs';
 import {NgIf} from '@angular/common';
+import {RouterModule} from '@angular/router';
 
 @Component({
   selector: 'app-results',
   standalone: true,
-  imports: [NgIf],
+    imports: [NgIf, RouterLink, RouterLinkActive, RouterModule],
   templateUrl: './results.component.html',
   styleUrl: './results.component.css',
 })

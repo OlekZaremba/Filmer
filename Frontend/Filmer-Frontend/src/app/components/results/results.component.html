@@ -1,6 +1,113 @@
 <div *ngIf="!votingCompleted">
-  <p>Oczekiwanie na zakończenie głosowania...</p>
+  <div class="section-user">
+    <div class="content">
+      <h1>Oczekiwanie na resztę graczy...</h1>
+    </div>
+  </div>
 </div>
 <div *ngIf="votingCompleted">
-  <p>Głosowanie zakończone! Przenoszenie do wyników...</p>
+  <div class="section-user">
+    <div class="content">
+      <h1>Wyniki głosowania</h1>
+      <div class="canvas">
+        <div class="cards">
+          <div class="second">
+            <img src="assets/images/secondPlace.png" alt="2nd">
+            <div class="second-place">
+              <h1>Drugie miejsce</h1>
+              <div class="info">
+                <div class="director">
+                  <h3>Reżyser:</h3>
+                  <p>kapitanek</p>
+                </div>
+                <div class="production">
+                  <h3>Produkcja:</h3>
+                  <p>produkcja</p>
+                </div>
+              </div>
+
+              <div class="info">
+                <div class="source">
+                  <h3>Źródło:</h3>
+                  <p>zrodlo</p>
+                </div>
+                <div class="genre">
+                  <h3>Gatunek:</h3>
+                  <p>gatuneczek</p>
+                </div>
+                <div class="type">
+                  <h3>Typ:</h3>
+                  <p>dla typa</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="first">
+            <img src="assets/images/firstPlace.png" alt="1st">
+            <div class="first-place">
+              <h1>Pierwsze miejsce</h1>
+              <div class="info">
+                <div class="director">
+                  <h3>Reżyser:</h3>
+                  <p>kapitanek</p>
+                </div>
+                <div class="production">
+                  <h3>Produkcja:</h3>
+                  <p>produkcja</p>
+                </div>
+              </div>
+
+              <div class="info">
+                <div class="source">
+                  <h3>Źródło:</h3>
+                  <p>zrodlo</p>
+                </div>
+                <div class="genre">
+                  <h3>Gatunek:</h3>
+                  <p>gatuneczek</p>
+                </div>
+                <div class="type">
+                  <h3>Typ:</h3>
+                  <p>dla typa</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="third">
+            <img src="assets/images/thirdPlace.png" alt="3rd">
+            <div class="third-place">
+              <h1>Trzecie miejsce</h1>
+              <div class="info">
+                <div class="director">
+                  <h3>Reżyser:</h3>
+                  <p>kapitanek</p>
+                </div>
+                <div class="production">
+                  <h3>Produkcja:</h3>
+                  <p>produkcja</p>
+                </div>
+              </div>
+
+              <div class="info">
+                <div class="source">
+                  <h3>Źródło:</h3>
+                  <p>zrodlo</p>
+                </div>
+                <div class="genre">
+                  <h3>Gatunek:</h3>
+                  <p>gatuneczek</p>
+                </div>
+                <div class="type">
+                  <h3>Typ:</h3>
+                  <p>dla typa</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button routerLink="/" routerLinkActive="active">Wróć na stronę główną</button>
+      </div>
+    </div>
+  </div>
 </div>

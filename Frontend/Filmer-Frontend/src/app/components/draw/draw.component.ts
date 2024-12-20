@@ -16,6 +16,8 @@ export class DrawComponent implements OnInit {
   userId: number | null = null;
   films: Film[] = [];
   currentFilmIndex = 0;
+  isSwipingLeft = false;
+  isSwipingRight = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -50,11 +52,19 @@ export class DrawComponent implements OnInit {
   }
 
   acceptFilm(): void {
-    this.submitVote(true);
+    this.isSwipingRight = true;
+    setTimeout(() => {
+      this.isSwipingRight = false;
+      this.submitVote(true);
+    }, 500); // Czas trwania animacji
   }
 
   declineFilm(): void {
-    this.submitVote(false);
+    this.isSwipingLeft = true;
+    setTimeout(() => {
+      this.isSwipingLeft = false;
+      this.submitVote(false);
+    }, 500); // Czas trwania animacji
   }
 
   submitVote(accepted: boolean): void {
