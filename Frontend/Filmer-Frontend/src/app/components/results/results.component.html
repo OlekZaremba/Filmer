@@ -12,14 +12,34 @@
       <div class="canvas">
         <div class="results">
           <div class="cards">
-            <img src="assets/images/second.png" class="second-place-card" alt="cards">
-            <img src="assets/images/first.png" class="first-place-card" alt="cards">
-            <img src="assets/images/third.png" class="third-place-card" alt="cards">
+            <img
+              src="assets/images/second.png"
+              class="second-place-card"
+              alt="cards"
+              (click)="showPopupForPlace('Drugie')"
+            />
+            <img
+              src="assets/images/first.png"
+              class="first-place-card"
+              alt="cards"
+              (click)="showPopupForPlace('Pierwsze')"
+            />
+            <img
+              src="assets/images/third.png"
+              class="third-place-card"
+              alt="cards"
+              (click)="showPopupForPlace('Trzecie')"
+            />
           </div>
         </div>
         <button routerLink="/" routerLinkActive="active">Wróć na stronę główną</button>
       </div>
     </div>
   </div>
+  <app-popup
+    [isVisible]="isPopupVisible"
+    [title]="popupTitle"
+    [items]="popupItems"
+    (popupClosed)="closePopup()"
+  ></app-popup>
 </div>
-
