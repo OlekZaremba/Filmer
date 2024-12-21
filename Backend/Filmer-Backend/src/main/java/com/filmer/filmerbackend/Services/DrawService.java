@@ -7,5 +7,4 @@ import java.util.List;
 public interface DrawService {
     List<Films> drawFilms(String lobbyCode);
     void submitVote(String lobbyCode, Integer filmId, Integer userId);
-    List<Object[]> getResults(String lobbyCode);
 }

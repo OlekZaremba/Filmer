@@ -5,6 +5,7 @@
     </div>
   </div>
 </div>
+
 <div *ngIf="votingCompleted">
   <div class="section-user">
     <div class="content">
@@ -16,19 +17,19 @@
               src="assets/images/second.png"
               class="second-place-card"
               alt="cards"
-              (click)="showPopupForPlace('Drugie')"
+              (click)="showPopupForPlace('Drugie', 2)"
             />
             <img
               src="assets/images/first.png"
               class="first-place-card"
               alt="cards"
-              (click)="showPopupForPlace('Pierwsze')"
+              (click)="showPopupForPlace('Pierwsze', 1)"
             />
             <img
               src="assets/images/third.png"
               class="third-place-card"
               alt="cards"
-              (click)="showPopupForPlace('Trzecie')"
+              (click)="showPopupForPlace('Trzecie', 3)"
             />
           </div>
         </div>

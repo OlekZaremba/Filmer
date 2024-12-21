@@ -94,10 +94,4 @@ public class DrawServiceImpl implements DrawService {
         }
     }
 
-    @Override
-    public List<Object[]> getResults(String lobbyCode) {
-        Lobby lobby = lobbyRepository.findByLobbyCode(lobbyCode)
-                .orElseThrow(() -> new IllegalArgumentException("Lobby nie istnieje."));
-        return lobbyResultsRepository.countVotesByLobby(lobby.getIdLobby());
-    }
 }

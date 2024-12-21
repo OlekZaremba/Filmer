@@ -28,10 +28,4 @@ public class DrawController {
         return ResponseEntity.ok(Collections.singletonMap("message", "Głos zapisany"));
     }
 
-
-    @GetMapping("/{lobbyCode}/results")
-    public ResponseEntity<List<Object[]>> getResults(@PathVariable String lobbyCode) {
-        List<Object[]> results = drawService.getResults(lobbyCode);
-        return ResponseEntity.ok(results);
-    }
 }

@@ -14,14 +14,16 @@ import java.util.List;
 @Repository
 public interface LobbyResultsRepository extends JpaRepository<LobbyResults, Integer> {
 
-    @Query("SELECT lr.film.idFilm, COUNT(lr) AS voteCount " +
-            "FROM LobbyResults lr WHERE lr.lobby.idLobby = :lobbyId " +
-            "GROUP BY lr.film.idFilm " +
+    @Query("SELECT lr.film, COUNT(lr) AS voteCount " +
+            "FROM LobbyResults lr " +
+            "WHERE lr.lobby.idLobby = :lobbyId " +
+            "GROUP BY lr.film " +
             "ORDER BY voteCount DESC")
-    List<Object[]> countVotesByLobby(@Param("lobbyId") Integer lobbyId);
+    List<Object[]> countVotesByLobby(Integer lobbyId);
 
     @Query("SELECT COUNT(lr) FROM LobbyResults lr WHERE lr.lobby = :lobby AND lr.user = :user")
     long countByLobbyAndUser(@Param("lobby") Lobby lobby, @Param("user") Users user);
+
 
 
     boolean existsByLobbyAndFilmAndUser(Lobby lobby, Films film, Users user);
