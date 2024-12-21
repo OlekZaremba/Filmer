@@ -24,6 +24,11 @@ public class DrawServiceImpl implements DrawService {
         Lobby lobby = lobbyRepository.findByLobbyCode(lobbyCode)
                 .orElseThrow(() -> new IllegalArgumentException("Lobby nie istnieje."));
 
+        List<LobbyHasFilms> existingLobbyFilms = lobbyHasFilmsRepository.findByLobby(lobby);
+        if (!existingLobbyFilms.isEmpty()) {
+            return existingLobbyFilms.stream().map(LobbyHasFilms::getFilm).collect(Collectors.toList());
+        }
+
         List<Films> selectedFilms = lobby.getUserPreferences().stream()
                 .flatMap(pref -> filmsRepository.findFilmsByPreferences(
                         pref.getGenre() != null ? pref.getGenre().getIdGenre() : null,
@@ -34,7 +39,11 @@ public class DrawServiceImpl implements DrawService {
                 .limit(lobby.getUserPreferences().size())
                 .collect(Collectors.toList());
 
-        List<Films> randomFilms = filmsRepository.findRandomFilms(16 - selectedFilms.size());
+        List<Films> randomFilms = filmsRepository.findRandomFilmsExcluding(
+                selectedFilms.stream().map(Films::getIdFilm).collect(Collectors.toList()),
+                16 - selectedFilms.size()
+        );
+
         selectedFilms.addAll(randomFilms);
 
         selectedFilms.forEach(film -> {
@@ -76,7 +85,6 @@ public class DrawServiceImpl implements DrawService {
             System.out.println("Gracz zakończył głosowanie: User=" + user.getId_user() +
                     ", FinishedPlayersCount=" + lobby.getFinishedPlayersCount());
 
-            // Jeśli wszyscy gracze zakończyli głosowanie
             long totalPlayers = lobby.getUserPreferences().size();
             if (lobby.getFinishedPlayersCount() >= totalPlayers) {
                 lobby.setVotingCompleted(true);
