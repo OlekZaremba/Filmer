@@ -10,8 +10,49 @@
 .cards {
   display: flex;
   flex-direction: row;
-  gap: 2rem;
+  justify-content: center;
+  align-items: center;
 }
+
+.cards img {
+  transition: .2s all ease-in-out;
+}
+
+.first-place-card {
+  height: 500px;
+  z-index: 999;
+}
+
+.first-place-card:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.second-place-card, .third-place-card {
+  height: 450px;
+  z-index: 888;
+}
+
+.second-place-card {
+  transform: rotate(-15deg);
+  margin-right: -10rem;
+}
+
+.second-place-card:hover {
+  transform: scale(1.05) rotate(-15deg);
+  cursor: pointer;
+}
+
+.third-place-card {
+  transform: rotate(15deg);
+  margin-left: -10rem;
+}
+
+.third-place-card:hover {
+  transform: scale(1.05) rotate(15deg);
+  cursor: pointer;
+}
+
 .canvas {
   width: 100%;
   height: 90vh;
@@ -39,77 +80,6 @@
 
 .content h1 {
   font-size: 3rem;
-}
-
-.first-place {
-  width: 243px;
-  height: 405px;
-  border: 5px solid #fff;
-  border-radius: 15px;
-  background: url("../../../assets/images/card-bg.png") center/cover no-repeat;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 2rem;
-  transition: .1s all ease-in-out;
-}
-
-.second-place, .third-place {
-  width: 216px;
-  height: 360px;
-  border: 5px solid #fff;
-  border-radius: 15px;
-  background: url("../../../assets/images/card-bg.png") center/cover no-repeat;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 2rem;
-  transition: .1s all ease-in-out;
-}
-
-.first-place:hover, .second-place:hover, .third-place:hover{
-  box-shadow: 0 0 10px #fff;
-}
-
-
-.first-place-image, .second-place-image, .third-place-image {
-  width: 300px;
-  height: 500px;
-  border: 5px solid #fff;
-  border-radius: 15px;
-  background: url("../../../assets/film-photos/2.jpg") center/cover no-repeat;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 2rem;
-  transition: .2s all ease-in-out;
-}
-
-.first-place-image:hover, second-place-image:hover, .third-place-image:hover {
-  box-shadow: 0 0 10px #fff;
-}
-
-.first-place h3, h1, p, .second-place h3, h1, p, .third-place h3, h1, p {
-  color: #fff;
-}
-
-.second-place h3, .third-place h3 {
-  font-size: 16px;
-}
-
-.second-place p, .third-place p {
-  font-size: 12px;
-}
-
-.first-place h1 {
-  font-size: 1.7rem;
-}
-
-.second-place h1, .third-place h1 {
-  font-size: 1.5rem;
 }
 
 .info {
@@ -166,32 +136,6 @@
   box-shadow: 0 0 10px green;
 }
 
-.first-place, .second-place, .third-place {
-  transition: transform 0.5s ease, opacity 0.5s ease;
-}
-
-.swipe-left {
-  transform: translateX(-100vw) rotate(-20deg);
-  opacity: 0;
-}
-
-.swipe-right {
-  transform: translateX(100vw) rotate(20deg);
-  opacity: 0;
-}
-
-.first img, .second img, .third img {
-  height: 100px;
-  width: 100px;
-  margin-bottom: 1rem;
-}
-
-.first, .second, .third {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .canvas button {
   width: 300px;
   height: 40px;
@@ -208,4 +152,22 @@
 .canvas button:hover {
   cursor: pointer;
   transform: scale(1.1);
+}
+
+.results {
+  display:flex;
+  flex-direction: row;
+}
+
+.result-list {
+  width: 400px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.section-user h1 {
+  color: #fff;
 }
