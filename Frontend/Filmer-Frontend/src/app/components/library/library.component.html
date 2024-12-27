@@ -12,23 +12,11 @@
       </div>
 
       <div class="movie-list">
-        <input type="text" placeholder="Wprowadź nazwę filmu...">
+        <input type="text" placeholder="Wprowadź nazwę filmu..." />
         <ul>
-          <li>
-            Film 1
-            <button class="info-button" (click)="showMovieInfo('Film 1', 'Opis filmu 1')">
-              Wyświetl informację
-            </button>
-          </li>
-          <li>
-            Film 2
-            <button class="info-button" (click)="showMovieInfo('Film 2', 'Opis filmu 2')">
-              Wyświetl informację
-            </button>
-          </li>
-          <li>
-            Film 3
-            <button class="info-button" (click)="showMovieInfo('Film 3', 'Opis filmu 3')">
+          <li *ngFor="let film of films">
+            {{ film.filmName }}
+            <button class="info-button" (click)="showFilmInfo(film.idFilm)">
               Wyświetl informację
             </button>
           </li>
@@ -38,9 +26,10 @@
   </div>
 
   <app-movie-popup
+    *ngIf="selectedFilm"
     [isVisible]="isPopupVisible"
-    [title]="selectedMovieTitle"
-    [description]="selectedMovieDescription"
+    [title]="selectedFilm.filmName"
+    [description]="selectedFilm.filmDesc"
     (popupClosed)="closePopup()"
   ></app-movie-popup>
 </div>
