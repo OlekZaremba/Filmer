@@ -11,58 +11,36 @@
         <button class="filter-button">Psychologiczny</button>
       </div>
 
-
       <div class="movie-list">
         <input type="text" placeholder="Wprowadź nazwę filmu...">
         <ul>
           <li>
             Film 1
-            <button class="info-button">Wyświetl informację</button>
+            <button class="info-button" (click)="showMovieInfo('Film 1', 'Opis filmu 1')">
+              Wyświetl informację
+            </button>
           </li>
-
           <li>
             Film 2
-            <button class="info-button">Wyświetl informację</button>
+            <button class="info-button" (click)="showMovieInfo('Film 2', 'Opis filmu 2')">
+              Wyświetl informację
+            </button>
           </li>
-
           <li>
             Film 3
-            <button class="info-button">Wyświetl informację</button>
+            <button class="info-button" (click)="showMovieInfo('Film 3', 'Opis filmu 3')">
+              Wyświetl informację
+            </button>
           </li>
-
-          <li>
-            Film 4
-            <button class="info-button">Wyświetl informację</button>
-          </li>
-
-          <li>
-            Film 5
-            <button class="info-button">Wyświetl informację</button>
-          </li>
-
-          <li>
-            Film 6
-            <button class="info-button">Wyświetl informację</button>
-          </li>
-
-          <li>
-            Film 7
-            <button class="info-button">Wyświetl informację</button>
-          </li>
-
-          <li>
-            Film 8
-            <button class="info-button">Wyświetl informację</button>
-          </li>
-
-          <li>
-            Film 9
-            <button class="info-button">Wyświetl informację</button>
-          </li>
-
         </ul>
       </div>
-
     </div>
   </div>
+
+  <app-movie-popup
+    [isVisible]="isPopupVisible"
+    [title]="selectedMovieTitle"
+    [description]="selectedMovieDescription"
+    (popupClosed)="closePopup()"
+  ></app-movie-popup>
 </div>
