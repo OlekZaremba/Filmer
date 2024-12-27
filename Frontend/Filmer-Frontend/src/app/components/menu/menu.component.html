@@ -5,7 +5,7 @@
   <div class="menu-buttons">
     <button routerLink="/" routerLinkActive="active">STRONA GŁÓWNA</button>
     <button routerLink="/create-lobby" routerLinkActive="active">UTWÓRZ LOBBY</button>
-    <button routerLink="/random-movie" routerLinkActive="active">LOSUJ FILM</button>
+    <button routerLink="/library" routerLinkActive="active">BIBLIOTEKA</button>
     <button routerLink="/your-reviews" routerLinkActive="active">TWOJE RECENZJE</button>
     <button routerLink="/contact" routerLinkActive="active">KONTAKT</button>
     <button *ngIf="!(isLoggedIn$ | async); else logoutBtn" (click)="login()" routerLink="/login" routerLinkActive="active">ZALOGUJ SIĘ</button>

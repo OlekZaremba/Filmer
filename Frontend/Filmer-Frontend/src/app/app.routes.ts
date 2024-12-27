@@ -5,10 +5,12 @@ import {UserProfileComponent} from './components/user-profile/user-profile.compo
 import {LobbyComponent} from './components/lobby/lobby.component';
 import {DrawComponent} from './components/draw/draw.component';
 import {ResultsComponent} from './components/results/results.component';
+import {LibraryComponent} from './components/library/library.component';
 
 export const routes: Routes = [
   { path: '', component: SectionOneComponent },
   { path: 'login', component: LoginPageComponent },
+  { path: 'library', component: LibraryComponent },
   { path: 'user-profile', component: UserProfileComponent},
   { path: 'create-lobby', component: LobbyComponent},
   { path: 'create-lobby2', component: LobbyComponent},
