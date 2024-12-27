@@ -1,0 +1,106 @@
+/* Overlay fade-in i fade-out */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fade-in 0.5s ease-out; /* Domyślna animacja wchodzenia */
+}
+
+.popup-overlay.fade-out {
+  animation: fade-out 0.5s ease-out; /* Animacja wychodzenia */
+}
+
+/* Pop-up fade-in i scale */
+.popup-content {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: scale-in 0.5s ease-out; /* Domyślna animacja wchodzenia */
+  font-family: 'Oswald', sans-serif; /* Ustawienie czcionki */
+}
+
+.popup-content.fade-out {
+  animation: scale-out 0.5s ease-out; /* Animacja wychodzenia */
+}
+
+/* Styl listy */
+.popup-content ul {
+  list-style: none; /* Usunięcie bullet pointów */
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.popup-content li {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #333; /* Neutralny kolor tekstu */
+  font-family: 'Oswald', sans-serif; /* Czcionka dla elementów listy */
+}
+
+/* Klucze animacji */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes scale-out {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}
+
+.popup-content button {
+  background-color: darkred;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  font-family: 'Oswald', sans-serif; /* Czcionka dla przycisku */
+}
+
+.popup-content button:hover {
+  background-color: red;
+  transform: scale(1.05);
+}

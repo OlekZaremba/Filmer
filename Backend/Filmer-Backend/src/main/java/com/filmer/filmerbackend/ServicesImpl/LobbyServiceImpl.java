@@ -160,4 +160,30 @@ public class LobbyServiceImpl implements LobbyService {
         System.out.println("Gra rozpoczęta dla lobby: " + lobbyId);
     }
 
+    @Override
+    public boolean checkVotingCompletion(String lobbyCode) {
+        Lobby lobby = lobbyRepository.findByLobbyCode(lobbyCode)
+                .orElseThrow(() -> new IllegalArgumentException("Lobby nie istnieje."));
+
+        return lobby.getVotingCompleted();
+    }
+
+    @Override
+    public void finishVoting(String lobbyCode, int userId) {
+        Lobby lobby = lobbyRepository.findByLobbyCode(lobbyCode)
+                .orElseThrow(() -> new IllegalArgumentException("Lobby nie istnieje."));
+
+        lobby.setFinishedPlayersCount(lobby.getFinishedPlayersCount() + 1);
+        System.out.println("Zaktualizowana liczba zakończonych głosowań: " + lobby.getFinishedPlayersCount());
+
+        long totalPlayers = lobby.getUserPreferences().size();
+        if (lobby.getFinishedPlayersCount() >= totalPlayers) {
+            lobby.setVotingCompleted(true);
+            System.out.println("Głosowanie zakończone! Flaga ustawiona na true.");
+        }
+
+        lobbyRepository.save(lobby);
+    }
+
+
 }

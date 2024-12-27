@@ -124,15 +124,6 @@ export class LobbyComponent implements OnInit, OnDestroy {
     }
   }
 
-  startLobby(): void {
-    if (this.lobbyLink) {
-      const lobbyCode = this.lobbyLink.split('/').pop();
-      if (lobbyCode) {
-        this.router.navigate([`/lobby/${lobbyCode}`]);
-      }
-    }
-  }
-
   isCreatingNewLobbyDisabled(): boolean {
     return this.isGeneratingLobby || !!this.lobbyLink;
   }

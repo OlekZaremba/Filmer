@@ -91,4 +91,18 @@ public class LobbyController {
         return ResponseEntity.ok(lobby.isStarted());
     }
 
+    @GetMapping("/{lobbyCode}/status")
+    public ResponseEntity<Boolean> checkVotingStatus(@PathVariable String lobbyCode) {
+        boolean isCompleted = lobbyService.checkVotingCompletion(lobbyCode);
+        return ResponseEntity.ok(isCompleted);
+    }
+
+    @PostMapping("/{lobbyCode}/finish-voting")
+    public ResponseEntity<String> finishVoting(@PathVariable String lobbyCode, @RequestBody Map<String, Integer> payload) {
+        int userId = payload.get("userId");
+        lobbyService.finishVoting(lobbyCode, userId);
+        return ResponseEntity.ok("Głosowanie zakończone dla użytkownika.");
+    }
+
+
 }

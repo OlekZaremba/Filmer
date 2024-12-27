@@ -1,0 +1,46 @@
+<div *ngIf="!votingCompleted">
+  <div class="section-user">
+    <div class="content">
+      <h1>Oczekiwanie na resztę graczy...</h1>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="votingCompleted">
+  <div class="section-user">
+    <div class="content">
+      <h1>Odkryj wyniki!</h1>
+      <div class="canvas">
+        <div class="results">
+          <div class="cards">
+            <img
+              src="assets/images/second.png"
+              class="second-place-card"
+              alt="cards"
+              (click)="showPopupForPlace('Drugie', 2)"
+            />
+            <img
+              src="assets/images/first.png"
+              class="first-place-card"
+              alt="cards"
+              (click)="showPopupForPlace('Pierwsze', 1)"
+            />
+            <img
+              src="assets/images/third.png"
+              class="third-place-card"
+              alt="cards"
+              (click)="showPopupForPlace('Trzecie', 3)"
+            />
+          </div>
+        </div>
+        <button routerLink="/" routerLinkActive="active">Wróć na stronę główną</button>
+      </div>
+    </div>
+  </div>
+  <app-popup
+    [isVisible]="isPopupVisible"
+    [title]="popupTitle"
+    [items]="popupItems"
+    (popupClosed)="closePopup()"
+  ></app-popup>
+</div>

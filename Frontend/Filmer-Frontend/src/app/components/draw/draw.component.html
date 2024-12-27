@@ -1,1 +1,49 @@
-<p>draw works!</p>
+<div class="section-user" *ngIf="films.length > currentFilmIndex">
+  <div class="content">
+    <h1>Film {{ currentFilmIndex + 1 }} z {{ films.length }}</h1>
+    <div class="canvas">
+      <div class="decline-button">
+        <button (click)="declineFilm()">X</button>
+      </div>
+      <div class="cards">
+        <div
+          class="draw-card"
+          [class.swipe-left]="isSwipingLeft"
+          [class.swipe-right]="isSwipingRight">
+          <h1>{{ films[currentFilmIndex].filmName }}</h1>
+          <p>{{ films[currentFilmIndex].filmDesc }}</p>
+
+          <div class="info">
+            <div class="director">
+              <h3>Reżyser:</h3>
+              <p>{{ films[currentFilmIndex].director.name }}</p>
+            </div>
+
+            <div class="production">
+              <h3>Produkcja:</h3>
+              <p>{{ films[currentFilmIndex].studio.studioName }}</p>
+            </div>
+          </div>
+
+          <div class="info">
+            <div class="source">
+              <h3>Źródło:</h3>
+              <p>{{ films[currentFilmIndex].source.sourceName }}</p>
+            </div>
+            <div class="genre">
+              <h3>Gatunek:</h3>
+              <p>{{ films[currentFilmIndex].genre.genreName }}</p>
+            </div>
+            <div class="type">
+              <h3>Typ:</h3>
+              <p>{{ films[currentFilmIndex].type.filmType }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="accept-button">
+        <button (click)="acceptFilm()">&#x2713;</button>
+      </div>
+    </div>
+  </div>
+</div>

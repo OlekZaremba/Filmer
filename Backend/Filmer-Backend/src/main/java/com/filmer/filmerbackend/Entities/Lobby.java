@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "lobby")
@@ -40,5 +41,17 @@ public class Lobby {
 
     @Column(name = "is_started", nullable = false)
     private boolean isStarted = false;
+
+    @OneToMany(mappedBy = "lobby", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<UserPreferences> userPreferences;
+
+    @OneToMany(mappedBy = "lobby", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<LobbyHasFilms> lobbyHasFilms;
+
+    @Column(name = "voting_completed", nullable = false)
+    private Boolean votingCompleted = false;
+
+    @Column(name = "finished_players_count", nullable = false)
+    private Integer finishedPlayersCount = 0;
 
 }

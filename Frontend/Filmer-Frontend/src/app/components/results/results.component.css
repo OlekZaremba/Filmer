@@ -1,0 +1,173 @@
+.section-user {
+  height: 100vh;
+  background: url("../../../assets/images/section-one-background.png") center/cover no-repeat;
+  font-family: "Oswald", sans-serif;
+  padding: 0 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.cards img {
+  transition: .2s all ease-in-out;
+}
+
+.first-place-card {
+  height: 500px;
+  z-index: 999;
+}
+
+.first-place-card:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.second-place-card, .third-place-card {
+  height: 450px;
+  z-index: 888;
+}
+
+.second-place-card {
+  transform: rotate(-15deg);
+  margin-right: -10rem;
+}
+
+.second-place-card:hover {
+  transform: scale(1.05) rotate(-15deg);
+  cursor: pointer;
+}
+
+.third-place-card {
+  transform: rotate(15deg);
+  margin-left: -10rem;
+}
+
+.third-place-card:hover {
+  transform: scale(1.05) rotate(15deg);
+  cursor: pointer;
+}
+
+.canvas {
+  width: 100%;
+  height: 90vh;
+  gap: .5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 7px;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+.content {
+  width: 100%;
+  height: 90vh;
+  background-color: rgba(46, 46, 46, 0.2);
+  gap: .5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.content h1 {
+  font-size: 3rem;
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+}
+
+.director, .production, .source, .genre, .type {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.decline-button button, .accept-button button {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  font-size: 3rem;
+  font-family: "Oswald", sans-serif;
+
+}
+
+.decline-button button {
+  background-color: transparent;
+  border: 2px solid red;
+  transition: .2s all ease-in-out;
+  color: red;
+  margin-right: 2rem;
+}
+
+.decline-button button:hover {
+  background-color: red;
+  border: 2px solid red;
+  cursor: pointer;
+  color: #fff;
+  box-shadow: 0 0 10px red;
+}
+
+.accept-button button {
+  background-color: transparent;
+  border: 2px solid green;
+  transition: .2s all ease-in-out;
+  color: green;
+  margin-left: 2rem;
+}
+
+.accept-button button:hover {
+  background-color: green;
+  border: 2px solid green;
+  cursor: pointer;
+  color: #fff;
+  box-shadow: 0 0 10px green;
+}
+
+.canvas button {
+  width: 300px;
+  height: 40px;
+  background-color: darkred;
+  color: #fff;
+  outline: none;
+  border: none;
+  border-radius: 15px;
+  transition: .1s all ease-in-out;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.canvas button:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.results {
+  display:flex;
+  flex-direction: row;
+}
+
+.result-list {
+  width: 400px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.section-user h1 {
+  color: #fff;
+}
