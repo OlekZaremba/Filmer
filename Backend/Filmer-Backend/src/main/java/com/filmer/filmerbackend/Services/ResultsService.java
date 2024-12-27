@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ResultsService {
     Map<Integer, List<Films>> getResultsByLobbyCode(String lobbyCode);
+    void sendResultsEmail(String lobbyCode, String email);
+
 }

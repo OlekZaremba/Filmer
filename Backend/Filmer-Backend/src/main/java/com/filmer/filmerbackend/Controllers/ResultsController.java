@@ -22,4 +22,14 @@ public class ResultsController {
         return ResponseEntity.ok(results);
     }
 
+    @PostMapping("/{lobbyCode}/sendEmail")
+    public ResponseEntity<String> sendResultsEmail(@PathVariable String lobbyCode, @RequestParam String email) {
+        try {
+            resultsService.sendResultsEmail(lobbyCode, email);
+            return ResponseEntity.ok("Wyniki zostały wysłane na e-mail: " + email);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Nie udało się wysłać wyników: " + e.getMessage());
+        }
+    }
+
 }

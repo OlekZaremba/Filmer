@@ -67,14 +67,20 @@ public class FriendsController {
 
     @PostMapping("/sendInvite")
     public ResponseEntity<String> sendInvite(@RequestBody SendInviteRequest request) {
-        System.out.println("Odebrano żądanie z parametrami: friendId=" + request.getFriendId() + ", lobbyLink=" + request.getLobbyLink());
+        System.out.println("Próba wysłania zaproszenia z danymi: " +
+                "friendId=" + request.getFriendId() + ", lobbyLink=" + request.getLobbyLink());
+
         try {
             friendsService.sendInviteEmail(request.getFriendId(), request.getLobbyLink());
+            System.out.println("Zaproszenie wysłane pomyślnie.");
             return ResponseEntity.ok("Zaproszenie zostało wysłane.");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Błąd walidacji danych: " + e.getMessage());
+            return ResponseEntity.badRequest().body("Błąd: " + e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            System.out.println("Błąd systemowy: " + e.getMessage());
+            return ResponseEntity.status(500).body("Błąd systemowy: " + e.getMessage());
         }
     }
-
 
 }

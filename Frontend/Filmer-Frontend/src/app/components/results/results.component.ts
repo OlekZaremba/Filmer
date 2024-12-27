@@ -97,4 +97,23 @@ export class ResultsComponent implements OnInit {
       console.error('Nie ustawiono userId lub lobbyCode.');
     }
   }
+
+  sendResults(): void {
+    const email = localStorage.getItem('email'); // Pobierz e-mail zalogowanego użytkownika
+    if (!email || !this.lobbyCode) {
+      alert('Brak e-maila użytkownika lub kodu lobby.');
+      return;
+    }
+
+    this.resultsService.sendResultsEmail(this.lobbyCode, email).subscribe({
+      next: () => {
+        alert('Wyniki zostały wysłane na Twój e-mail.');
+      },
+      error: (err) => {
+        console.error('Błąd podczas wysyłania wyników:', err);
+        alert('Nie udało się wysłać wyników.');
+      },
+    });
+  }
+
 }
