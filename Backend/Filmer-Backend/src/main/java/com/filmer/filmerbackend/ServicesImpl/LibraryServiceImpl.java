@@ -3,8 +3,11 @@ package com.filmer.filmerbackend.ServicesImpl;
 import com.filmer.filmerbackend.Entities.Films;
 import com.filmer.filmerbackend.Repositories.FilmsRepository;
 import com.filmer.filmerbackend.Services.LibraryService;
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -37,20 +40,54 @@ public class LibraryServiceImpl implements LibraryService {
             com.itextpdf.kernel.pdf.PdfDocument pdfDoc = new com.itextpdf.kernel.pdf.PdfDocument(writer);
             Document document = new Document(pdfDoc);
 
-            document.add(new Paragraph("Tytuł: " + title));
-            document.add(new Paragraph("Opis: " + description));
+            String logoPath = "D:/Filmer/Backend/Filmer-Backend/src/main/resources/static/logo_red.png";
+            try {
+                ImageData imageData = ImageDataFactory.create(logoPath);
+                Image logo = new Image(imageData);
+                document.add(logo);
+            } catch (Exception e) {
+                System.err.println("Nie udało się załadować logo: " + e.getMessage());
+            }
+            Optional<Films> filmOptional = filmsRepository.findByFilmName(title);
+            if (filmOptional.isEmpty()) {
+                return ResponseEntity.badRequest().body("Film nie został znaleziony.".getBytes());
+            }
+
+            Films film = filmOptional.get();
+            String processedTitle = replacePolishCharacters(film.getFilmName());
+            String processedDescription = replacePolishCharacters(film.getFilmDesc());
+
+            document.add(new Paragraph("Title: " + processedTitle));
+            document.add(new Paragraph("Description: " + processedDescription));
+            document.add(new Paragraph("Author: " + film.getDirector().getName()));
+            document.add(new Paragraph("Studio: " + film.getStudio().getStudioName()));
+            document.add(new Paragraph("Type: " + film.getType().getFilmType()));
+
             document.close();
 
             byte[] pdfBytes = baos.toByteArray();
-
             HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Disposition", "attachment; filename=" + title + ".pdf");
+            headers.add("Content-Disposition", "attachment; filename=" + processedTitle.replaceAll("[^a-zA-Z0-9]", "_") + ".pdf");
 
             return ResponseEntity.ok()
                     .headers(headers)
                     .body(pdfBytes);
         } catch (Exception e) {
-            return ResponseEntity.status(500).build();
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(("Error: " + e.getMessage()).getBytes());
         }
+    }
+
+
+    private String replacePolishCharacters(String text) {
+        return text.replace("ą", "a")
+                .replace("ć", "c")
+                .replace("ę", "e")
+                .replace("ł", "l")
+                .replace("ń", "n")
+                .replace("ó", "o")
+                .replace("ś", "s")
+                .replace("ź", "z")
+                .replace("ż", "z");
     }
 }

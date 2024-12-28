@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface FilmsRepository extends JpaRepository<Films, Integer> {
@@ -24,4 +25,6 @@ public interface FilmsRepository extends JpaRepository<Films, Integer> {
 
     @Query(value = "SELECT * FROM films f ORDER BY RAND() LIMIT :limit", nativeQuery = true)
     List<Films> findRandomFilms(@Param("limit") int limit);
+
+    Optional<Films> findByFilmName(String filmName);
 }
