@@ -10,5 +10,6 @@ public interface LibraryService {
     Optional<Films> getFilmById(Integer idFilm);
     ResponseEntity<byte[]> generatePdf(String title, String description);
     List<Films> getAllFilms();
-    public List<Films> getFilmsByGenre(String genreName);
+    List<Films> getFilmsByGenre(String genreName);
+    List<Films> getFilmsByName(String name);
 }

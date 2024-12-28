@@ -41,4 +41,10 @@ public class LibraryController {
         List<Films> filteredFilms = libraryService.getFilmsByGenre(genre);
         return ResponseEntity.ok(filteredFilms);
     }
+
+    @GetMapping("/films/search")
+    public ResponseEntity<List<Films>> getFilmsByName(@RequestParam String name) {
+        List<Films> films = libraryService.getFilmsByName(name);
+        return ResponseEntity.ok(films);
+    }
 }

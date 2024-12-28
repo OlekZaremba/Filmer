@@ -30,4 +30,8 @@ public interface FilmsRepository extends JpaRepository<Films, Integer> {
 
     @Query("SELECT f FROM Films f WHERE LOWER(f.genre.genreName) = LOWER(:genreName)")
     List<Films> findByGenre(@Param("genreName") String genreName);
+
+    @Query("SELECT f FROM Films f WHERE LOWER(f.filmName) LIKE LOWER(CONCAT('%', :name, '%'))")
+    List<Films> findByFilmNameContaining(@Param("name") String name);
+
 }

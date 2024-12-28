@@ -21,6 +21,10 @@ export class FilmService {
   getFilmsByGenre(genre: string): Observable<Film[]> {
     return this.http.get<Film[]>(`${this.apiUrl}/filter?genre=${genre}`);
   }
+
+  getFilmsByName(name: string): Observable<Film[]> {
+    return this.http.get<Film[]>(`${this.apiUrl}/search?name=${name}`);
+  }
 }
 
 export interface Film {

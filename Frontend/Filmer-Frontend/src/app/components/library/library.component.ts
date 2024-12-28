@@ -46,6 +46,13 @@ export class LibraryComponent implements OnInit {
     }
   }
 
+  searchFilmsByName(name: string): void {
+    this.filmService.getFilmsByName(name).subscribe((data) => {
+      this.filteredFilms = data;
+      console.log('Searched films:', data); // Debug
+    });
+  }
+
   showFilmInfo(id: number): void {
     this.filmService.getFilmById(id).subscribe((film) => {
       this.selectedFilm = film;

@@ -104,4 +104,9 @@ public class LibraryServiceImpl implements LibraryService {
     public List<Films> getFilmsByGenre(String genreName) {
         return filmsRepository.findByGenre(genreName);
     }
+
+    @Override
+    public List<Films> getFilmsByName(String name) {
+        return filmsRepository.findByFilmNameContaining(name);
+    }
 }
