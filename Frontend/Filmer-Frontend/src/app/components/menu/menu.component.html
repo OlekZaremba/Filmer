@@ -6,8 +6,6 @@
     <button routerLink="/" routerLinkActive="active">STRONA GŁÓWNA</button>
     <button routerLink="/create-lobby" routerLinkActive="active">UTWÓRZ LOBBY</button>
     <button routerLink="/library" routerLinkActive="active">BIBLIOTEKA</button>
-    <button routerLink="/your-reviews" routerLinkActive="active">TWOJE RECENZJE</button>
-    <button routerLink="/contact" routerLinkActive="active">KONTAKT</button>
     <button *ngIf="!(isLoggedIn$ | async); else logoutBtn" (click)="login()" routerLink="/login" routerLinkActive="active">ZALOGUJ SIĘ</button>
     <ng-template #logoutBtn>
       <button (click)="logout()">WYLOGUJ SIĘ</button>
