@@ -40,7 +40,8 @@ public class LibraryServiceImpl implements LibraryService {
             com.itextpdf.kernel.pdf.PdfDocument pdfDoc = new com.itextpdf.kernel.pdf.PdfDocument(writer);
             Document document = new Document(pdfDoc);
 
-            String logoPath = "D:/Filmer/Backend/Filmer-Backend/src/main/resources/static/logo_red.png";
+//            String logoPath = "D:/Filmer/Backend/Filmer-Backend/src/main/resources/static/logo_red.png"; //olek
+            String logoPath = "D:/JavaProjektyUltimate/Filmer/Backend/Filmer-Backend/src/main/resources/static/logo_red.png"; //kuba
             try {
                 ImageData imageData = ImageDataFactory.create(logoPath);
                 Image logo = new Image(imageData);

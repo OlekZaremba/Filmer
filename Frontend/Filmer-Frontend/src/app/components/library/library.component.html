@@ -12,8 +12,12 @@
       </div>
 
       <div class="movie-list">
-        <input type="text" #searchInput placeholder="Wprowadź nazwę filmu..." />
-        <button (click)="searchFilmsByName(searchInput.value); searchInput.value = ''">Szukaj</button>
+        <div class="search-movie">
+          <input type="text" #searchInput placeholder="Wprowadź nazwę filmu..." />
+          <button (click)="searchFilmsByName(searchInput.value); searchInput.value = ''">
+            <img src="assets/images/search.png" alt="Szukaj">
+          </button>
+        </div>
         <ul>
           <li *ngFor="let film of filteredFilms">
             {{ film.filmName }}
