@@ -14,7 +14,7 @@ import {FormsModule} from '@angular/forms';
         <p>{{ description }}</p>
         <h2>Recenzja</h2>
         <input list="review" placeholder="Twoja recenzja" onfocus="this.value=''">
-
+        <button class="close-button">Zapisz</button>
         <button class="download-button" (click)="downloadPdf()">Pobierz opis do PDF</button>
         <button class="close-button" (click)="closePopup()">Zamknij</button>
       </div>
