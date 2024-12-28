@@ -177,12 +177,13 @@ input {
 .info-button {
   border: none;
   outline: none;
-  width: 150px;
+  width: 60px;
   height: 40px;
   background-color: darkred;
   color: #fff;
   border-radius: 7px;
   transition: .2s all ease-in-out;
+  font-size: 1.5rem;
 }
 
 .info-button:hover {
