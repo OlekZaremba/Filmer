@@ -10,7 +10,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -38,7 +37,7 @@ public class ResultsServiceImpl implements ResultsService {
                         Collectors.mapping(row -> (Films) row[0], Collectors.toList())
                 ));
 
-        Map<Integer, List<Films>> sortedResults = new TreeMap<>(Collections.reverseOrder());
+        Map<Integer, List<Films>> sortedResults = new TreeMap<>();
         sortedResults.putAll(results);
 
         return sortedResults;
