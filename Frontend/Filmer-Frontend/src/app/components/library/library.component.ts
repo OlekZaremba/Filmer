@@ -22,6 +22,7 @@ export class LibraryComponent implements OnInit {
   filteredFilms: Film[] = [];
   isPopupVisible = false;
   selectedFilm: Film | null = null;
+  activeFilter: string = 'all';
 
   constructor(private filmService: FilmService) {}
 
@@ -37,6 +38,7 @@ export class LibraryComponent implements OnInit {
   }
 
   filterFilms(filter: string): void {
+    this.activeFilter = filter;
     if (filter === 'all') {
       this.loadFilms();
     } else {

@@ -3,13 +3,50 @@
     <div class="friends-component">
       <div class="filter-settings">
         <h2>Filtry:</h2>
-        <button class="filter-button" (click)="filterFilms('all')">Pokaż wszystkie</button>
-        <button class="filter-button" (click)="filterFilms('Dramat')">Dramat</button>
-        <button class="filter-button" (click)="filterFilms('Komedia')">Komedia</button>
-        <button class="filter-button" (click)="filterFilms('Horror')">Horror</button>
-        <button class="filter-button" (click)="filterFilms('Thriller')">Thriller</button>
-        <button class="filter-button" (click)="filterFilms('Psychologiczny')">Psychologiczny</button>
+        <button
+          class="filter-button"
+          [class.active]="activeFilter === 'all'"
+          (click)="filterFilms('all')"
+        >
+          Pokaż wszystkie
+        </button>
+        <button
+          class="filter-button"
+          [class.active]="activeFilter === 'Dramat'"
+          (click)="filterFilms('Dramat')"
+        >
+          Dramat
+        </button>
+        <button
+          class="filter-button"
+          [class.active]="activeFilter === 'Komedia'"
+          (click)="filterFilms('Komedia')"
+        >
+          Komedia
+        </button>
+        <button
+          class="filter-button"
+          [class.active]="activeFilter === 'Horror'"
+          (click)="filterFilms('Horror')"
+        >
+          Horror
+        </button>
+        <button
+          class="filter-button"
+          [class.active]="activeFilter === 'Thriller'"
+          (click)="filterFilms('Thriller')"
+        >
+          Thriller
+        </button>
+        <button
+          class="filter-button"
+          [class.active]="activeFilter === 'Psychologiczny'"
+          (click)="filterFilms('Psychologiczny')"
+        >
+          Psychologiczny
+        </button>
       </div>
+
 
       <div class="movie-list">
         <div class="search-movie">

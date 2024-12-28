@@ -149,7 +149,7 @@ body {
   outline: none;
   border: none;
   background-color: transparent;
-  transition: .2s all ease-in-out;
+  transition: 0.2s all ease-in-out;
   font-family: "Oswald", sans-serif;
   font-weight: 300;
 }
@@ -158,6 +158,12 @@ body {
   cursor: pointer;
   transform: scale(1.02);
   border-bottom: 2px solid #fff;
+}
+
+.filter-button.active {
+  transform: scale(1.05);
+  border-bottom: 2px solid #ffd700;
+  color: #ffd700;
 }
 
 input {
