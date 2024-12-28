@@ -1,0 +1,82 @@
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background-color: #2e2e2e;
+  padding: 2rem;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 500px;
+  color: #fff;
+  font-family: 'Oswald', sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.popup-content label {
+  display: flex;
+  align-items: center; /* Wyrównanie tekstu i inputu w jednej linii */
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  width: 100%; /* Pełna szerokość dla wyrównania */
+  font-family: 'Oswald', sans-serif;
+}
+
+.popup-content label span {
+  width: 150px; /* Ujednolicona szerokość etykiet */
+  font-weight: bold;
+  text-align: left;
+}
+
+.popup-content input,
+.popup-content textarea,
+.popup-content select {
+  flex: 1; /* Input wypełnia pozostałą przestrzeń */
+  padding: 0.5rem;
+  border-radius: 7px;
+  border: none;
+  font-family: 'Oswald', sans-serif;
+  margin-left: 1rem; /* Lekki odstęp między etykietą a polem */
+}
+
+.popup-content textarea {
+  resize: vertical; /* Pozwala na zmianę rozmiaru tylko w pionie */
+}
+
+.popup-content .button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.popup-content button {
+  margin: 0.5rem;
+  background-color: darkred;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  font-family: 'Oswald', sans-serif;
+}
+
+.popup-content button:hover {
+  background-color: red;
+  transform: scale(1.05);
+}

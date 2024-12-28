@@ -4,50 +4,17 @@
       <div class="filter-settings">
         <h2>Filtry:</h2>
         <button
-          class="filter-button"
-          [class.active]="activeFilter === 'all'"
-          (click)="filterFilms('all')"
-        >
-          Pokaż wszystkie
-        </button>
-        <button
-          class="filter-button"
-          [class.active]="activeFilter === 'Dramat'"
-          (click)="filterFilms('Dramat')"
-        >
-          Dramat
-        </button>
-        <button
-          class="filter-button"
-          [class.active]="activeFilter === 'Komedia'"
-          (click)="filterFilms('Komedia')"
-        >
-          Komedia
-        </button>
-        <button
-          class="filter-button"
-          [class.active]="activeFilter === 'Horror'"
-          (click)="filterFilms('Horror')"
-        >
-          Horror
-        </button>
-        <button
-          class="filter-button"
-          [class.active]="activeFilter === 'Thriller'"
-          (click)="filterFilms('Thriller')"
-        >
-          Thriller
-        </button>
-        <button
-          class="filter-button"
-          [class.active]="activeFilter === 'Psychologiczny'"
-          (click)="filterFilms('Psychologiczny')"
-        >
-          Psychologiczny
-        </button>
+          class="filter-button" [class.active]="activeFilter === 'all'" (click)="filterFilms('all')">Pokaż wszystkie</button>
+        <button class="filter-button" [class.active]="activeFilter === 'Dramat'"(click)="filterFilms('Dramat')">Dramat</button>
+        <button class="filter-button" [class.active]="activeFilter === 'Komedia'" (click)="filterFilms('Komedia')">Komedia</button>
+        <button class="filter-button" [class.active]="activeFilter === 'Horror'" (click)="filterFilms('Horror')">Horror</button>
+        <button class="filter-button" [class.active]="activeFilter === 'Thriller'" (click)="filterFilms('Thriller')">Thriller</button>
+        <button class="filter-button" [class.active]="activeFilter === 'Psychologiczny'" (click)="filterFilms('Psychologiczny')">Psychologiczny</button>
+
+        <h3>Twój pomysł</h3>
+        <p>Nie znalazłeś filmu dla siebie? Zaproponuj nam coś!</p>
+        <button class="add-button" (click)="openAddPopup()">Zaproponuj swój film!</button>
       </div>
-
-
       <div class="movie-list">
         <div class="search-movie">
           <input type="text" #searchInput placeholder="Wprowadź nazwę filmu..." />
@@ -74,4 +41,10 @@
     [description]="selectedFilm.filmDesc"
     (popupClosed)="closePopup()"
   ></app-movie-popup>
+
+  <app-add-movie-popup
+    *ngIf="isAddPopupVisible"
+    (popupClosed)="closeAddPopup()"
+    (movieAdded)="handleMovieAdded($event)"
+  ></app-add-movie-popup>
 </div>
