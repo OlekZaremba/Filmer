@@ -3,18 +3,18 @@
     <div class="friends-component">
       <div class="filter-settings">
         <h2>Filtry:</h2>
-        <button class="filter-button">Pokaż wszystkie</button>
-        <button class="filter-button">Dramat</button>
-        <button class="filter-button">Komedia</button>
-        <button class="filter-button">Horror</button>
-        <button class="filter-button">Thriller</button>
-        <button class="filter-button">Psychologiczny</button>
+        <button class="filter-button" (click)="filterFilms('all')">Pokaż wszystkie</button>
+        <button class="filter-button" (click)="filterFilms('Dramat')">Dramat</button>
+        <button class="filter-button" (click)="filterFilms('Komedia')">Komedia</button>
+        <button class="filter-button" (click)="filterFilms('Horror')">Horror</button>
+        <button class="filter-button" (click)="filterFilms('Thriller')">Thriller</button>
+        <button class="filter-button" (click)="filterFilms('Psychologiczny')">Psychologiczny</button>
       </div>
 
       <div class="movie-list">
         <input type="text" placeholder="Wprowadź nazwę filmu..." />
         <ul>
-          <li *ngFor="let film of films">
+          <li *ngFor="let film of filteredFilms">
             {{ film.filmName }}
             <button class="info-button" (click)="showFilmInfo(film.idFilm)">
               Wyświetl informację

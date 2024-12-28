@@ -27,4 +27,7 @@ public interface FilmsRepository extends JpaRepository<Films, Integer> {
     List<Films> findRandomFilms(@Param("limit") int limit);
 
     Optional<Films> findByFilmName(String filmName);
+
+    @Query("SELECT f FROM Films f WHERE LOWER(f.genre.genreName) = LOWER(:genreName)")
+    List<Films> findByGenre(@Param("genreName") String genreName);
 }

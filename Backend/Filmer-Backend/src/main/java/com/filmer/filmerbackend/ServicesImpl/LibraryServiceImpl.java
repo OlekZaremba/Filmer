@@ -99,4 +99,9 @@ public class LibraryServiceImpl implements LibraryService {
                 .replace("ź", "z")
                 .replace("ż", "z");
     }
+
+    @Override
+    public List<Films> getFilmsByGenre(String genreName) {
+        return filmsRepository.findByGenre(genreName);
+    }
 }

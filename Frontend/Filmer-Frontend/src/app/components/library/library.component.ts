@@ -19,6 +19,7 @@ import {Film} from '../../services/film.service';
 })
 export class LibraryComponent implements OnInit {
   films: Film[] = [];
+  filteredFilms: Film[] = [];
   isPopupVisible = false;
   selectedFilm: Film | null = null;
 
@@ -29,10 +30,20 @@ export class LibraryComponent implements OnInit {
   }
 
   loadFilms(): void {
-    // Załaduj listę filmów z backendu
     this.filmService.getAllFilms().subscribe((data) => {
       this.films = data;
+      this.filteredFilms = data;
     });
+  }
+
+  filterFilms(filter: string): void {
+    if (filter === 'all') {
+      this.loadFilms();
+    } else {
+      this.filmService.getFilmsByGenre(filter).subscribe((data) => {
+        this.filteredFilms = data;
+      });
+    }
   }
 
   showFilmInfo(id: number): void {

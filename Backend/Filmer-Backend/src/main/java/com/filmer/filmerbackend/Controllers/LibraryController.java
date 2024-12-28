@@ -36,4 +36,9 @@ public class LibraryController {
         return ResponseEntity.ok(films);
     }
 
+    @GetMapping("/films/filter")
+    public ResponseEntity<List<Films>> getFilmsByGenre(@RequestParam String genre) {
+        List<Films> filteredFilms = libraryService.getFilmsByGenre(genre);
+        return ResponseEntity.ok(filteredFilms);
+    }
 }
