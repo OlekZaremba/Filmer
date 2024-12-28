@@ -44,7 +44,16 @@ public class LibraryServiceImpl implements LibraryService {
             try {
                 ImageData imageData = ImageDataFactory.create(logoPath);
                 Image logo = new Image(imageData);
+
+                logo.scaleToFit(100, 50);
+
+                float pageWidth = pdfDoc.getDefaultPageSize().getWidth();
+                float imageWidth = logo.getImageScaledWidth();
+                float marginLeft = (pageWidth - imageWidth) / 2;
+                logo.setFixedPosition(marginLeft, pdfDoc.getDefaultPageSize().getHeight() - 100);
+
                 document.add(logo);
+                document.add(new Paragraph("\n\n\n"));
             } catch (Exception e) {
                 System.err.println("Nie udało się załadować logo: " + e.getMessage());
             }
