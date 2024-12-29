@@ -30,8 +30,8 @@ export class FilmService {
     return this.http.get<number>(`${this.apiUrl}/watched-movies/${filmId}/rating?userId=${userId}`);
   }
 
-  setRating(filmId: number, userId: number, rating: number): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/watched-movies/${filmId}/rating?userId=${userId}&rating=${rating}`, {});
+  setRating(filmId: number, userId: number, rating: number): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/watched-movies/${filmId}/rating?userId=${userId}&rating=${rating}`, {});
   }
 }
 

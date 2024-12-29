@@ -76,8 +76,19 @@ public class LibraryController {
     }
 
     @PostMapping("films/watched-movies/{filmId}/rating")
-    public ResponseEntity<String> setRating(@PathVariable Integer filmId, @RequestParam Integer userId, @RequestParam Integer rating) {
+    public ResponseEntity<Map<String, Object>> setRating(
+            @PathVariable Integer filmId,
+            @RequestParam Integer userId,
+            @RequestParam Integer rating) {
         libraryService.setRating(filmId, userId, rating);
-        return ResponseEntity.ok("Ocena została zapisana.");
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Ocena została zapisana pomyślnie.");
+        response.put("filmId", filmId);
+        response.put("userId", userId);
+        response.put("rating", rating);
+
+        return ResponseEntity.ok(response);
     }
+
 }

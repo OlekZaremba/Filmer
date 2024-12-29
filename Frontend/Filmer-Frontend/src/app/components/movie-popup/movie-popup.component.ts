@@ -93,10 +93,9 @@ export class MoviePopupComponent implements OnInit {
         this.filmService.getFilmsByName(this.title).subscribe((films) => {
           if (films.length > 0) {
             const film = films[0];
-            console.log('Film ID:', film.idFilm, 'User ID:', userId, 'Rating:', numericRating); // Debug
             this.filmService.setRating(film.idFilm, userId, numericRating).subscribe(
-              () => {
-                alert('Ocena zapisana!');
+              (response) => {
+                alert(response.message);
               },
               (error) => {
                 console.error('Błąd przy zapisie oceny:', error);
