@@ -1,11 +1,14 @@
 package com.filmer.filmerbackend.Controllers;
 
+import com.filmer.filmerbackend.Dtos.FilmSuggestionRequest;
 import com.filmer.filmerbackend.Entities.Films;
 import com.filmer.filmerbackend.Services.LibraryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -46,5 +49,22 @@ public class LibraryController {
     public ResponseEntity<List<Films>> getFilmsByName(@RequestParam String name) {
         List<Films> films = libraryService.getFilmsByName(name);
         return ResponseEntity.ok(films);
+    }
+
+    @PostMapping("/suggest-film")
+    public ResponseEntity<Map<String, String>> suggestFilm(@RequestBody FilmSuggestionRequest request) {
+        libraryService.sendFilmSuggestion(
+                request.getTitle(),
+                request.getDescription(),
+                request.getGenre(),
+                request.getPlatform(),
+                request.getDirector(),
+                request.getStudio(),
+                request.getType()
+        );
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Sugestia została wysłana pomyślnie.");
+        return ResponseEntity.ok(response);
     }
 }

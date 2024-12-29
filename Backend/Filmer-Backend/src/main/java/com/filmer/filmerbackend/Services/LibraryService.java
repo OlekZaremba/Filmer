@@ -12,4 +12,5 @@ public interface LibraryService {
     List<Films> getAllFilms();
     List<Films> getFilmsByGenre(String genreName);
     List<Films> getFilmsByName(String name);
+    void sendFilmSuggestion(String title, String description, String genre, String platform, String director, String studio, String type);
 }

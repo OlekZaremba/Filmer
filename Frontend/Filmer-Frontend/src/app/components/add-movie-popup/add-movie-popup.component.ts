@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-add-movie-popup',
@@ -58,7 +59,7 @@ export class AddMoviePopupComponent {
 
   movieForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private http: HttpClient) {
     this.movieForm = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
@@ -76,8 +77,17 @@ export class AddMoviePopupComponent {
 
   submitForm(): void {
     if (this.movieForm.valid) {
-      this.movieAdded.emit(this.movieForm.value);
-      this.closePopup();
+      const formData = this.movieForm.value;
+      this.http.post<{ message: string }>('http://localhost:8080/api/library/suggest-film', formData)
+        .subscribe({
+          next: (response) => {
+            alert(response.message);
+            this.closePopup();
+          },
+          error: () => {
+            alert('Wystąpił błąd podczas wysyłania sugestii.');
+          }
+        });
     }
   }
 }

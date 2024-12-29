@@ -12,6 +12,8 @@ import com.itextpdf.layout.element.Paragraph;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -23,6 +25,8 @@ import java.util.Optional;
 public class LibraryServiceImpl implements LibraryService {
 
     private final FilmsRepository filmsRepository;
+    private final JavaMailSender mailSender;
+
     @Override
     public Optional<Films> getFilmById(Integer idFilm) {
         return filmsRepository.findById(idFilm);
@@ -110,4 +114,20 @@ public class LibraryServiceImpl implements LibraryService {
     public List<Films> getFilmsByName(String name) {
         return filmsRepository.findByFilmNameContaining(name);
     }
+
+    @Override
+    public void sendFilmSuggestion(String title, String description, String genre, String platform, String director, String studio, String type) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo("filmer2222@gmail.com");
+        message.setSubject("Nowa sugestia filmu");
+        message.setText("Tytuł: " + title + "\n" +
+                "Opis: " + description + "\n" +
+                "Gatunek: " + genre + "\n" +
+                "Platforma: " + platform + "\n" +
+                "Reżyser: " + director + "\n" +
+                "Studio: " + studio + "\n" +
+                "Typ: " + type);
+        mailSender.send(message);
+    }
+
 }
