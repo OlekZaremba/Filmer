@@ -26,4 +26,7 @@ public class WatchedMovies {
     @ManyToOne
     @JoinColumn(name = "users_id_user", nullable = false)
     private Users user;
+
+    @Column(name = "rating", nullable = true)
+    private Integer rating;
 }

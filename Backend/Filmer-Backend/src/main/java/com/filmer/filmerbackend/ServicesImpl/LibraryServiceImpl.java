@@ -1,7 +1,11 @@
 package com.filmer.filmerbackend.ServicesImpl;
 
 import com.filmer.filmerbackend.Entities.Films;
+import com.filmer.filmerbackend.Entities.Users;
+import com.filmer.filmerbackend.Entities.WatchedMovies;
 import com.filmer.filmerbackend.Repositories.FilmsRepository;
+import com.filmer.filmerbackend.Repositories.UsersRepository;
+import com.filmer.filmerbackend.Repositories.WatchedMoviesRepository;
 import com.filmer.filmerbackend.Services.LibraryService;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
@@ -26,6 +30,8 @@ public class LibraryServiceImpl implements LibraryService {
 
     private final FilmsRepository filmsRepository;
     private final JavaMailSender mailSender;
+    private final WatchedMoviesRepository watchedMoviesRepository;
+    private final UsersRepository usersRepository;
 
     @Override
     public Optional<Films> getFilmById(Integer idFilm) {
@@ -128,6 +134,29 @@ public class LibraryServiceImpl implements LibraryService {
                 "Studio: " + studio + "\n" +
                 "Typ: " + type);
         mailSender.send(message);
+    }
+
+    @Override
+    public Optional<Integer> getRating(Integer filmId, Integer userId) {
+        return watchedMoviesRepository.findByFilmIdAndUserId(filmId, userId)
+                .map(WatchedMovies::getRating);
+    }
+
+    @Override
+    public void setRating(Integer filmId, Integer userId, Integer rating) {
+        WatchedMovies watchedMovie = watchedMoviesRepository.findByFilmIdAndUserId(filmId, userId)
+                .orElseGet(() -> {
+                    WatchedMovies newWatchedMovie = new WatchedMovies();
+                    Films film = filmsRepository.findById(filmId)
+                            .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono filmu o podanym ID."));
+                    Users user = usersRepository.findById(userId)
+                            .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono użytkownika o podanym ID."));
+                    newWatchedMovie.setFilm(film);
+                    newWatchedMovie.setUser(user);
+                    return newWatchedMovie;
+                });
+        watchedMovie.setRating(rating);
+        watchedMoviesRepository.save(watchedMovie);
     }
 
 }

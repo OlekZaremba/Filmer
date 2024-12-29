@@ -67,4 +67,17 @@ public class LibraryController {
         response.put("message", "Sugestia została wysłana pomyślnie.");
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("films/watched-movies/{filmId}/rating")
+    public ResponseEntity<Integer> getRating(@PathVariable Integer filmId, @RequestParam Integer userId) {
+        return libraryService.getRating(filmId, userId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("films/watched-movies/{filmId}/rating")
+    public ResponseEntity<String> setRating(@PathVariable Integer filmId, @RequestParam Integer userId, @RequestParam Integer rating) {
+        libraryService.setRating(filmId, userId, rating);
+        return ResponseEntity.ok("Ocena została zapisana.");
+    }
 }

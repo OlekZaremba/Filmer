@@ -25,6 +25,14 @@ export class FilmService {
   getFilmsByName(name: string): Observable<Film[]> {
     return this.http.get<Film[]>(`${this.apiUrl}/search?name=${name}`);
   }
+
+  getRating(filmId: number, userId: number): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/watched-movies/${filmId}/rating?userId=${userId}`);
+  }
+
+  setRating(filmId: number, userId: number, rating: number): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/watched-movies/${filmId}/rating?userId=${userId}&rating=${rating}`, {});
+  }
 }
 
 export interface Film {
