@@ -2,7 +2,7 @@
   <div class="main-container">
     <div class="friends-component">
       <div class="joining-users">
-        <h2>Uczestnicy {{participants.length}}/5</h2>
+        <h2>{{ currentLanguage === 'polish' ? 'Uczestnicy' : 'Participants' }} {{participants.length}}/5</h2>
         <ul>
           <li *ngFor="let participant of participants">
             {{ participant.nick }}
@@ -11,52 +11,60 @@
       </div>
 
       <div class="initial-settings">
-        <h2>Wstępne ustawienia</h2>
+        <h2>{{ currentLanguage === 'polish' ? 'Wstępne ustawienia' : 'Initial settings' }}</h2>
 
         <div class="streaming-platform">
-          <h3>Platforma streamingowa:</h3>
+          <h3>{{ currentLanguage === 'polish' ? 'Platforma streamingowa:' : 'Streaming platform:' }}</h3>
           <input list="streaming-platform" [(ngModel)]="selectedPlatform" onfocus="this.value=''">
         </div>
 
         <div class="genre">
-          <h3>Gatunek filmu:</h3>
+          <h3>{{ currentLanguage === 'polish' ? 'Gatunek filmu:' : 'Movie genre:' }}</h3>
           <input list="genre" [(ngModel)]="selectedGenre" onfocus="this.value=''">
         </div>
 
         <div class="type">
-          <h3>Typ</h3>
+          <h3>{{ currentLanguage === 'polish' ? 'Typ:' : 'Type:' }}</h3>
           <input list="type" [(ngModel)]="selectedType" onfocus="this.value=''">
         </div>
 
         <div class="submit-buttons">
-          <button class="submit" (click)="savePreferences()">Zapisz preferencje</button>
-          <button class="submit" (click)="generateLink()" [disabled]="isCreatingNewLobbyDisabled()">
-            Generuj link
+          <button class="submit" (click)="savePreferences()">
+            {{ currentLanguage === 'polish' ? 'Zapisz preferencje' : 'Save preferences' }}
           </button>
-          <button class="submit" (click)="startGame()">Rozpocznij</button>
+          <button class="submit" (click)="generateLink()" [disabled]="isCreatingNewLobbyDisabled()">
+            {{ currentLanguage === 'polish' ? 'Generuj link' : 'Generate link' }}
+          </button>
+          <button class="submit" (click)="startGame()">
+            {{ currentLanguage === 'polish' ? 'Rozpocznij' : 'Start game' }}
+          </button>
         </div>
 
-        <p>Twój link do lobby:</p>
+        <p>{{ currentLanguage === 'polish' ? 'Twój link do lobby:' : 'Your lobby link:' }}</p>
         <div *ngIf="lobbyLink" class="lobby-link">
           <p><a [href]="lobbyLink" target="_blank">{{ lobbyLink }}</a></p>
         </div>
       </div>
 
       <div class="friends-list">
-        <div *ngIf="friends.length === 0" class="no-friends">Brak znajomych do wyświetlenia.</div>
-        <h2>Twoi znajomi</h2>
+        <div *ngIf="friends.length === 0" class="no-friends">
+          {{ currentLanguage === 'polish' ? 'Brak znajomych do wyświetlenia.' : 'No friends to display.' }}
+        </div>
+        <h2>{{ currentLanguage === 'polish' ? 'Twoi znajomi' : 'Your friends' }}</h2>
         <ul *ngIf="friends.length > 0">
           <li *ngFor="let friend of friends" class="friend-item">
             <img
               [src]="friend.avatar || 'assets/images/user.png'"
               class="friend-avatar"
-              alt="Zdjęcie znajomego">
+              [alt]="currentLanguage === 'polish' ? 'Zdjęcie znajomego' : 'Friend photo'">
             <div class="friend-invite">
               <div class="friend-info">
                 <span class="friend-nick">{{ friend.nick }}</span>
               </div>
               <div class="invite-button">
-                <button (click)="sendInvite(friend)" [disabled]="!canSendInvites">Wyślij zaproszenie</button>
+                <button (click)="sendInvite(friend)" [disabled]="!canSendInvites">
+                  {{ currentLanguage === 'polish' ? 'Wyślij zaproszenie' : 'Send invite' }}
+                </button>
               </div>
             </div>
           </li>
@@ -67,22 +75,22 @@
 </div>
 
 <datalist id="streaming-platform">
-  <option value="Netflix">
-  <option value="Disney+">
-  <option value="Max">
-  <option value="Showtime">
-  <option value="Amazon">
+  <option value="{{ currentLanguage === 'polish' ? 'Netflix' : 'Netflix' }}">
+  <option value="{{ currentLanguage === 'polish' ? 'Disney+' : 'Disney+' }}">
+  <option value="{{ currentLanguage === 'polish' ? 'Max' : 'Max' }}">
+  <option value="{{ currentLanguage === 'polish' ? 'Showtime' : 'Showtime' }}">
+  <option value="{{ currentLanguage === 'polish' ? 'Amazon' : 'Amazon' }}">
 </datalist>
 
 <datalist id="genre">
-  <option value="Dramat">
-  <option value="Komedia">
-  <option value="Horror">
-  <option value="Thriller">
-  <option value="Psychologiczny">
+  <option value="{{ currentLanguage === 'polish' ? 'Dramat' : 'Drama' }}">
+  <option value="{{ currentLanguage === 'polish' ? 'Komedia' : 'Comedy' }}">
+  <option value="{{ currentLanguage === 'polish' ? 'Horror' : 'Horror' }}">
+  <option value="{{ currentLanguage === 'polish' ? 'Thriller' : 'Thriller' }}">
+  <option value="{{ currentLanguage === 'polish' ? 'Psychologiczny' : 'Psychological' }}">
 </datalist>
 
 <datalist id="type">
-  <option value="Film">
-  <option value="Serial">
+  <option value="{{ currentLanguage === 'polish' ? 'Film' : 'Movie' }}">
+  <option value="{{ currentLanguage === 'polish' ? 'Serial' : 'Series' }}">
 </datalist>

@@ -26,6 +26,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
   selectedType: string = '';
   readyParticipantsCount: number = 0;
   currentTheme: 'light' | 'dark' = 'dark';
+  currentLanguage: 'polish' | 'english' = 'polish';
 
   private participantSubscription: Subscription | undefined;
 
@@ -38,6 +39,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadTheme();
+    this.loadLanguage();
     const email = localStorage.getItem('email');
     const nick = localStorage.getItem('nick');
     const userId = localStorage.getItem('userId');
@@ -70,6 +72,12 @@ export class LobbyComponent implements OnInit, OnDestroy {
     });
 
     this.loadParticipants();
+    window.addEventListener('storage', this.handleStorageChange.bind(this));
+  }
+
+  private loadLanguage(): void {
+    const savedLanguage = localStorage.getItem('language') as 'polish' | 'english';
+    this.currentLanguage = savedLanguage || 'polish';
   }
 
   private loadTheme() {
@@ -92,6 +100,13 @@ export class LobbyComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.participantSubscription) {
       this.participantSubscription.unsubscribe();
+    }
+    window.removeEventListener('storage', this.handleStorageChange.bind(this));
+  }
+
+  private handleStorageChange(event: StorageEvent): void {
+    if (event.key === 'language') {
+      this.loadLanguage();
     }
   }
 
