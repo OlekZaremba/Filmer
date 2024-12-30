@@ -4,15 +4,20 @@
   </div>
   <div class="content">
     <div class="left-text">
-      <h1>Nie wiesz co obejrzeć?</h1>
-      <span>Utwórz poczekalnię sam lub ze znajomymi i pozwól<br>nam dopasować film pod Twoje oczekiwania!</span>
-      <button routerLink="/create-lobby" routerLinkActive="active">Utwórz poczekalnię!</button>
+      <h1>{{ currentLanguage === 'polish' ? 'Nie wiesz co obejrzeć?' : 'Not sure what to watch?' }}</h1>
+      <span [innerHTML]="currentLanguage === 'polish'
+        ? 'Utwórz poczekalnię sam lub ze znajomymi i pozwól<br>nam dopasować film pod Twoje oczekiwania!'
+        : 'Create a lobby alone or with friends and let us<br>match a movie to your preferences!'">
+      </span>
+      <button routerLink="/create-lobby" routerLinkActive="active">
+        {{ currentLanguage === 'polish' ? 'Utwórz poczekalnię!' : 'Create a lobby!' }}
+      </button>
     </div>
     <div class="right-cards" #rightCards (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave()">
       <img src="assets/images/cards.png" alt="Obrazek" #parallaxImage>
     </div>
     <button class="theme-toggle" (click)="toggleTheme()">
-      {{ currentTheme === 'dark' ? '&#127769;' : '&#127774;' }}
+      {{ currentTheme === 'dark' ? '🌙' : '☀️' }}
     </button>
   </div>
 </div>

@@ -2,24 +2,58 @@
   <div class="main-container">
     <div class="friends-component">
       <div class="filter-settings">
-        <h2>Filtry:</h2>
+        <h2>{{ currentLanguage === 'polish' ? 'Filtry:' : 'Filters:' }}</h2>
         <button
-          class="filter-button" [class.active]="activeFilter === 'all'" (click)="filterFilms('all')">Pokaż wszystkie</button>
-        <button class="filter-button" [class.active]="activeFilter === 'Dramat'"(click)="filterFilms('Dramat')">Dramat</button>
-        <button class="filter-button" [class.active]="activeFilter === 'Komedia'" (click)="filterFilms('Komedia')">Komedia</button>
-        <button class="filter-button" [class.active]="activeFilter === 'Horror'" (click)="filterFilms('Horror')">Horror</button>
-        <button class="filter-button" [class.active]="activeFilter === 'Thriller'" (click)="filterFilms('Thriller')">Thriller</button>
-        <button class="filter-button" [class.active]="activeFilter === 'Psychologiczny'" (click)="filterFilms('Psychologiczny')">Psychologiczny</button>
+          class="filter-button"
+          [class.active]="activeFilter === 'all'"
+          (click)="filterFilms('all')">
+          {{ currentLanguage === 'polish' ? 'Pokaż wszystkie' : 'Show all' }}
+        </button>
+        <button
+          class="filter-button"
+          [class.active]="activeFilter === 'Dramat'"
+          (click)="filterFilms('Dramat')">
+          {{ currentLanguage === 'polish' ? 'Dramat' : 'Drama' }}
+        </button>
+        <button
+          class="filter-button"
+          [class.active]="activeFilter === 'Komedia'"
+          (click)="filterFilms('Komedia')">
+          {{ currentLanguage === 'polish' ? 'Komedia' : 'Comedy' }}
+        </button>
+        <button
+          class="filter-button"
+          [class.active]="activeFilter === 'Horror'"
+          (click)="filterFilms('Horror')">
+          {{ currentLanguage === 'polish' ? 'Horror' : 'Horror' }}
+        </button>
+        <button
+          class="filter-button"
+          [class.active]="activeFilter === 'Thriller'"
+          (click)="filterFilms('Thriller')">
+          {{ currentLanguage === 'polish' ? 'Thriller' : 'Thriller' }}
+        </button>
+        <button
+          class="filter-button"
+          [class.active]="activeFilter === 'Psychologiczny'"
+          (click)="filterFilms('Psychologiczny')">
+          {{ currentLanguage === 'polish' ? 'Psychologiczny' : 'Psychological' }}
+        </button>
 
-        <h3>Twój pomysł</h3>
-        <p>Nie znalazłeś filmu dla siebie? Zaproponuj nam coś!</p>
-        <button class="add-button" (click)="openAddPopup()">Zaproponuj swój film!</button>
+        <h3>{{ currentLanguage === 'polish' ? 'Twój pomysł' : 'Your idea' }}</h3>
+        <p>{{ currentLanguage === 'polish' ? 'Nie znalazłeś filmu dla siebie? Zaproponuj nam coś!' : 'Didn’t find a movie for yourself? Suggest one to us!' }}</p>
+        <button class="add-button" (click)="openAddPopup()">
+          {{ currentLanguage === 'polish' ? 'Zaproponuj swój film!' : 'Suggest your movie!' }}
+        </button>
       </div>
       <div class="movie-list">
         <div class="search-movie">
-          <input type="text" #searchInput placeholder="Wprowadź nazwę filmu..." />
+          <input
+            type="text"
+            #searchInput
+            [placeholder]="currentLanguage === 'polish' ? 'Wprowadź nazwę filmu...' : 'Enter the movie name...'" />
           <button (click)="searchFilmsByName(searchInput.value); searchInput.value = ''">
-            <img src="assets/images/search.png" alt="Szukaj">
+            <img src="assets/images/search.png" [alt]="currentLanguage === 'polish' ? 'Szukaj' : 'Search'">
           </button>
         </div>
         <ul>

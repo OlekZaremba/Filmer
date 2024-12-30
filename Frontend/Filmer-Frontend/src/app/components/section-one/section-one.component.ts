@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ElementRef, ViewChild, Renderer2, OnInit } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild, Renderer2, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { MenuComponent } from '../menu/menu.component';
 import { RouterModule } from '@angular/router';
 
@@ -9,14 +9,24 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [RouterModule, MenuComponent]
 })
-export class SectionOneComponent implements AfterViewInit, OnInit {
+export class SectionOneComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('parallaxImage') parallaxImage!: ElementRef;
   currentTheme: 'light' | 'dark' = 'dark';
+  currentLanguage: 'polish' | 'english' = 'english'; // Domyślny język
 
-  constructor(private renderer: Renderer2) { }
+  constructor(private renderer: Renderer2, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.loadTheme();
+    this.loadLanguage();
+
+    // Nasłuchiwanie zmian w localStorage
+    window.addEventListener('storage', this.handleStorageChange.bind(this));
+  }
+
+  ngOnDestroy(): void {
+    // Usuwanie nasłuchiwania po zniszczeniu komponentu
+    window.removeEventListener('storage', this.handleStorageChange.bind(this));
   }
 
   ngAfterViewInit(): void {
@@ -62,5 +72,17 @@ export class SectionOneComponent implements AfterViewInit, OnInit {
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
     this.currentTheme = savedTheme || 'dark';
     this.applyTheme(this.currentTheme);
+  }
+
+  private loadLanguage() {
+    const savedLanguage = localStorage.getItem('language') as 'polish' | 'english';
+    this.currentLanguage = savedLanguage || 'english';
+    this.cdr.detectChanges(); // Wymuszenie odświeżenia widoku
+  }
+
+  private handleStorageChange(event: StorageEvent): void {
+    if (event.key === 'language') {
+      this.loadLanguage();
+    }
   }
 }

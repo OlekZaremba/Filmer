@@ -1,4 +1,4 @@
-import {Component, Renderer2} from '@angular/core';
+import {ChangeDetectorRef, Component, Renderer2} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -26,12 +26,33 @@ export class LoginPageComponent {
   captchaSiteKey: string = '6LfkyJYqAAAAAJ_woX_R6Ida3127aiF68n6VCQuL';
   captchaResponse: string | null = null;
   currentTheme: 'light' | 'dark' = 'dark';
+  currentLanguage: 'polish' | 'english' = 'english';
 
 
-  constructor(private authService: AuthService, private router: Router, private renderer: Renderer2) {}
+  constructor(private authService: AuthService, private router: Router, private renderer: Renderer2, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.loadTheme();
+    this.loadLanguage();
+
+    window.addEventListener('storage', this.handleStorageChange.bind(this));
+  }
+
+  ngOnDestroy(): void {
+    // Usuwanie nasłuchiwania po zniszczeniu komponentu
+    window.removeEventListener('storage', this.handleStorageChange.bind(this));
+  }
+
+  private loadLanguage() {
+    const savedLanguage = localStorage.getItem('language') as 'polish' | 'english';
+    this.currentLanguage = savedLanguage || 'english';
+    this.cdr.detectChanges(); // Wymuszenie odświeżenia widoku
+  }
+
+  private handleStorageChange(event: StorageEvent): void {
+    if (event.key === 'language') {
+      this.loadLanguage();
+    }
   }
 
   private loadTheme() {

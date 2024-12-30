@@ -1,4 +1,4 @@
-import {Component, OnInit, Renderer2} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, Renderer2} from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import { FriendsService } from '../../services/friends.service';
 import {MenuComponent} from '../menu/menu.component';
@@ -20,11 +20,14 @@ export class UserProfileComponent implements OnInit {
   searchResults: any[] = [];
   selectedFile: File | null = null;
   currentTheme: 'light' | 'dark' = 'dark';
+  currentLanguage: 'polish' | 'english' = 'english';
 
-  constructor(private friendsService: FriendsService, private renderer: Renderer2) {}
+  constructor(private friendsService: FriendsService, private renderer: Renderer2, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.loadTheme();
+    this.loadLanguage();
+
     const email = localStorage.getItem('email');
     const nick = localStorage.getItem('nick');
     const userId = localStorage.getItem('userId');
@@ -41,6 +44,24 @@ export class UserProfileComponent implements OnInit {
       }
     } else {
       console.error('E-mail lub nick użytkownika nie są dostępne w localStorage.');
+    }
+    window.addEventListener('storage', this.handleStorageChange.bind(this));
+  }
+
+  ngOnDestroy(): void {
+    // Usuwanie nasłuchiwania po zniszczeniu komponentu
+    window.removeEventListener('storage', this.handleStorageChange.bind(this));
+  }
+
+  private loadLanguage() {
+    const savedLanguage = localStorage.getItem('language') as 'polish' | 'english';
+    this.currentLanguage = savedLanguage || 'english';
+    this.cdr.detectChanges(); // Wymuszenie odświeżenia widoku
+  }
+
+  private handleStorageChange(event: StorageEvent): void {
+    if (event.key === 'language') {
+      this.loadLanguage();
     }
   }
 

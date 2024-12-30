@@ -1,4 +1,4 @@
-import {Component, OnInit, Renderer2} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, Renderer2} from '@angular/core';
 import {NgForOf, NgIf} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import { MoviePopupComponent } from '../movie-popup/movie-popup.component';
@@ -27,12 +27,35 @@ export class LibraryComponent implements OnInit {
   activeFilter: string = 'all';
   isAddPopupVisible = false;
   currentTheme: 'light' | 'dark' = 'dark';
+  currentLanguage: 'polish' | 'english' = 'english';
 
-  constructor(private filmService: FilmService, private renderer: Renderer2) {}
+  constructor(private filmService: FilmService, private renderer: Renderer2, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.loadTheme();
     this.loadFilms();
+
+    this.loadLanguage();
+
+    // Nasłuchiwanie zmian w localStorage
+    window.addEventListener('storage', this.handleStorageChange.bind(this));
+  }
+
+  ngOnDestroy(): void {
+    // Usuwanie nasłuchiwania po zniszczeniu komponentu
+    window.removeEventListener('storage', this.handleStorageChange.bind(this));
+  }
+
+  private loadLanguage() {
+    const savedLanguage = localStorage.getItem('language') as 'polish' | 'english';
+    this.currentLanguage = savedLanguage || 'english';
+    this.cdr.detectChanges(); // Wymuszenie odświeżenia widoku
+  }
+
+  private handleStorageChange(event: StorageEvent): void {
+    if (event.key === 'language') {
+      this.loadLanguage();
+    }
   }
 
   private loadTheme() {

@@ -15,6 +15,7 @@ export class MenuComponent implements OnInit {
   isLoggedIn$;
   userPhoto: string | null = null;
   currentTheme: 'light' | 'dark' = 'dark'; // Domyślny motyw
+  currentLanguage: 'polish' | 'english' = 'english'; // Domyślny motyw
 
   constructor(
     private authService: AuthService,
@@ -33,8 +34,19 @@ export class MenuComponent implements OnInit {
       }
     });
     this.loadTheme();
+    this.loadLanguage();
+  }
+  changeLanguage() {
+    this.currentLanguage = this.currentLanguage === 'english' ? 'polish' : 'english';
+    localStorage.setItem('language', this.currentLanguage);
+
+    window.location.reload();
   }
 
+  private loadLanguage() {
+    const savedLanguage = localStorage.getItem('language') as 'polish' | 'english';
+    this.currentLanguage = savedLanguage || 'english';
+  }
   toggleTheme() {
     this.currentTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
     this.applyTheme(this.currentTheme);

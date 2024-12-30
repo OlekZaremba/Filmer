@@ -3,16 +3,28 @@
     <button><img src="assets/images/logo_white.png" alt="Logo"></button>
   </div>
   <div class="menu-buttons">
-    <button routerLink="/" routerLinkActive="active">STRONA GŁÓWNA</button>
-    <button routerLink="/create-lobby" routerLinkActive="active">UTWÓRZ LOBBY</button>
-    <button routerLink="/library" routerLinkActive="active">BIBLIOTEKA</button>
-    <button routerLink="/your-reviews" routerLinkActive="active">DODAJ FILM</button>
-    <button *ngIf="!(isLoggedIn$ | async); else logoutBtn" (click)="login()" routerLink="/login" routerLinkActive="active">ZALOGUJ SIĘ</button>
+    <button routerLink="/" routerLinkActive="active">
+      {{ currentLanguage === 'polish' ? 'STRONA GŁÓWNA' : 'HOME' }}
+    </button>
+    <button routerLink="/create-lobby" routerLinkActive="active">
+      {{ currentLanguage === 'polish' ? 'UTWÓRZ LOBBY' : 'CREATE LOBBY' }}
+    </button>
+    <button routerLink="/library" routerLinkActive="active">
+      {{ currentLanguage === 'polish' ? 'BIBLIOTEKA' : 'LIBRARY' }}
+    </button>
+    <button *ngIf="!(isLoggedIn$ | async); else logoutBtn" (click)="login()" routerLink="/login" routerLinkActive="active">
+      {{ currentLanguage === 'polish' ? 'ZALOGUJ SIĘ' : 'LOGIN' }}
+    </button>
     <ng-template #logoutBtn>
-      <button (click)="logout()">WYLOGUJ SIĘ</button>
+      <button (click)="logout()">
+        {{ currentLanguage === 'polish' ? 'WYLOGUJ SIĘ' : 'LOGOUT' }}
+      </button>
       <button class="user-button" routerLink="/user-profile">
         <img [src]="userPhoto || 'assets/images/user.png'" alt="Zdjęcie profilowe użytkownika">
       </button>
     </ng-template>
+    <button (click)="changeLanguage()">
+      {{ currentLanguage === 'polish' ? 'EN' : 'PL' }}
+    </button>
   </div>
 </div>

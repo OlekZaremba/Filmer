@@ -1,26 +1,54 @@
 <div class="container">
   <div class="main">
     <div class="login">
-      <h1>Zaloguj się!</h1>
+      <h1>{{ currentLanguage === 'polish' ? 'Zaloguj się!' : 'Log in!' }}</h1>
       <div class="inputs">
-        <input type="email" [(ngModel)]="loginEmail" placeholder="Email lub nazwa użytkownika" required>
-        <input type="password" [(ngModel)]="loginPassword" placeholder="Hasło" required>
+        <input
+          type="email"
+          [(ngModel)]="loginEmail"
+          [placeholder]="currentLanguage === 'polish' ? 'Email lub nazwa użytkownika' : 'Email or username'"
+          required>
+        <input
+          type="password"
+          [(ngModel)]="loginPassword"
+          [placeholder]="currentLanguage === 'polish' ? 'Hasło' : 'Password'"
+          required>
 
         <!-- reCAPTCHA widget -->
         <re-captcha (resolved)="onCaptchaResolved($event)" [siteKey]="captchaSiteKey"></re-captcha>
 
-        <button [disabled]="!captchaResponse" (click)="login()">Zaloguj się</button>
+        <button [disabled]="!captchaResponse" (click)="login()">
+          {{ currentLanguage === 'polish' ? 'Zaloguj się' : 'Log in' }}
+        </button>
       </div>
     </div>
 
     <div class="sign-up">
-      <h1>lub zarejestruj 😉</h1>
+      <h1>{{ currentLanguage === 'polish' ? 'lub zarejestruj 😉' : 'or sign up 😉' }}</h1>
       <div class="inputs">
-        <input type="text" [(ngModel)]="registerUsername" placeholder="Nazwa użytkownika" required>
-        <input type="email" [(ngModel)]="registerEmail" placeholder="E-mail" required>
-        <input type="password" [(ngModel)]="registerPassword" placeholder="Hasło" required>
-        <input type="password" [(ngModel)]="registerConfirmPassword" placeholder="Potwierdź hasło" required>
-        <button (click)="register()">Zarejestruj się!</button>
+        <input
+          type="text"
+          [(ngModel)]="registerUsername"
+          [placeholder]="currentLanguage === 'polish' ? 'Nazwa użytkownika' : 'Username'"
+          required>
+        <input
+          type="email"
+          [(ngModel)]="registerEmail"
+          [placeholder]="currentLanguage === 'polish' ? 'E-mail' : 'E-mail'"
+          required>
+        <input
+          type="password"
+          [(ngModel)]="registerPassword"
+          [placeholder]="currentLanguage === 'polish' ? 'Hasło' : 'Password'"
+          required>
+        <input
+          type="password"
+          [(ngModel)]="registerConfirmPassword"
+          [placeholder]="currentLanguage === 'polish' ? 'Potwierdź hasło' : 'Confirm password'"
+          required>
+        <button (click)="register()">
+          {{ currentLanguage === 'polish' ? 'Zarejestruj się!' : 'Sign up!' }}
+        </button>
       </div>
     </div>
   </div>

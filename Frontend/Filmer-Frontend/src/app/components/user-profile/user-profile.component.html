@@ -2,12 +2,12 @@
   <div class="content">
     <div class="user-info-left">
 
-      <h1>Twój profil</h1>
+      <h1>{{ currentLanguage === 'polish' ? 'Twój profil' : 'Your profile' }}</h1>
 
       <div class="profile-picture-container">
         <img
           src="assets/images/user.png"
-          alt="Zdjęcie profilowe"
+          alt="{{ currentLanguage === 'polish' ? 'Zdjęcie profilowe' : 'Profile picture' }}"
           class="profile-picture"
         >
         <input
@@ -17,29 +17,35 @@
           (change)="onFileSelected($event)"
           hidden
         />
-        <button class="change-picture-button" (click)="triggerFileInput()">Zmień zdjęcie</button>
+        <button class="change-picture-button" (click)="triggerFileInput()">
+          {{ currentLanguage === 'polish' ? 'Zmień zdjęcie' : 'Change picture' }}
+        </button>
       </div>
 
-      <span>Nazwa użytkownika</span>
-      <input type="text" [value]="userName" placeholder="Nazwa użytkownika" disabled>
-      <span>Adres e-mail</span>
-      <input type="text" [value]="email" placeholder="Adres e-mail" disabled>
+      <span>{{ currentLanguage === 'polish' ? 'Nazwa użytkownika' : 'Username' }}</span>
+      <input type="text" [value]="userName" [placeholder]="currentLanguage === 'polish' ? 'Nazwa użytkownika' : 'Username'" disabled>
+      <span>{{ currentLanguage === 'polish' ? 'Adres e-mail' : 'Email address' }}</span>
+      <input type="text" [value]="email" [placeholder]="currentLanguage === 'polish' ? 'Adres e-mail' : 'Email address'" disabled>
     </div>
 
     <div class="user-info-right">
-      <h1>Obserwowani</h1>
+      <h1>{{ currentLanguage === 'polish' ? 'Obserwowani' : 'Following' }}</h1>
       <div class="friends-list">
-        <div *ngIf="friends.length === 0" class="no-friends">Brak obserwowanych.</div>
+        <div *ngIf="friends.length === 0" class="no-friends">
+          {{ currentLanguage === 'polish' ? 'Brak obserwowanych.' : 'No friends followed.' }}
+        </div>
 
         <ul *ngIf="friends.length > 0">
           <li *ngFor="let friend of friends" class="friend-item">
             <img
               [src]="friend.avatar || 'assets/images/user.png'"
               class="friend-avatar"
-              alt="Zdjęcie obserwowanego">
+              [alt]="currentLanguage === 'polish' ? 'Zdjęcie obserwowanego' : 'Followed user picture'">
             <div class="friend-info">
               <span class="friend-nick">{{ friend.nick }}</span>
-              <button class="delete-friend">Przestań obserwować</button>
+              <button class="delete-friend">
+                {{ currentLanguage === 'polish' ? 'Przestań obserwować' : 'Unfollow' }}
+              </button>
             </div>
           </li>
         </ul>
@@ -48,15 +54,19 @@
 
     <div class="search-friend">
       <div class="search-bar">
-        <h1>Znajdź użytkownika</h1>
+        <h1>{{ currentLanguage === 'polish' ? 'Znajdź użytkownika' : 'Find user' }}</h1>
 
         <input
           type="text"
-          placeholder="Wpisz nazwę użytkownika"
+          [placeholder]="currentLanguage === 'polish' ? 'Wpisz nazwę użytkownika' : 'Enter username'"
           [(ngModel)]="searchTerm"
           (input)="searchUsers()">
       </div>
-      <div *ngIf="searchResults.length === 0 && searchTerm" class="no-results"><span>Brak wyników wyszukiwania.</span></div>
+      <div *ngIf="searchResults.length === 0 && searchTerm" class="no-results">
+        <span>
+          {{ currentLanguage === 'polish' ? 'Brak wyników wyszukiwania.' : 'No search results.' }}
+        </span>
+      </div>
       <div class="search-results" *ngIf="searchResults.length > 0">
         <ul>
           <li *ngFor="let user of searchResults" class="search-item">
@@ -65,7 +75,9 @@
               class="friend-avatar">
             <div class="friend-info">
               <span class="friend-nick">{{ user.nick }}</span>
-              <button (click)="addFriend(user.id)">Obserwuj</button>
+              <button (click)="addFriend(user.id)">
+                {{ currentLanguage === 'polish' ? 'Obserwuj' : 'Follow' }}
+              </button>
             </div>
           </li>
         </ul>
