@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Renderer2} from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { DrawService } from '../../services/draw.service';
 import { interval, Subscription } from 'rxjs';
@@ -25,12 +25,15 @@ export class ResultsComponent implements OnInit {
   isPopupVisible = false;
   popupTitle = '';
   popupItems: string[] = [];
+  currentTheme: 'light' | 'dark' = 'dark';
+
 
   constructor(
     private route: ActivatedRoute,
     private drawService: DrawService,
     private router: Router,
     private resultsService: ResultsService,
+    private renderer: Renderer2
   ) {}
 
   ngOnInit(): void {
@@ -48,6 +51,27 @@ export class ResultsComponent implements OnInit {
       this.startPolling();
     } else {
       console.error('Brak lobbyCode w URL.');
+    }
+  }
+
+  ngAfterViewChecked(){
+    this.applyTheme(this.currentTheme);
+  }
+
+  private loadTheme() {
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
+    this.currentTheme = savedTheme || 'dark';
+    this.applyTheme(this.currentTheme);
+  }
+
+  private applyTheme(theme: 'light' | 'dark') {
+    const container = document.querySelector('.section-user') as HTMLElement;
+    if (theme === 'dark') {
+      this.renderer.addClass(container, 'dark-theme');
+      this.renderer.removeClass(container, 'light-theme');
+    } else {
+      this.renderer.addClass(container, 'light-theme');
+      this.renderer.removeClass(container, 'dark-theme');
     }
   }
 

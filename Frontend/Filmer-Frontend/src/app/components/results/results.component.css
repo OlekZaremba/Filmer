@@ -7,6 +7,8 @@
   align-items: center;
   justify-content: center;
 }
+
+
 .cards {
   display: flex;
   flex-direction: row;
@@ -19,7 +21,7 @@
 }
 
 .first-place-card {
-  height: 500px;
+  height: 25rem;
   z-index: 999;
 }
 
@@ -29,13 +31,13 @@
 }
 
 .second-place-card, .third-place-card {
-  height: 450px;
+  height: 20rem;
   z-index: 888;
 }
 
 .second-place-card {
   transform: rotate(-15deg);
-  margin-right: -10rem;
+  margin-right: -7rem;
 }
 
 .second-place-card:hover {
@@ -45,7 +47,7 @@
 
 .third-place-card {
   transform: rotate(15deg);
-  margin-left: -10rem;
+  margin-left: -7rem;
 }
 
 .third-place-card:hover {

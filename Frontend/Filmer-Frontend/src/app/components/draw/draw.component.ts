@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Renderer2} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DrawService, Film } from '../../services/draw.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgForOf, NgIf } from '@angular/common';
+import {NgClass, NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-draw',
   standalone: true,
-  imports: [NgForOf, NgIf, ReactiveFormsModule],
+  imports: [NgForOf, NgIf, ReactiveFormsModule, NgClass],
   templateUrl: './draw.component.html',
   styleUrl: './draw.component.css'
 })
@@ -18,14 +18,17 @@ export class DrawComponent implements OnInit {
   currentFilmIndex = 0;
   isSwipingLeft = false;
   isSwipingRight = false;
+  currentTheme: 'light' | 'dark' = 'dark';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private drawService: DrawService
+    private drawService: DrawService,
+    private renderer: Renderer2
   ) {}
 
   ngOnInit(): void {
+
     this.lobbyCode = this.route.snapshot.paramMap.get('lobbyCode');
     const storedUserId = localStorage.getItem('userId');
 
@@ -42,6 +45,33 @@ export class DrawComponent implements OnInit {
       console.error('Błąd: Brak kodu lobby w URL.');
     }
   }
+
+  ngAfterViewChecked(): void {
+    this.applyTheme();
+  }
+
+  private loadTheme() {
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
+    this.currentTheme = savedTheme || 'dark';
+    this.applyTheme();
+  }
+
+  private applyTheme(): void {
+    const container = document.querySelector('.section-user2') as HTMLElement;
+    if (!container) {
+      console.warn('Element .section-user2 nie istnieje w DOM.');
+      return;
+    }
+
+    if (this.currentTheme === 'dark') {
+      this.renderer.addClass(container, 'dark-theme');
+      this.renderer.removeClass(container, 'light-theme');
+    } else {
+      this.renderer.addClass(container, 'light-theme');
+      this.renderer.removeClass(container, 'dark-theme');
+    }
+  }
+
 
   fetchDrawFilms(): void {
     this.drawService.getDrawFilms(this.lobbyCode!)

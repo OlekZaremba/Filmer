@@ -5,13 +5,22 @@ body {
   padding: 0;
 }
 
-.bg{
+.bg.light-theme {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   width: 100%;
   background-image: url('../../../assets/images/section-one-background.png');
+}
+
+.bg.dark-theme {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-image: url('../../../assets/images/bglight.png');
 }
 
 .main-container {
@@ -28,13 +37,25 @@ body {
   font-family: "Oswald", sans-serif;
 }
 
-.joining-users {
+.bg.light-theme .joining-users {
   height: 570px;
   width: 30%;
   padding: 5px 10px;
   border-radius: 15px;
   background-color: #2e2e2e;
   color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bg.dark-theme .joining-users {
+  height: 570px;
+  width: 30%;
+  padding: 5px 10px;
+  border-radius: 15px;
+  background-color: lightgrey;
+  color: #2e2e2e;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,7 +81,7 @@ body {
   margin-top: 2px;
 }
 
-.friends-component {
+.bg.light-theme .friends-component {
   width: 100%;
   height: 650px;
   border-radius: 15px;
@@ -74,7 +95,21 @@ body {
   color: #fff;
 }
 
-.friends-list {
+.bg.dark-theme .friends-component {
+  width: 100%;
+  height: 650px;
+  border-radius: 15px;
+  background-color: gainsboro;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  color: #fff;
+}
+
+.bg.light-theme .friends-list {
   width: 30%;
   height: 570px;
   border-radius: 15px;
@@ -85,6 +120,20 @@ body {
   align-items: center;
   border: none;
   overflow-y: auto;
+}
+
+.bg.dark-theme .friends-list {
+  width: 30%;
+  height: 570px;
+  border-radius: 15px;
+  padding: 5px 10px;
+  background-color: lightgrey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none;
+  overflow-y: auto;
+  color: #2e2e2e;
 }
 
 .friends-list ul {
@@ -159,7 +208,7 @@ body {
   cursor: pointer;
 }
 
-.initial-settings {
+.bg.light-theme .initial-settings {
   width: 40%;
   height: 570px;
   padding: 5px 10px;
@@ -168,6 +217,17 @@ body {
   border: none;
   overflow-y: auto;
   color: #fff;
+}
+
+.bg.dark-theme .initial-settings {
+  width: 40%;
+  height: 570px;
+  padding: 5px 10px;
+  border-radius: 15px;
+  background-color: lightgrey;
+  border: none;
+  overflow-y: auto;
+  color: #2e2e2e;
 }
 
 input {
@@ -194,7 +254,7 @@ input {
   border-radius: 25px;
   border: none;
   color: #fff;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 500;
   transition: .2s all ease-in-out;
 }

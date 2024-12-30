@@ -1,4 +1,14 @@
-.section-user {
+.section-user2.dark-theme {
+  height: 100vh;
+  background: url("../../../assets/images/section-one-background.png") center/cover no-repeat;
+  font-family: "Oswald", sans-serif;
+  padding: 0 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-user2.light-theme {
   height: 100vh;
   background: url("../../../assets/images/section-one-background.png") center/cover no-repeat;
   font-family: "Oswald", sans-serif;

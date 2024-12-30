@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Renderer2} from '@angular/core';
 import {NgForOf, NgIf} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import { MoviePopupComponent } from '../movie-popup/movie-popup.component';
@@ -26,11 +26,30 @@ export class LibraryComponent implements OnInit {
   selectedFilm: Film | null = null;
   activeFilter: string = 'all';
   isAddPopupVisible = false;
+  currentTheme: 'light' | 'dark' = 'dark';
 
-  constructor(private filmService: FilmService) {}
+  constructor(private filmService: FilmService, private renderer: Renderer2) {}
 
   ngOnInit(): void {
+    this.loadTheme();
     this.loadFilms();
+  }
+
+  private loadTheme() {
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
+    this.currentTheme = savedTheme || 'dark';
+    this.applyTheme(this.currentTheme);
+  }
+
+  private applyTheme(theme: 'light' | 'dark') {
+    const container = document.querySelector('.bg') as HTMLElement;
+    if (theme === 'dark') {
+      this.renderer.addClass(container, 'dark-theme');
+      this.renderer.removeClass(container, 'light-theme');
+    } else {
+      this.renderer.addClass(container, 'light-theme');
+      this.renderer.removeClass(container, 'dark-theme');
+    }
   }
 
   loadFilms(): void {

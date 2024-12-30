@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {Component, EventEmitter, Output, Renderer2} from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 
@@ -56,10 +56,12 @@ import {HttpClient} from '@angular/common/http';
 export class AddMoviePopupComponent {
   @Output() popupClosed = new EventEmitter<void>();
   @Output() movieAdded = new EventEmitter<any>();
+  currentTheme: 'light' | 'dark' = 'dark';
+
 
   movieForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private renderer: Renderer2) {
     this.movieForm = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
@@ -69,6 +71,32 @@ export class AddMoviePopupComponent {
       platform: ['', Validators.required],
       genre: ['', Validators.required],
     });
+  }
+
+  ngOnInit(): void {
+    this.loadTheme();
+  }
+
+  private loadTheme(): void {
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
+    this.currentTheme = savedTheme || 'dark';
+    this.applyTheme();
+  }
+
+  private applyTheme(): void {
+    const popupElement = document.querySelector('.popup-overlay') as HTMLElement;
+    if (!popupElement) {
+      console.warn('Element .popup-overlay nie istnieje w DOM.');
+      return;
+    }
+
+    if (this.currentTheme === 'dark') {
+      this.renderer.addClass(popupElement, 'dark-theme');
+      this.renderer.removeClass(popupElement, 'light-theme');
+    } else {
+      this.renderer.addClass(popupElement, 'light-theme');
+      this.renderer.removeClass(popupElement, 'dark-theme');
+    }
   }
 
   closePopup(): void {

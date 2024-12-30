@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {Component, OnInit, OnDestroy, Renderer2} from '@angular/core';
 import { FriendsService } from '../../services/friends.service';
 import { LobbyService } from '../../services/lobby.service';
 import { NgForOf, NgIf } from '@angular/common';
@@ -25,16 +25,19 @@ export class LobbyComponent implements OnInit, OnDestroy {
   selectedGenre: string = '';
   selectedType: string = '';
   readyParticipantsCount: number = 0;
+  currentTheme: 'light' | 'dark' = 'dark';
 
   private participantSubscription: Subscription | undefined;
 
   constructor(
     private friendsService: FriendsService,
     private lobbyService: LobbyService,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2
   ) {}
 
   ngOnInit(): void {
+    this.loadTheme();
     const email = localStorage.getItem('email');
     const nick = localStorage.getItem('nick');
     const userId = localStorage.getItem('userId');
@@ -67,6 +70,23 @@ export class LobbyComponent implements OnInit, OnDestroy {
     });
 
     this.loadParticipants();
+  }
+
+  private loadTheme() {
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
+    this.currentTheme = savedTheme || 'dark';
+    this.applyTheme(this.currentTheme);
+  }
+
+  private applyTheme(theme: 'light' | 'dark') {
+    const container = document.querySelector('.bg') as HTMLElement;
+    if (theme === 'dark') {
+      this.renderer.addClass(container, 'dark-theme');
+      this.renderer.removeClass(container, 'light-theme');
+    } else {
+      this.renderer.addClass(container, 'light-theme');
+      this.renderer.removeClass(container, 'dark-theme');
+    }
   }
 
   ngOnDestroy(): void {
@@ -249,6 +269,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
     this.lobbyService.getReadyStatus(lobbyCode).subscribe({
       next: (allReady) => {
         if (allReady) {
+          alert('Gra się rozpoczyna!');
           this.lobbyService.startGame(lobbyCode).subscribe({
             next: () => {
               console.log('Gra została rozpoczęta.');
@@ -260,6 +281,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
           });
         } else {
           alert('Nie wszyscy uczestnicy są gotowi!');
+
         }
       },
       error: (err) => {

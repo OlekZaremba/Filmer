@@ -8,18 +8,6 @@ body {
   overflow-x: hidden;
 }
 
-/*.section-one {*/
-/*  height: 100vh;*/
-/*  background-image: url('../../../assets/images/section-one-background.png');*/
-/*  background-size: cover;*/
-/*  background-position: center;*/
-/*  background-repeat: no-repeat;*/
-/*  padding-left: 5rem;*/
-/*  padding-right: 5rem;*/
-/*  font-family: "Oswald", sans-serif;*/
-/*  transition: background-color 0.3s, color 0.3s;*/
-/*}*/
-
 .section-one.light-theme {
   height: 100vh;
   background-image: url('../../../assets/images/section-one-background.png');
@@ -41,20 +29,22 @@ body {
   padding-left: 5rem;
   padding-right: 5rem;
   font-family: "Oswald", sans-serif;
-  transition: background-color 0.3s, color 0.3s;
+  transition: all 0.3s ease-in-out;
 }
 
 /* Przyciski */
 .theme-toggle {
+  height: 60px;
+  width: 60px;
   position: absolute;
   bottom: 20px;
   right: 20px;
-  background-color: #ffcc00;
+  background-color: darkred;
   border: none;
   border-radius: 20px;
-  padding: 10px 20px;
+  /*padding: 10px 20px;*/
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 2rem;
   transition: transform 0.2s ease-in-out;
 }
 
