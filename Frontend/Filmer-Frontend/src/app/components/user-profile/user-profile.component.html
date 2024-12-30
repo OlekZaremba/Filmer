@@ -24,8 +24,6 @@
       <input type="text" [value]="userName" placeholder="Nazwa użytkownika" disabled>
       <span>Adres e-mail</span>
       <input type="text" [value]="email" placeholder="Adres e-mail" disabled>
-
-      <div *ngIf="searchResults.length === 0 && searchTerm" class="no-results">Brak wyników wyszukiwania.</div>
     </div>
 
     <div class="user-info-right">
@@ -58,7 +56,7 @@
           [(ngModel)]="searchTerm"
           (input)="searchUsers()">
       </div>
-
+      <div *ngIf="searchResults.length === 0 && searchTerm" class="no-results"><span>Brak wyników wyszukiwania.</span></div>
       <div class="search-results" *ngIf="searchResults.length > 0">
         <ul>
           <li *ngFor="let user of searchResults" class="search-item">

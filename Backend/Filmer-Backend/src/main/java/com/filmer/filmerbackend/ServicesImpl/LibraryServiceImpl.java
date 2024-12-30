@@ -51,7 +51,9 @@ public class LibraryServiceImpl implements LibraryService {
             Document document = new Document(pdfDoc);
 
 //            String logoPath = "D:/Filmer/Backend/Filmer-Backend/src/main/resources/static/logo_red.png"; //olek
-            String logoPath = "D:/JavaProjektyUltimate/Filmer/Backend/Filmer-Backend/src/main/resources/static/logo_red.png"; //kuba
+//            String logoPath = "D:/JavaProjektyUltimate/Filmer/Backend/Filmer-Backend/src/main/resources/static/logo_red.png"; //kuba pc
+            String logoPath = "C:/Users/kubab/IdeaProjects/Filmer/Backend/Filmer-Backend/src/main/resources/static/logo_red.png"; //kuba lapek
+
             try {
                 ImageData imageData = ImageDataFactory.create(logoPath);
                 Image logo = new Image(imageData);

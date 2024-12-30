@@ -1,4 +1,4 @@
-.container {
+.container.light-theme {
   margin: 0;
   padding: 0;
   display: flex;
@@ -11,7 +11,21 @@
   background-image: url('../../../assets/images/login-background.png');
 }
 
-.main {
+.container.dark-theme {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: "Oswald", sans-serif;
+  background-size: cover;
+  background-position: center;
+  background-image: url('../../../assets/images/bglight.png');
+}
+
+
+.container.light-theme .main {
   width: 80%;
   height: 70vh;
   background: linear-gradient(135deg, #2a2a2a, #1c1c1c);
@@ -21,8 +35,17 @@
   overflow: hidden;
 }
 
-.login,
-.sign-up {
+.container.dark-theme .main {
+  width: 80%;
+  height: 70vh;
+  background-color: lightgrey;
+  border-radius: 15px;
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  overflow: hidden;
+}
+
+.login, .sign-up {
   width: 50%;
   display: flex;
   flex-direction: column;
@@ -31,11 +54,24 @@
   color: #fff;
 }
 
+.container.dark-theme .login, .container.dark-theme .sign-up {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  color: #000;
+}
+
 .login {
   border-right: 1px solid #444;
 }
 
-h1 {
+.container.dark-theme .login {
+  border-right: 1px solid #000;
+}
+
+.container.light-theme h1 {
   margin-bottom: 1.5rem;
   font-size: 2rem;
   color: #fff;
@@ -43,7 +79,15 @@ h1 {
   letter-spacing: 2px;
 }
 
-input {
+.container.dark-theme h1 {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  color: #2e2e2e;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.container.light-theme input {
   width: 80%;
   height: 45px;
   border-radius: 25px;
@@ -53,6 +97,19 @@ input {
   padding: 0 1.5rem;
   background: #333;
   color: #fff;
+  font-size: 1rem;
+  transition: all 0.3s ease-in-out;
+}
+.container.dark-theme input {
+  width: 80%;
+  height: 45px;
+  border-radius: 25px;
+  margin-bottom: 15px;
+  outline: none;
+  border: 1px solid white;
+  padding: 0 1.5rem;
+  background: white;
+  color: #2e2e2e;
   font-size: 1rem;
   transition: all 0.3s ease-in-out;
 }

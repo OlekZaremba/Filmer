@@ -1,4 +1,4 @@
-<div class="section-one">
+<div class="section-one" [class.light-theme]="currentTheme === 'light'" [class.dark-theme]="currentTheme === 'dark'">
   <div class="navbar">
     <app-menu></app-menu>
   </div>
@@ -11,5 +11,8 @@
     <div class="right-cards" #rightCards (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave()">
       <img src="assets/images/cards.png" alt="Obrazek" #parallaxImage>
     </div>
+    <button class="theme-toggle" (click)="toggleTheme()">
+      {{ currentTheme === 'dark' ? 'Ciemny Motyw' : 'Jasny Motyw' }}
+    </button>
   </div>
 </div>

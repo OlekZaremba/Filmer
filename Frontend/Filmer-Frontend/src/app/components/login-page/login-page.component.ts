@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Renderer2} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -25,8 +25,31 @@ export class LoginPageComponent {
 
   captchaSiteKey: string = '6LfkyJYqAAAAAJ_woX_R6Ida3127aiF68n6VCQuL';
   captchaResponse: string | null = null;
+  currentTheme: 'light' | 'dark' = 'dark';
 
-  constructor(private authService: AuthService, private router: Router) {}
+
+  constructor(private authService: AuthService, private router: Router, private renderer: Renderer2) {}
+
+  ngOnInit(): void {
+    this.loadTheme();
+  }
+
+  private loadTheme() {
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
+    this.currentTheme = savedTheme || 'dark';
+    this.applyTheme(this.currentTheme);
+  }
+
+  private applyTheme(theme: 'light' | 'dark') {
+    const container = document.querySelector('.container') as HTMLElement;
+    if (theme === 'dark') {
+      this.renderer.addClass(container, 'dark-theme');
+      this.renderer.removeClass(container, 'light-theme');
+    } else {
+      this.renderer.addClass(container, 'light-theme');
+      this.renderer.removeClass(container, 'dark-theme');
+    }
+  }
 
   login() {
     if (!this.captchaResponse) {

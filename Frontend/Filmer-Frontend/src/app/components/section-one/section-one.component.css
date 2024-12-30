@@ -8,7 +8,19 @@ body {
   overflow-x: hidden;
 }
 
-.section-one {
+/*.section-one {*/
+/*  height: 100vh;*/
+/*  background-image: url('../../../assets/images/section-one-background.png');*/
+/*  background-size: cover;*/
+/*  background-position: center;*/
+/*  background-repeat: no-repeat;*/
+/*  padding-left: 5rem;*/
+/*  padding-right: 5rem;*/
+/*  font-family: "Oswald", sans-serif;*/
+/*  transition: background-color 0.3s, color 0.3s;*/
+/*}*/
+
+.section-one.light-theme {
   height: 100vh;
   background-image: url('../../../assets/images/section-one-background.png');
   background-size: cover;
@@ -17,6 +29,37 @@ body {
   padding-left: 5rem;
   padding-right: 5rem;
   font-family: "Oswald", sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.section-one.dark-theme {
+  height: 100vh;
+  background-image: url('../../../assets/images/bglight.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding-left: 5rem;
+  padding-right: 5rem;
+  font-family: "Oswald", sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Przyciski */
+.theme-toggle {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ffcc00;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
 }
 
 .content {
@@ -50,7 +93,7 @@ body {
   margin-bottom: 2rem;
 }
 
-.left-text button {
+.section-one.light-theme .left-text button {
   width: 50%;
   padding-top: .5rem;
   padding-bottom: .5rem;
@@ -64,10 +107,26 @@ body {
   transition: .2s all ease-in-out;
 }
 
+.section-one.dark-theme .left-text button {
+  width: 50%;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  outline: none;
+  border: none;
+  background-color: #fff;
+  border-radius: 25px;
+  color: darkred;
+  font-family: "Oswald", sans-serif;
+  font-size: 1.2rem;
+  transition: .2s all ease-in-out;
+}
+
 .left-text button:hover {
   cursor: pointer;
   transform: scale(1.05);
 }
+
+
 
 .right-cards {
   display: flex;

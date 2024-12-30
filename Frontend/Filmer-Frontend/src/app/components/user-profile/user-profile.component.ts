@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Renderer2} from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import { FriendsService } from '../../services/friends.service';
 import {MenuComponent} from '../menu/menu.component';
@@ -19,10 +19,12 @@ export class UserProfileComponent implements OnInit {
   searchTerm: string = '';
   searchResults: any[] = [];
   selectedFile: File | null = null;
+  currentTheme: 'light' | 'dark' = 'dark';
 
-  constructor(private friendsService: FriendsService) {}
+  constructor(private friendsService: FriendsService, private renderer: Renderer2) {}
 
   ngOnInit(): void {
+    this.loadTheme();
     const email = localStorage.getItem('email');
     const nick = localStorage.getItem('nick');
     const userId = localStorage.getItem('userId');
@@ -39,6 +41,23 @@ export class UserProfileComponent implements OnInit {
       }
     } else {
       console.error('E-mail lub nick użytkownika nie są dostępne w localStorage.');
+    }
+  }
+
+  private loadTheme() {
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
+    this.currentTheme = savedTheme || 'dark';
+    this.applyTheme(this.currentTheme);
+  }
+
+  private applyTheme(theme: 'light' | 'dark') {
+    const container = document.querySelector('.section-user') as HTMLElement;
+    if (theme === 'dark') {
+      this.renderer.addClass(container, 'dark-theme');
+      this.renderer.removeClass(container, 'light-theme');
+    } else {
+      this.renderer.addClass(container, 'light-theme');
+      this.renderer.removeClass(container, 'dark-theme');
     }
   }
 

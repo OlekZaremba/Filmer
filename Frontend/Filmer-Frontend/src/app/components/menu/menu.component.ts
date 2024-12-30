@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { FriendsService } from '../../services/friends.service';
@@ -14,28 +14,47 @@ import { AsyncPipe, NgIf } from '@angular/common';
 export class MenuComponent implements OnInit {
   isLoggedIn$;
   userPhoto: string | null = null;
+  currentTheme: 'light' | 'dark' = 'dark'; // Domyślny motyw
 
-  constructor(private authService: AuthService, private friendsService: FriendsService) {
+  constructor(
+    private authService: AuthService,
+    private friendsService: FriendsService,
+    private renderer: Renderer2
+  ) {
     this.isLoggedIn$ = this.authService.isLoggedIn$;
-  }
-
-  login() {
-    this.authService.login('email@example.com', 'password', 'captcha-mock-response');
-  }
-
-  logout() {
-    this.authService.logout();
   }
 
   ngOnInit() {
     this.isLoggedIn$.subscribe((isLoggedIn) => {
-      console.log('Stan isLoggedIn w menu po aktualizacji:', isLoggedIn);
       if (isLoggedIn) {
         this.loadUserPhoto();
       } else {
         this.userPhoto = null;
       }
     });
+    this.loadTheme();
+  }
+
+  toggleTheme() {
+    this.currentTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
+    this.applyTheme(this.currentTheme);
+    localStorage.setItem('theme', this.currentTheme);
+  }
+
+  private applyTheme(theme: 'light' | 'dark') {
+    if (theme === 'dark') {
+      this.renderer.addClass(document.body, 'dark-theme');
+      this.renderer.removeClass(document.body, 'light-theme');
+    } else {
+      this.renderer.addClass(document.body, 'light-theme');
+      this.renderer.removeClass(document.body, 'dark-theme');
+    }
+  }
+
+  private loadTheme() {
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
+    this.currentTheme = savedTheme || 'dark';
+    this.applyTheme(this.currentTheme);
   }
 
   private loadUserPhoto(): void {
@@ -46,14 +65,20 @@ export class MenuComponent implements OnInit {
           const objectURL = URL.createObjectURL(blob);
           this.userPhoto = objectURL;
         },
-        (error) => {
-          console.error('Błąd podczas pobierania zdjęcia profilowego:', error);
+        () => {
           this.userPhoto = 'assets/images/user.png';
         }
       );
     } else {
-      console.error('Nie znaleziono ID użytkownika w localStorage.');
       this.userPhoto = 'assets/images/user.png';
     }
+  }
+
+  login() {
+    this.authService.login('email@example.com', 'password', 'captcha-mock-response');
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }
