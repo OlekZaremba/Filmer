@@ -214,7 +214,8 @@ export class UserProfileComponent implements OnInit {
       },
       error: (err) => {
         console.error('Błąd podczas przesyłania zdjęcia:', err);
-        alert('Nie udało się przesłać zdjęcia.');
+        // alert('Nie udało się przesłać zdjęcia.');
+        window.location.reload();
       },
     });
   }
