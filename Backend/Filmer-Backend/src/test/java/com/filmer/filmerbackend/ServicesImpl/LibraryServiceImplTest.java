@@ -19,7 +19,12 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class LibraryServiceImplTest {
+/**
+ * Klasa testowa dla usługi {@link LibraryServiceImpl}.
+ * Testuje funkcjonalności zarządzania biblioteką filmów, w tym wyszukiwanie filmów,
+ * generowanie plików PDF, zarządzanie ocenami i wysyłanie sugestii filmowych.
+ */
+public class LibraryServiceImplTest {
 
     @Mock
     private FilmsRepository filmsRepository;
@@ -36,61 +41,78 @@ class LibraryServiceImplTest {
     @InjectMocks
     private LibraryServiceImpl libraryService;
 
+    /**
+     * Inicjalizacja mocków przed każdym testem.
+     */
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
+    /**
+     * Testuje metodę {@link LibraryServiceImpl#getFilmById(Integer)}.
+     * <p>
+     * Scenariusz: Pobranie filmu po jego identyfikatorze.
+     * Oczekiwany wynik: Zwrócenie obiektu filmu, jeśli istnieje.
+     */
     @Test
-    void getFilmById_ShouldReturnFilm_WhenFilmExists() {
-        // Arrange
+    public void getFilmById_ShouldReturnFilm_WhenFilmExists() {
         Integer filmId = 1;
         Films film = new Films();
         film.setIdFilm(filmId);
 
         when(filmsRepository.findById(filmId)).thenReturn(Optional.of(film));
 
-        // Act
         Optional<Films> result = libraryService.getFilmById(filmId);
 
-        // Assert
         assertTrue(result.isPresent());
         assertEquals(film, result.get());
     }
 
+    /**
+     * Testuje metodę {@link LibraryServiceImpl#getFilmById(Integer)}.
+     * <p>
+     * Scenariusz: Próba pobrania filmu po identyfikatorze, gdy film nie istnieje.
+     * Oczekiwany wynik: Zwrócenie pustego {@link Optional}.
+     */
     @Test
-    void getFilmById_ShouldReturnEmptyOptional_WhenFilmDoesNotExist() {
-        // Arrange
+    public void getFilmById_ShouldReturnEmptyOptional_WhenFilmDoesNotExist() {
         Integer filmId = 1;
 
         when(filmsRepository.findById(filmId)).thenReturn(Optional.empty());
 
-        // Act
         Optional<Films> result = libraryService.getFilmById(filmId);
 
-        // Assert
         assertTrue(result.isEmpty());
     }
 
+    /**
+     * Testuje metodę {@link LibraryServiceImpl#getAllFilms()}.
+     * <p>
+     * Scenariusz: Pobranie wszystkich filmów z biblioteki.
+     * Oczekiwany wynik: Zwrócenie listy filmów.
+     */
     @Test
-    void getAllFilms_ShouldReturnListOfFilms() {
-        // Arrange
+    public void getAllFilms_ShouldReturnListOfFilms() {
         Films film1 = new Films();
         Films film2 = new Films();
         when(filmsRepository.findAll()).thenReturn(List.of(film1, film2));
 
-        // Act
         List<Films> result = libraryService.getAllFilms();
 
-        // Assert
         assertEquals(2, result.size());
         assertEquals(film1, result.get(0));
         assertEquals(film2, result.get(1));
     }
 
+    /**
+     * Testuje metodę {@link LibraryServiceImpl#generatePdf(String, String)}.
+     * <p>
+     * Scenariusz: Generowanie pliku PDF z informacjami o istniejącym filmie.
+     * Oczekiwany wynik: Zwrócenie odpowiedzi HTTP z zawartością PDF i statusem 200.
+     */
     @Test
-    void generatePdf_ShouldReturnPdfBytes_WhenFilmExists() {
-        // Arrange
+    public void generatePdf_ShouldReturnPdfBytes_WhenFilmExists() {
         String title = "Test Film";
         String description = "Test Description";
 
@@ -98,47 +120,50 @@ class LibraryServiceImplTest {
         film.setFilmName(title);
         film.setFilmDesc(description);
 
-        // Mockowanie FilmStudio
         FilmStudio studio = new FilmStudio();
         studio.setStudioName("Test Studio");
         film.setStudio(studio);
 
-        // Mockowanie FilmType
         FilmType type = new FilmType();
         type.setFilmType("Movie");
         film.setType(type);
 
         when(filmsRepository.findByFilmName(title)).thenReturn(Optional.of(film));
 
-        // Act
         ResponseEntity<byte[]> response = libraryService.generatePdf(title, description);
 
-        // Assert
         assertNotNull(response.getBody());
         assertEquals(200, response.getStatusCodeValue());
         verify(filmsRepository, times(1)).findByFilmName(title);
     }
 
-
+    /**
+     * Testuje metodę {@link LibraryServiceImpl#generatePdf(String, String)}.
+     * <p>
+     * Scenariusz: Próba wygenerowania pliku PDF dla nieistniejącego filmu.
+     * Oczekiwany wynik: Zwrócenie odpowiedzi HTTP z komunikatem błędu i statusem 400.
+     */
     @Test
-    void generatePdf_ShouldReturnBadRequest_WhenFilmDoesNotExist() {
-        // Arrange
+    public void generatePdf_ShouldReturnBadRequest_WhenFilmDoesNotExist() {
         String title = "Nonexistent Film";
         String description = "Some Description";
 
         when(filmsRepository.findByFilmName(title)).thenReturn(Optional.empty());
 
-        // Act
         ResponseEntity<byte[]> response = libraryService.generatePdf(title, description);
 
-        // Assert
         assertEquals(400, response.getStatusCodeValue());
         assertEquals("Film nie został znaleziony.", new String(response.getBody()));
     }
 
+    /**
+     * Testuje metodę {@link LibraryServiceImpl#sendFilmSuggestion(String, String, String, String, String, String, String)}.
+     * <p>
+     * Scenariusz: Wysłanie sugestii filmowej przez e-mail.
+     * Oczekiwany wynik: Wywołanie wysyłki e-maila.
+     */
     @Test
-    void sendFilmSuggestion_ShouldSendEmail() {
-        // Arrange
+    public void sendFilmSuggestion_ShouldSendEmail() {
         String title = "Film Title";
         String description = "Film Description";
         String genre = "Action";
@@ -147,16 +172,19 @@ class LibraryServiceImplTest {
         String studio = "Studio Name";
         String type = "Movie";
 
-        // Act
         libraryService.sendFilmSuggestion(title, description, genre, platform, director, studio, type);
 
-        // Assert
         verify(mailSender, times(1)).send(any(SimpleMailMessage.class));
     }
 
+    /**
+     * Testuje metodę {@link LibraryServiceImpl#getRating(Integer, Integer)}.
+     * <p>
+     * Scenariusz: Pobranie oceny filmu wystawionej przez użytkownika.
+     * Oczekiwany wynik: Zwrócenie oceny, jeśli istnieje.
+     */
     @Test
-    void getRating_ShouldReturnRating_WhenExists() {
-        // Arrange
+    public void getRating_ShouldReturnRating_WhenExists() {
         Integer filmId = 1;
         Integer userId = 1;
         WatchedMovies watchedMovie = new WatchedMovies();
@@ -164,32 +192,38 @@ class LibraryServiceImplTest {
 
         when(watchedMoviesRepository.findByFilmIdAndUserId(filmId, userId)).thenReturn(Optional.of(watchedMovie));
 
-        // Act
         Optional<Integer> rating = libraryService.getRating(filmId, userId);
 
-        // Assert
         assertTrue(rating.isPresent());
         assertEquals(5, rating.get());
     }
 
+    /**
+     * Testuje metodę {@link LibraryServiceImpl#getRating(Integer, Integer)}.
+     * <p>
+     * Scenariusz: Próba pobrania oceny, gdy nie istnieje.
+     * Oczekiwany wynik: Zwrócenie pustego {@link Optional}.
+     */
     @Test
-    void getRating_ShouldReturnEmptyOptional_WhenNotExists() {
-        // Arrange
+    public void getRating_ShouldReturnEmptyOptional_WhenNotExists() {
         Integer filmId = 1;
         Integer userId = 1;
 
         when(watchedMoviesRepository.findByFilmIdAndUserId(filmId, userId)).thenReturn(Optional.empty());
 
-        // Act
         Optional<Integer> rating = libraryService.getRating(filmId, userId);
 
-        // Assert
         assertTrue(rating.isEmpty());
     }
 
+    /**
+     * Testuje metodę {@link LibraryServiceImpl#setRating(Integer, Integer, Integer)}.
+     * <p>
+     * Scenariusz: Aktualizacja oceny filmu, gdy obiekt istnieje w bazie danych.
+     * Oczekiwany wynik: Zapisanie nowej oceny w bazie danych.
+     */
     @Test
-    void setRating_ShouldSaveRating_WhenWatchedMovieExists() {
-        // Arrange
+    public void setRating_ShouldSaveRating_WhenWatchedMovieExists() {
         Integer filmId = 1;
         Integer userId = 1;
         Integer rating = 4;
@@ -197,17 +231,20 @@ class LibraryServiceImplTest {
         WatchedMovies watchedMovie = new WatchedMovies();
         when(watchedMoviesRepository.findByFilmIdAndUserId(filmId, userId)).thenReturn(Optional.of(watchedMovie));
 
-        // Act
         libraryService.setRating(filmId, userId, rating);
 
-        // Assert
         verify(watchedMoviesRepository, times(1)).save(watchedMovie);
         assertEquals(rating, watchedMovie.getRating());
     }
 
+    /**
+     * Testuje metodę {@link LibraryServiceImpl#setRating(Integer, Integer, Integer)}.
+     * <p>
+     * Scenariusz: Ustawienie oceny filmu dla użytkownika, gdy brak odpowiedniego rekordu w bazie.
+     * Oczekiwany wynik: Utworzenie nowego obiektu {@link WatchedMovies} i zapisanie go w bazie danych.
+     */
     @Test
-    void setRating_ShouldCreateAndSaveWatchedMovie_WhenNotExists() {
-        // Arrange
+    public void setRating_ShouldCreateAndSaveWatchedMovie_WhenNotExists() {
         Integer filmId = 1;
         Integer userId = 1;
         Integer rating = 5;
@@ -219,10 +256,8 @@ class LibraryServiceImplTest {
         when(filmsRepository.findById(filmId)).thenReturn(Optional.of(film));
         when(usersRepository.findById(userId)).thenReturn(Optional.of(user));
 
-        // Act
         libraryService.setRating(filmId, userId, rating);
 
-        // Assert
         verify(watchedMoviesRepository, times(1)).save(any(WatchedMovies.class));
     }
 }

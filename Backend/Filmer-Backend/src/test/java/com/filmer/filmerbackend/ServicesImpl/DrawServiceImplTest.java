@@ -16,7 +16,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-class DrawServiceImplTest {
+/**
+ * Klasa testowa dla usługi {@link DrawServiceImpl}.
+ * Testuje funkcjonalności związane z losowaniem filmów oraz obsługą głosowań w lobby.
+ */
+public class DrawServiceImplTest {
 
     @Mock
     private FilmsRepository filmsRepository;
@@ -36,14 +40,22 @@ class DrawServiceImplTest {
     @InjectMocks
     private DrawServiceImpl drawService;
 
+    /**
+     * Inicjalizacja mocków przed każdym testem.
+     */
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
+    /**
+     * Testuje metodę {@link DrawServiceImpl#drawFilms(String)}.
+     * <p>
+     * Scenariusz: Pobranie istniejących filmów przypisanych do lobby.
+     * Oczekiwany wynik: Zwrócenie listy filmów z lobby.
+     */
     @Test
-    void drawFilms_ShouldReturnExistingLobbyFilms_WhenLobbyHasFilms() {
-        // Arrange
+    public void drawFilms_ShouldReturnExistingLobbyFilms_WhenLobbyHasFilms() {
         String lobbyCode = "testLobby";
         Lobby lobby = new Lobby();
         lobby.setLobbyCode(lobbyCode);
@@ -61,33 +73,39 @@ class DrawServiceImplTest {
         when(lobbyRepository.findByLobbyCode(lobbyCode)).thenReturn(Optional.of(lobby));
         when(lobbyHasFilmsRepository.findByLobby(lobby)).thenReturn(Arrays.asList(lobbyFilm1, lobbyFilm2));
 
-        // Act
         List<Films> result = drawService.drawFilms(lobbyCode);
 
-        // Assert
         assertEquals(2, result.size());
         assertEquals(film1, result.get(0));
         assertEquals(film2, result.get(1));
     }
 
+    /**
+     * Testuje metodę {@link DrawServiceImpl#drawFilms(String)}.
+     * <p>
+     * Scenariusz: Próba losowania filmów dla nieistniejącego lobby.
+     * Oczekiwany wynik: Rzucenie wyjątku {@link IllegalArgumentException}.
+     */
     @Test
-    void drawFilms_ShouldThrowException_WhenLobbyDoesNotExist() {
-        // Arrange
+    public void drawFilms_ShouldThrowException_WhenLobbyDoesNotExist() {
         String lobbyCode = "nonexistentLobby";
         when(lobbyRepository.findByLobbyCode(lobbyCode)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> drawService.drawFilms(lobbyCode), "Lobby nie istnieje.");
     }
 
+    /**
+     * Testuje metodę {@link DrawServiceImpl#drawFilms(String)}.
+     * <p>
+     * Scenariusz: Losowanie filmów na podstawie preferencji użytkowników oraz dodanie filmów losowych.
+     * Oczekiwany wynik: Zwrócenie listy filmów zawierającej filmy zgodne z preferencjami i losowe.
+     */
     @Test
-    void drawFilms_ShouldReturnSelectedAndRandomFilms_WhenLobbyHasNoExistingFilms() {
-        // Arrange
+    public void drawFilms_ShouldReturnSelectedAndRandomFilms_WhenLobbyHasNoExistingFilms() {
         String lobbyCode = "testLobby";
         Lobby lobby = new Lobby();
         lobby.setLobbyCode(lobbyCode);
 
-        // Mockowanie preferencji użytkowników
         UserPreferences pref1 = new UserPreferences();
         FilmGenres genre = new FilmGenres();
         genre.setIdGenre(1);
@@ -100,7 +118,6 @@ class DrawServiceImplTest {
 
         lobby.setUserPreferences(Arrays.asList(pref1, pref2));
 
-        // Mockowanie filmów zwróconych na podstawie preferencji
         Films selectedFilm1 = new Films();
         selectedFilm1.setIdFilm(1);
 
@@ -112,29 +129,30 @@ class DrawServiceImplTest {
         when(filmsRepository.findFilmsByPreferences(1, null, null)).thenReturn(List.of(selectedFilm1));
         when(filmsRepository.findFilmsByPreferences(null, 2, null)).thenReturn(List.of(selectedFilm2));
 
-        // Mockowanie losowych filmów
         Films randomFilm = new Films();
         randomFilm.setIdFilm(3);
 
         when(filmsRepository.findRandomFilmsExcluding(List.of(1, 2), 14)).thenReturn(List.of(randomFilm));
 
-        // Act
         List<Films> result = drawService.drawFilms(lobbyCode);
 
-        // Assert
         assertEquals(3, result.size());
         verify(lobbyHasFilmsRepository, times(3)).save(any(LobbyHasFilms.class));
     }
 
+    /**
+     * Testuje metodę {@link DrawServiceImpl#drawFilms(String)}.
+     * <p>
+     * Scenariusz: Losowanie wyłącznie losowych filmów, gdy brak preferencji użytkowników.
+     * Oczekiwany wynik: Zwrócenie listy losowych filmów.
+     */
     @Test
-    void drawFilms_ShouldHandleEmptyPreferencesAndReturnRandomFilms() {
-        // Arrange
+    public void drawFilms_ShouldHandleEmptyPreferencesAndReturnRandomFilms() {
         String lobbyCode = "testLobby";
         Lobby lobby = new Lobby();
         lobby.setLobbyCode(lobbyCode);
         lobby.setUserPreferences(List.of());
 
-        // Mockowanie losowych filmów
         Films randomFilm1 = new Films();
         randomFilm1.setIdFilm(1);
 
@@ -145,72 +163,78 @@ class DrawServiceImplTest {
         when(lobbyHasFilmsRepository.findByLobby(lobby)).thenReturn(List.of());
         when(filmsRepository.findRandomFilmsExcluding(List.of(), 16)).thenReturn(List.of(randomFilm1, randomFilm2));
 
-        // Act
         List<Films> result = drawService.drawFilms(lobbyCode);
 
-        // Assert
         assertEquals(2, result.size());
         verify(lobbyHasFilmsRepository, times(2)).save(any(LobbyHasFilms.class));
     }
 
+    /**
+     * Testuje metodę {@link DrawServiceImpl#submitVote(String, Integer, Integer)}.
+     * <p>
+     * Scenariusz: Zakończenie głosowania po oddaniu głosów przez wszystkich graczy.
+     * Oczekiwany wynik: Ustawienie flagi zakończenia głosowania i zapisanie wyników.
+     */
     @Test
-    void submitVote_ShouldMarkVotingAsCompleted_WhenAllPlayersHaveFinished() {
-        // Arrange
+    public void submitVote_ShouldMarkVotingAsCompleted_WhenAllPlayersHaveFinished() {
         String lobbyCode = "testLobby";
         Integer filmId = 1;
         Integer userId = 1;
 
-        // Tworzenie lobby z 2 graczami w preferencjach
         Lobby lobby = new Lobby();
         lobby.setLobbyCode(lobbyCode);
-        lobby.setFinishedPlayersCount(1); // 1 gracz już zakończył
-        lobby.setVotingCompleted(false); // Głosowanie jeszcze nie zakończone
+        lobby.setFinishedPlayersCount(1);
+        lobby.setVotingCompleted(false);
 
         UserPreferences pref1 = new UserPreferences();
         pref1.setUser(new Users());
         UserPreferences pref2 = new UserPreferences();
         pref2.setUser(new Users());
-        lobby.setUserPreferences(Arrays.asList(pref1, pref2)); // 2 gracze w lobby
+        lobby.setUserPreferences(Arrays.asList(pref1, pref2));
 
-        // Tworzenie filmu i użytkownika
         Films film = new Films();
         film.setIdFilm(filmId);
 
         Users user = new Users();
         user.setId_user(userId);
 
-        // Mockowanie repozytoriów
         when(lobbyRepository.findByLobbyCode(lobbyCode)).thenReturn(Optional.of(lobby));
         when(filmsRepository.findById(filmId)).thenReturn(Optional.of(film));
         when(usersRepository.findById(userId)).thenReturn(Optional.of(user));
-        when(lobbyResultsRepository.countByLobbyAndUser(lobby, user)).thenReturn(16L); // Gracz oddał wszystkie głosy
+        when(lobbyResultsRepository.countByLobbyAndUser(lobby, user)).thenReturn(16L);
 
-        // Act
         drawService.submitVote(lobbyCode, filmId, userId);
 
-        // Assert
-        assertEquals(2, lobby.getFinishedPlayersCount()); // Obaj gracze zakończyli głosowanie
-        assertEquals(true, lobby.getVotingCompleted()); // Głosowanie zakończone
-        verify(lobbyRepository, times(2)).save(lobby); // Lobby zapisane dwa razy (dla licznika i flagi)
+        assertEquals(2, lobby.getFinishedPlayersCount());
+        assertEquals(true, lobby.getVotingCompleted());
+        verify(lobbyRepository, times(2)).save(lobby);
     }
 
-
+    /**
+     * Testuje metodę {@link DrawServiceImpl#submitVote(String, Integer, Integer)}.
+     * <p>
+     * Scenariusz: Próba oddania głosu w nieistniejącym lobby.
+     * Oczekiwany wynik: Rzucenie wyjątku {@link IllegalArgumentException}.
+     */
     @Test
-    void submitVote_ShouldThrowException_WhenLobbyDoesNotExist() {
-        // Arrange
+    public void submitVote_ShouldThrowException_WhenLobbyDoesNotExist() {
         String lobbyCode = "nonexistentLobby";
         Integer filmId = 1;
         Integer userId = 1;
 
         when(lobbyRepository.findByLobbyCode(lobbyCode)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> drawService.submitVote(lobbyCode, filmId, userId), "Lobby nie istnieje.");
     }
 
+    /**
+     * Testuje metodę {@link DrawServiceImpl#submitVote(String, Integer, Integer)}.
+     * <p>
+     * Scenariusz: Próba oddania głosu na nieistniejący film.
+     * Oczekiwany wynik: Rzucenie wyjątku {@link IllegalArgumentException}.
+     */
     @Test
-    void submitVote_ShouldThrowException_WhenFilmDoesNotExist() {
-        // Arrange
+    public void submitVote_ShouldThrowException_WhenFilmDoesNotExist() {
         String lobbyCode = "testLobby";
         Integer filmId = 1;
         Integer userId = 1;
@@ -221,13 +245,17 @@ class DrawServiceImplTest {
         when(lobbyRepository.findByLobbyCode(lobbyCode)).thenReturn(Optional.of(lobby));
         when(filmsRepository.findById(filmId)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> drawService.submitVote(lobbyCode, filmId, userId), "Film nie istnieje.");
     }
 
+    /**
+     * Testuje metodę {@link DrawServiceImpl#submitVote(String, Integer, Integer)}.
+     * <p>
+     * Scenariusz: Próba oddania głosu przez nieistniejącego użytkownika.
+     * Oczekiwany wynik: Rzucenie wyjątku {@link IllegalArgumentException}.
+     */
     @Test
-    void submitVote_ShouldThrowException_WhenUserDoesNotExist() {
-        // Arrange
+    public void submitVote_ShouldThrowException_WhenUserDoesNotExist() {
         String lobbyCode = "testLobby";
         Integer filmId = 1;
         Integer userId = 1;
@@ -242,7 +270,6 @@ class DrawServiceImplTest {
         when(filmsRepository.findById(filmId)).thenReturn(Optional.of(film));
         when(usersRepository.findById(userId)).thenReturn(Optional.empty());
 
-        // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> drawService.submitVote(lobbyCode, filmId, userId), "Użytkownik nie istnieje.");
     }
 }

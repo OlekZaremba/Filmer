@@ -4,7 +4,6 @@ import com.filmer.filmerbackend.Entities.Films;
 import com.filmer.filmerbackend.Entities.Lobby;
 import com.filmer.filmerbackend.Repositories.LobbyRepository;
 import com.filmer.filmerbackend.Repositories.LobbyResultsRepository;
-import com.filmer.filmerbackend.Services.ResultsService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -22,8 +21,12 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Klasa testowa dla usługi {@link ResultsServiceImpl}.
+ * Testuje funkcjonalności związane z pobieraniem wyników głosowań oraz wysyłaniem e-maili z wynikami.
+ */
 @ExtendWith(MockitoExtension.class)
-class ResultsServiceImplTest {
+public class ResultsServiceImplTest {
 
     @Mock
     private LobbyRepository lobbyRepository;
@@ -37,8 +40,14 @@ class ResultsServiceImplTest {
     @InjectMocks
     private ResultsServiceImpl resultsService;
 
+    /**
+     * Testuje metodę {@link ResultsServiceImpl#getResultsByLobbyCode(String)}.
+     * <p>
+     * Scenariusz: Pobranie wyników głosowania dla poprawnego kodu lobby.
+     * Oczekiwany wynik: Zwrócenie mapy wyników z odpowiednimi filmami i liczbą głosów.
+     */
     @Test
-    void getResultsByLobbyCode_ShouldReturnCorrectResults() {
+    public void getResultsByLobbyCode_ShouldReturnCorrectResults() {
         // Given
         String lobbyCode = "testLobbyCode";
         Lobby lobby = new Lobby();
@@ -55,19 +64,22 @@ class ResultsServiceImplTest {
         when(lobbyResultsRepository.countVotesByLobby(lobby.getIdLobby()))
                 .thenReturn(Arrays.asList(new Object[]{film1, 1}, new Object[]{film2, 2}));
 
-        // When
         Map<Integer, List<Films>> results = resultsService.getResultsByLobbyCode(lobbyCode);
 
-        // Then
         assertNotNull(results);
         assertEquals(2, results.size());
         assertTrue(results.get(1).contains(film1));
         assertTrue(results.get(2).contains(film2));
     }
 
+    /**
+     * Testuje metodę {@link ResultsServiceImpl#sendResultsEmail(String, String)}.
+     * <p>
+     * Scenariusz: Wysłanie e-maila z wynikami głosowania dla istniejącego lobby i poprawnego adresu e-mail.
+     * Oczekiwany wynik: E-mail zostaje wysłany z odpowiednimi wynikami w treści.
+     */
     @Test
-    void sendResultsEmail_ShouldSendEmail_WhenLobbyAndResultsExist() {
-        // Given
+    public void sendResultsEmail_ShouldSendEmail_WhenLobbyAndResultsExist() {
         String lobbyCode = "testLobbyCode";
         String email = "test@example.com";
         Lobby lobby = new Lobby();
@@ -86,10 +98,8 @@ class ResultsServiceImplTest {
 
         ArgumentCaptor<SimpleMailMessage> emailCaptor = ArgumentCaptor.forClass(SimpleMailMessage.class);
 
-        // When
         resultsService.sendResultsEmail(lobbyCode, email);
 
-        // Then
         verify(mailSender).send(emailCaptor.capture());
         SimpleMailMessage capturedMessage = emailCaptor.getValue();
 
@@ -99,9 +109,14 @@ class ResultsServiceImplTest {
         assertTrue(capturedMessage.getText().contains("Miejsce 2:\n - Film 2"));
     }
 
+    /**
+     * Testuje metodę {@link ResultsServiceImpl#sendResultsEmail(String, String)}.
+     * <p>
+     * Scenariusz: Próba wysłania e-maila, gdy występuje błąd wysyłania.
+     * Oczekiwany wynik: Rzucenie wyjątku {@link RuntimeException} z odpowiednim komunikatem.
+     */
     @Test
-    void sendResultsEmail_ShouldThrowException_WhenEmailSendingFails() {
-        // Given
+    public void sendResultsEmail_ShouldThrowException_WhenEmailSendingFails() {
         String lobbyCode = "testLobbyCode";
         String email = "test@example.com";
         Lobby lobby = new Lobby();
@@ -118,18 +133,22 @@ class ResultsServiceImplTest {
 
         doThrow(new RuntimeException("Email error")).when(mailSender).send(any(SimpleMailMessage.class));
 
-        // When & Then
         Exception exception = assertThrows(RuntimeException.class, () -> resultsService.sendResultsEmail(lobbyCode, email));
         assertTrue(exception.getMessage().contains("Błąd podczas wysyłania e-maila"));
     }
 
+    /**
+     * Testuje metodę {@link ResultsServiceImpl#getResultsByLobbyCode(String)}.
+     * <p>
+     * Scenariusz: Próba pobrania wyników dla nieistniejącego lobby.
+     * Oczekiwany wynik: Rzucenie wyjątku {@link IllegalArgumentException} z komunikatem o braku lobby.
+     */
     @Test
-    void getResultsByLobbyCode_ShouldThrowException_WhenLobbyDoesNotExist() {
+    public void getResultsByLobbyCode_ShouldThrowException_WhenLobbyDoesNotExist() {
         // Given
         String lobbyCode = "nonExistentLobby";
         when(lobbyRepository.findByLobbyCode(lobbyCode)).thenReturn(Optional.empty());
 
-        // When & Then
         Exception exception = assertThrows(IllegalArgumentException.class, () -> resultsService.getResultsByLobbyCode(lobbyCode));
         assertTrue(exception.getMessage().contains("Lobby nie istnieje."));
     }

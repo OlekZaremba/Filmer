@@ -8,14 +8,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class LobbyServiceImplTest {
+/**
+ * Klasa testowa dla usługi {@link LobbyServiceImpl}.
+ * Testuje funkcjonalności związane z zarządzaniem lobby, w tym tworzenie lobby,
+ * dodawanie użytkowników, zarządzanie preferencjami oraz obsługę głosowań.
+ */
+public class LobbyServiceImplTest {
 
     @Mock
     private LobbyRepository lobbyRepository;
@@ -38,13 +42,22 @@ class LobbyServiceImplTest {
     @InjectMocks
     private LobbyServiceImpl lobbyService;
 
+    /**
+     * Inicjalizacja mocków przed każdym testem.
+     */
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
+    /**
+     * Testuje metodę {@link LobbyServiceImpl#createLobby(int)}.
+     * <p>
+     * Scenariusz: Tworzenie nowego lobby przez użytkownika.
+     * Oczekiwany wynik: Zwrócenie obiektu lobby z poprawnym właścicielem.
+     */
     @Test
-    void createLobby_ShouldCreateAndReturnLobby() {
+    public void createLobby_ShouldCreateAndReturnLobby() {
         int ownerId = 1;
         Users owner = new Users();
         owner.setId_user(ownerId);
@@ -64,8 +77,14 @@ class LobbyServiceImplTest {
         verify(lobbyRepository, times(1)).save(any(Lobby.class));
     }
 
+    /**
+     * Testuje metodę {@link LobbyServiceImpl#closeLobby(int)}.
+     * <p>
+     * Scenariusz: Zamknięcie aktywnego lobby.
+     * Oczekiwany wynik: Ustawienie flagi aktywności na false.
+     */
     @Test
-    void closeLobby_ShouldDeactivateLobby() {
+    public void closeLobby_ShouldDeactivateLobby() {
         int lobbyId = 1;
         Lobby lobby = new Lobby();
         lobby.setIdLobby(lobbyId);
@@ -79,8 +98,14 @@ class LobbyServiceImplTest {
         verify(lobbyRepository, times(1)).save(lobby);
     }
 
+    /**
+     * Testuje metodę {@link LobbyServiceImpl#addUserToLobby(String, int)}.
+     * <p>
+     * Scenariusz: Dodanie użytkownika do istniejącego lobby.
+     * Oczekiwany wynik: Zapisanie preferencji użytkownika w bazie danych.
+     */
     @Test
-    void addUserToLobby_ShouldAddUserToLobby() {
+    public void addUserToLobby_ShouldAddUserToLobby() {
         String lobbyCode = "testCode";
         int userId = 1;
 
@@ -99,8 +124,14 @@ class LobbyServiceImplTest {
         verify(userPreferencesRepository, times(1)).save(any(UserPreferences.class));
     }
 
+    /**
+     * Testuje metodę {@link LobbyServiceImpl#getParticipants(String)}.
+     * <p>
+     * Scenariusz: Pobranie listy uczestników z danego lobby.
+     * Oczekiwany wynik: Zwrócenie listy użytkowników powiązanych z preferencjami w lobby.
+     */
     @Test
-    void getParticipants_ShouldReturnParticipants() {
+    public void getParticipants_ShouldReturnParticipants() {
         String lobbyCode = "testCode";
 
         Lobby lobby = new Lobby();
@@ -125,8 +156,14 @@ class LobbyServiceImplTest {
         verify(userPreferencesRepository, times(1)).findByLobby_IdLobby(lobby.getIdLobby());
     }
 
+    /**
+     * Testuje metodę {@link LobbyServiceImpl#saveUserPreferences(String, int, String, String, String)}.
+     * <p>
+     * Scenariusz: Aktualizacja preferencji użytkownika w lobby.
+     * Oczekiwany wynik: Zapisanie preferencji (platforma, gatunek, typ filmu) w bazie danych i ustawienie flagi gotowości.
+     */
     @Test
-    void saveUserPreferences_ShouldUpdatePreferences_WhenValidInput() {
+    public void saveUserPreferences_ShouldUpdatePreferences_WhenValidInput() {
         String lobbyCode = "testLobbyCode";
         int userId = 1;
         String streamingPlatform = "Netflix";
@@ -169,8 +206,14 @@ class LobbyServiceImplTest {
         verify(lobbyRepository, times(1)).save(lobby);
     }
 
+    /**
+     * Testuje metodę {@link LobbyServiceImpl#finishVoting(String, int)}.
+     * <p>
+     * Scenariusz: Ukończenie głosowania przez wszystkich uczestników.
+     * Oczekiwany wynik: Zwiększenie liczby zakończonych graczy oraz ustawienie flagi zakończenia głosowania.
+     */
     @Test
-    void finishVoting_ShouldSetVotingCompleted_WhenAllPlayersFinish() {
+    public void finishVoting_ShouldSetVotingCompleted_WhenAllPlayersFinish() {
         String lobbyCode = "testLobbyCode";
         int userId = 1;
 
@@ -203,8 +246,14 @@ class LobbyServiceImplTest {
         verify(lobbyRepository, times(1)).save(lobby);
     }
 
+    /**
+     * Testuje metodę {@link LobbyServiceImpl#areAllUsersReady(int)}.
+     * <p>
+     * Scenariusz: Sprawdzenie, czy wszyscy użytkownicy są gotowi w lobby.
+     * Oczekiwany wynik: Zwrócenie true, gdy wszyscy użytkownicy mają ustawioną flagę gotowości.
+     */
     @Test
-    void areAllUsersReady_ShouldReturnTrue_WhenAllUsersAreReady() {
+    public void areAllUsersReady_ShouldReturnTrue_WhenAllUsersAreReady() {
         int lobbyId = 1;
 
         when(userPreferencesRepository.existsByLobby_IdLobbyAndIsReadyFalse(lobbyId)).thenReturn(false);
@@ -215,8 +264,14 @@ class LobbyServiceImplTest {
         verify(userPreferencesRepository, times(1)).existsByLobby_IdLobbyAndIsReadyFalse(lobbyId);
     }
 
+    /**
+     * Testuje metodę {@link LobbyServiceImpl#startGame(int)}.
+     * <p>
+     * Scenariusz: Rozpoczęcie gry, gdy lobby jest aktywne i wszyscy użytkownicy są gotowi.
+     * Oczekiwany wynik: Ustawienie flagi rozpoczęcia gry na true.
+     */
     @Test
-    void startGame_ShouldSetStarted_WhenLobbyIsActiveAndAllUsersReady() {
+    public void startGame_ShouldSetStarted_WhenLobbyIsActiveAndAllUsersReady() {
         int lobbyId = 1;
 
         Lobby lobby = new Lobby();
@@ -232,8 +287,14 @@ class LobbyServiceImplTest {
         verify(lobbyRepository, times(1)).save(lobby);
     }
 
+    /**
+     * Testuje metodę {@link LobbyServiceImpl#checkVotingCompletion(String)}.
+     * <p>
+     * Scenariusz: Sprawdzenie, czy głosowanie w danym lobby zostało zakończone.
+     * Oczekiwany wynik: Zwrócenie true, gdy głosowanie jest oznaczone jako zakończone.
+     */
     @Test
-    void checkVotingCompletion_ShouldReturnTrue_WhenVotingIsCompleted() {
+    public void checkVotingCompletion_ShouldReturnTrue_WhenVotingIsCompleted() {
         String lobbyCode = "testLobbyCode";
 
         Lobby lobby = new Lobby();

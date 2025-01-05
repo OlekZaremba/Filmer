@@ -18,7 +18,12 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class UsersServiceImplTest {
+/**
+ * Klasa testowa dla usługi {@link UsersServiceImpl}.
+ * Testuje metody związane z zarządzaniem użytkownikami, w tym wyszukiwanie,
+ * uwierzytelnianie oraz rejestrację użytkowników.
+ */
+public class UsersServiceImplTest {
 
     @Mock
     private UsersRepository usersRepository;
@@ -32,13 +37,22 @@ class UsersServiceImplTest {
     @InjectMocks
     private UsersServiceImpl usersService;
 
+    /**
+     * Inicjalizacja mocków przed każdym testem.
+     */
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
+    /**
+     * Testuje metodę {@link UsersServiceImpl#findUserByNick(String)}.
+     * <p>
+     * Scenariusz: Znalezienie użytkownika po nicku.
+     * Oczekiwany wynik: Znalezienie użytkownika i zwrócenie obiektu {@link Optional} z wartością.
+     */
     @Test
-    void testFindUserByNick() {
+    public void testFindUserByNick() {
         String nick = "testUser";
         Users user = new Users();
         user.setNick(nick);
@@ -52,8 +66,14 @@ class UsersServiceImplTest {
         verify(usersRepository, times(1)).findByNick(nick);
     }
 
+    /**
+     * Testuje metodę {@link UsersServiceImpl#findUserByEmail(String)}.
+     * <p>
+     * Scenariusz: Znalezienie użytkownika po adresie e-mail.
+     * Oczekiwany wynik: Znalezienie użytkownika powiązanego z danym adresem e-mail.
+     */
     @Test
-    void testFindUserByEmail() {
+    public void testFindUserByEmail() {
         String email = "test@example.com";
         UserSensitiveData sensitiveData = new UserSensitiveData();
         sensitiveData.setEmail(email);
@@ -72,8 +92,14 @@ class UsersServiceImplTest {
         verify(usersRepository, times(1)).findById(1);
     }
 
+    /**
+     * Testuje metodę {@link UsersServiceImpl#authenticateUser(String, String)}.
+     * <p>
+     * Scenariusz: Uwierzytelnienie użytkownika z poprawnymi danymi logowania.
+     * Oczekiwany wynik: Zwrócenie wartości true.
+     */
     @Test
-    void testAuthenticateUserSuccess() {
+    public void testAuthenticateUserSuccess() {
         String email = "test@example.com";
         String password = "password123";
         String encodedPassword = "$2a$10$encodedPassword";
@@ -92,8 +118,14 @@ class UsersServiceImplTest {
         verify(passwordEncoder, times(1)).matches(password, encodedPassword);
     }
 
+    /**
+     * Testuje metodę {@link UsersServiceImpl#authenticateUser(String, String)}.
+     * <p>
+     * Scenariusz: Próba uwierzytelnienia użytkownika z błędnym hasłem.
+     * Oczekiwany wynik: Zwrócenie wartości false.
+     */
     @Test
-    void testAuthenticateUserFailure() {
+    public void testAuthenticateUserFailure() {
         String email = "test@example.com";
         String password = "wrongPassword";
 
@@ -106,8 +138,14 @@ class UsersServiceImplTest {
         verify(passwordEncoder, never()).matches(anyString(), anyString());
     }
 
+    /**
+     * Testuje metodę {@link UsersServiceImpl#registerUser(String, String, String)}.
+     * <p>
+     * Scenariusz: Rejestracja nowego użytkownika.
+     * Oczekiwany wynik: Zwrócenie komunikatu o pomyślnej rejestracji.
+     */
     @Test
-    void testRegisterUserSuccess() {
+    public void testRegisterUserSuccess() {
         String username = "newUser";
         String email = "new@example.com";
         String password = "password123";
@@ -131,8 +169,14 @@ class UsersServiceImplTest {
         verify(userSensitiveDataRepository, times(1)).save(any(UserSensitiveData.class));
     }
 
+    /**
+     * Testuje metodę {@link UsersServiceImpl#registerUser(String, String, String)}.
+     * <p>
+     * Scenariusz: Próba rejestracji użytkownika z istniejącym nickiem.
+     * Oczekiwany wynik: Zwrócenie komunikatu o błędzie rejestracji.
+     */
     @Test
-    void testRegisterUserFailure() {
+    public void testRegisterUserFailure() {
         String username = "existingUser";
         String email = "existing@example.com";
 
@@ -148,8 +192,14 @@ class UsersServiceImplTest {
         verify(userSensitiveDataRepository, never()).save(any(UserSensitiveData.class));
     }
 
+    /**
+     * Testuje metodę {@link UsersServiceImpl#getFriendsByUserId(int)}.
+     * <p>
+     * Scenariusz: Pobranie listy znajomych dla danego użytkownika.
+     * Oczekiwany wynik: Zwrócenie listy znajomych o oczekiwanym rozmiarze.
+     */
     @Test
-    void testGetFriendsByUserId() {
+    public void testGetFriendsByUserId() {
         int userId = 1;
         Users friend1 = new Users();
         Users friend2 = new Users();

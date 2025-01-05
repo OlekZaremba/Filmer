@@ -16,14 +16,18 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class FriendsServiceImplTest {
+/**
+ * Klasa testowa dla usługi {@link FriendsServiceImpl}.
+ * Testuje funkcjonalności zarządzania znajomymi, w tym wyszukiwanie, dodawanie znajomych,
+ * przesyłanie zdjęć profilowych oraz wysyłanie zaproszeń e-mailowych.
+ */
+public class FriendsServiceImplTest {
 
     @Mock
     private UsersRepository usersRepository;
@@ -40,13 +44,22 @@ class FriendsServiceImplTest {
     @InjectMocks
     private FriendsServiceImpl friendsService;
 
+    /**
+     * Inicjalizacja mocków przed każdym testem.
+     */
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
+    /**
+     * Testuje metodę {@link FriendsServiceImpl#getFriendsByUserId(int)}.
+     * <p>
+     * Scenariusz: Pobranie listy znajomych dla określonego użytkownika.
+     * Oczekiwany wynik: Zwrócenie listy znajomych.
+     */
     @Test
-    void testGetFriendsByUserId() {
+    public void testGetFriendsByUserId() {
         int userId = 1;
         Users friend1 = new Users();
         Users friend2 = new Users();
@@ -60,8 +73,14 @@ class FriendsServiceImplTest {
         verify(usersRepository, times(1)).findFriendsByUserId(userId);
     }
 
+    /**
+     * Testuje metodę {@link FriendsServiceImpl#searchUsersByNick(String)}.
+     * <p>
+     * Scenariusz: Wyszukiwanie użytkowników na podstawie fragmentu nicku.
+     * Oczekiwany wynik: Zwrócenie listy pasujących użytkowników.
+     */
     @Test
-    void testSearchUsersByNick() {
+    public void testSearchUsersByNick() {
         String nick = "test";
         Users user1 = new Users();
         Users user2 = new Users();
@@ -75,8 +94,14 @@ class FriendsServiceImplTest {
         verify(usersRepository, times(1)).findByPartialNick(nick);
     }
 
+    /**
+     * Testuje metodę {@link FriendsServiceImpl#addFriend(int, int)}.
+     * <p>
+     * Scenariusz: Dodanie nowego znajomego.
+     * Oczekiwany wynik: Zapisanie relacji znajomości w bazie danych.
+     */
     @Test
-    void testAddFriendSuccess() {
+    public void testAddFriendSuccess() {
         int userId = 1;
         int friendId = 2;
 
@@ -92,8 +117,14 @@ class FriendsServiceImplTest {
         verify(friendsListRepository, times(2)).save(any(FriendsList.class));
     }
 
+    /**
+     * Testuje metodę {@link FriendsServiceImpl#addFriend(int, int)}.
+     * <p>
+     * Scenariusz: Próba dodania samego siebie jako znajomego.
+     * Oczekiwany wynik: Rzucenie wyjątku {@link IllegalArgumentException}.
+     */
     @Test
-    void testAddFriendSameUser() {
+    public void testAddFriendSameUser() {
         int userId = 1;
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> friendsService.addFriend(userId, userId));
@@ -101,8 +132,14 @@ class FriendsServiceImplTest {
         assertEquals("Nie możesz dodać samego siebie do znajomych.", exception.getMessage());
     }
 
+    /**
+     * Testuje metodę {@link FriendsServiceImpl#addFriend(int, int)}.
+     * <p>
+     * Scenariusz: Próba dodania znajomego, gdy użytkownik nie istnieje.
+     * Oczekiwany wynik: Rzucenie wyjątku {@link IllegalArgumentException}.
+     */
     @Test
-    void testAddFriendUserDoesNotExist() {
+    public void testAddFriendUserDoesNotExist() {
         int userId = 1;
         int friendId = 2;
 
@@ -113,8 +150,14 @@ class FriendsServiceImplTest {
         assertEquals("Jeden z użytkowników nie istnieje.", exception.getMessage());
     }
 
+    /**
+     * Testuje metodę {@link FriendsServiceImpl#uploadProfilePicture(int, MultipartFile)}.
+     * <p>
+     * Scenariusz: Przesłanie zdjęcia profilowego dla istniejącego użytkownika.
+     * Oczekiwany wynik: Zapisanie zdjęcia w bazie danych.
+     */
     @Test
-    void testUploadProfilePictureSuccess() throws Exception {
+    public void testUploadProfilePictureSuccess() throws Exception {
         int userId = 1;
         MultipartFile file = mock(MultipartFile.class);
         Users user = new Users();
@@ -128,8 +171,14 @@ class FriendsServiceImplTest {
         assertArrayEquals(new byte[]{1, 2, 3}, user.getProfilePicture());
     }
 
+    /**
+     * Testuje metodę {@link FriendsServiceImpl#uploadProfilePicture(int, MultipartFile)}.
+     * <p>
+     * Scenariusz: Próba przesłania zdjęcia profilowego dla nieistniejącego użytkownika.
+     * Oczekiwany wynik: Rzucenie wyjątku {@link IllegalArgumentException}.
+     */
     @Test
-    void testUploadProfilePictureUserNotFound() {
+    public void testUploadProfilePictureUserNotFound() {
         int userId = 1;
         MultipartFile file = mock(MultipartFile.class);
 
@@ -140,8 +189,14 @@ class FriendsServiceImplTest {
         assertEquals("Użytkownik nie istnieje.", exception.getMessage());
     }
 
+    /**
+     * Testuje metodę {@link FriendsServiceImpl#getProfilePicture(int)}.
+     * <p>
+     * Scenariusz: Pobranie zdjęcia profilowego istniejącego użytkownika.
+     * Oczekiwany wynik: Zwrócenie zdjęcia profilowego w postaci tablicy bajtów.
+     */
     @Test
-    void testGetProfilePictureSuccess() {
+    public void testGetProfilePictureSuccess() {
         int userId = 1;
         Users user = new Users();
         user.setProfilePicture(new byte[]{1, 2, 3});
@@ -153,8 +208,14 @@ class FriendsServiceImplTest {
         assertArrayEquals(new byte[]{1, 2, 3}, result);
     }
 
+    /**
+     * Testuje metodę {@link FriendsServiceImpl#getProfilePicture(int)}.
+     * <p>
+     * Scenariusz: Próba pobrania zdjęcia profilowego dla nieistniejącego użytkownika.
+     * Oczekiwany wynik: Rzucenie wyjątku {@link IllegalArgumentException}.
+     */
     @Test
-    void testGetProfilePictureUserNotFound() {
+    public void testGetProfilePictureUserNotFound() {
         int userId = 1;
 
         when(usersRepository.findById(userId)).thenReturn(Optional.empty());
@@ -164,8 +225,14 @@ class FriendsServiceImplTest {
         assertEquals("Użytkownik nie istnieje.", exception.getMessage());
     }
 
+    /**
+     * Testuje metodę {@link FriendsServiceImpl#sendInviteEmail(int, String)}.
+     * <p>
+     * Scenariusz: Wysłanie e-maila z zaproszeniem do znajomego.
+     * Oczekiwany wynik: Wysłanie wiadomości e-mail na adres znajomego.
+     */
     @Test
-    void testSendInviteEmailSuccess() {
+    public void testSendInviteEmailSuccess() {
         int friendId = 1;
         String lobbyLink = "http://example.com/lobby";
 
@@ -182,8 +249,14 @@ class FriendsServiceImplTest {
         verify(mailSender, times(1)).send(any(SimpleMailMessage.class));
     }
 
+    /**
+     * Testuje metodę {@link FriendsServiceImpl#sendInviteEmail(int, String)}.
+     * <p>
+     * Scenariusz: Próba wysłania e-maila z zaproszeniem do nieistniejącego użytkownika.
+     * Oczekiwany wynik: Rzucenie wyjątku {@link IllegalArgumentException}.
+     */
     @Test
-    void testSendInviteEmailUserNotFound() {
+    public void testSendInviteEmailUserNotFound() {
         int friendId = 1;
         String lobbyLink = "http://example.com/lobby";
 
