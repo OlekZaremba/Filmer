@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Implementacja interfejsu LobbyService do zarządzania lobby, preferencjami użytkowników i grami.
+ */
 @Service
 public class LobbyServiceImpl implements LobbyService {
 
@@ -31,6 +34,13 @@ public class LobbyServiceImpl implements LobbyService {
         this.filmTypeRepository = filmTypeRepository;
     }
 
+    /**
+     * Tworzy nowe lobby z określonym właścicielem.
+     *
+     * @param ownerId identyfikator właściciela lobby
+     * @return utworzone lobby
+     * @throws IllegalArgumentException jeśli użytkownik o podanym identyfikatorze nie istnieje
+     */
     @Override
     public Lobby createLobby(int ownerId) {
         Users owner = usersRepository.findById(ownerId)
@@ -48,6 +58,12 @@ public class LobbyServiceImpl implements LobbyService {
         return savedLobby;
     }
 
+    /**
+     * Zamyka lobby na podstawie jego identyfikatora.
+     *
+     * @param lobbyId identyfikator lobby
+     * @throws IllegalArgumentException jeśli lobby o podanym identyfikatorze nie istnieje
+     */
     @Override
     public void closeLobby(int lobbyId) {
         Lobby lobby = lobbyRepository.findById(lobbyId)
@@ -57,6 +73,14 @@ public class LobbyServiceImpl implements LobbyService {
         lobbyRepository.save(lobby);
     }
 
+    /**
+     * Dodaje użytkownika do lobby na podstawie kodu lobby.
+     *
+     * @param lobbyCode kod lobby
+     * @param userId    identyfikator użytkownika
+     * @throws IllegalArgumentException jeśli lobby lub użytkownik nie istnieje,
+     *                                  lub jeśli użytkownik już znajduje się w lobby
+     */
     @Override
     public void addUserToLobby(String lobbyCode, int userId) {
         Lobby lobby = lobbyRepository.findByLobbyCode(lobbyCode)
@@ -81,6 +105,13 @@ public class LobbyServiceImpl implements LobbyService {
         userPreferencesRepository.save(preferences);
     }
 
+    /**
+     * Pobiera listę uczestników lobby.
+     *
+     * @param lobbyCode kod lobby
+     * @return lista uczestników lobby
+     * @throws IllegalArgumentException jeśli lobby o podanym kodzie nie istnieje
+     */
     @Override
     public List<Users> getParticipants(String lobbyCode) {
         Lobby lobby = lobbyRepository.findByLobbyCode(lobbyCode)
@@ -92,6 +123,16 @@ public class LobbyServiceImpl implements LobbyService {
                 .toList();
     }
 
+    /**
+     * Zapisuje preferencje użytkownika dotyczące platformy streamingowej, gatunku i typu filmu.
+     *
+     * @param lobbyCode       kod lobby
+     * @param userId          identyfikator użytkownika
+     * @param streamingPlatform preferowana platforma streamingowa
+     * @param genre           preferowany gatunek filmu
+     * @param type            preferowany typ filmu
+     * @throws IllegalArgumentException jeśli lobby, użytkownik, platforma, gatunek lub typ filmu nie istnieje
+     */
     @Override
     public void saveUserPreferences(String lobbyCode, int userId, String streamingPlatform, String genre, String type) {
         Lobby lobby = lobbyRepository.findByLobbyCode(lobbyCode)
@@ -125,17 +166,37 @@ public class LobbyServiceImpl implements LobbyService {
         }
     }
 
+    /**
+     * Sprawdza, czy wszyscy użytkownicy w lobby są gotowi.
+     *
+     * @param lobbyId identyfikator lobby
+     * @return true, jeśli wszyscy użytkownicy są gotowi; false w przeciwnym razie
+     */
     @Override
     public boolean areAllUsersReady(int lobbyId) {
         return !userPreferencesRepository.existsByLobby_IdLobbyAndIsReadyFalse(lobbyId);
     }
 
+    /**
+     * Pobiera lobby na podstawie jego kodu.
+     *
+     * @param lobbyCode kod lobby
+     * @return obiekt lobby
+     * @throws IllegalArgumentException jeśli lobby o podanym kodzie nie istnieje
+     */
     @Override
     public Lobby getLobbyByCode(String lobbyCode) {
         return lobbyRepository.findByLobbyCode(lobbyCode)
                 .orElseThrow(() -> new IllegalArgumentException("Lobby nie istnieje."));
     }
 
+    /**
+     * Rozpoczyna grę w określonym lobby.
+     *
+     * @param lobbyId identyfikator lobby
+     * @throws IllegalArgumentException jeśli lobby nie istnieje, jest zamknięte,
+     *                                  lub nie wszyscy uczestnicy są gotowi
+     */
     @Override
     public void startGame(int lobbyId) {
         Lobby lobby = lobbyRepository.findById(lobbyId)
@@ -160,6 +221,13 @@ public class LobbyServiceImpl implements LobbyService {
         System.out.println("Gra rozpoczęta dla lobby: " + lobbyId);
     }
 
+    /**
+     * Sprawdza, czy głosowanie w lobby zostało zakończone.
+     *
+     * @param lobbyCode kod lobby
+     * @return true, jeśli głosowanie zostało zakończone; false w przeciwnym razie
+     * @throws IllegalArgumentException jeśli lobby o podanym kodzie nie istnieje
+     */
     @Override
     public boolean checkVotingCompletion(String lobbyCode) {
         Lobby lobby = lobbyRepository.findByLobbyCode(lobbyCode)
@@ -168,6 +236,13 @@ public class LobbyServiceImpl implements LobbyService {
         return lobby.getVotingCompleted();
     }
 
+    /**
+     * Kończy głosowanie dla użytkownika w lobby.
+     *
+     * @param lobbyCode kod lobby
+     * @param userId    identyfikator użytkownika
+     * @throws IllegalArgumentException jeśli lobby o podanym kodzie nie istnieje
+     */
     @Override
     public void finishVoting(String lobbyCode, int userId) {
         Lobby lobby = lobbyRepository.findByLobbyCode(lobbyCode)

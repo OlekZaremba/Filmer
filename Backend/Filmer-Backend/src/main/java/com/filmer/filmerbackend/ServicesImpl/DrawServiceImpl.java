@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Implementacja interfejsu DrawService do zarządzania losowania filmów dla lobby oraz obsługi głosowania użytkowników.
+ */
 @Service
 @RequiredArgsConstructor
 public class DrawServiceImpl implements DrawService {
@@ -19,6 +22,12 @@ public class DrawServiceImpl implements DrawService {
     private final LobbyResultsRepository lobbyResultsRepository;
     private final UsersRepository usersRepository;
 
+    /**
+     * Losuje listę filmów dla określonego lobby. Uwzględnia preferencje użytkowników i dodaje filmy losowe.
+     *
+     * @param lobbyCode kod lobby
+     * @return lista wylosowanych filmów
+     */
     @Override
     public List<Films> drawFilms(String lobbyCode) {
         Lobby lobby = lobbyRepository.findByLobbyCode(lobbyCode)
@@ -56,6 +65,13 @@ public class DrawServiceImpl implements DrawService {
         return selectedFilms;
     }
 
+    /**
+     * Zapisuje głos użytkownika na dany film w lobby. Sprawdza, czy wszyscy gracze zakończyli głosowanie.
+     *
+     * @param lobbyCode kod lobby
+     * @param filmId    identyfikator filmu
+     * @param userId    identyfikator użytkownika
+     */
     @Override
     public void submitVote(String lobbyCode, Integer filmId, Integer userId) {
         Lobby lobby = lobbyRepository.findByLobbyCode(lobbyCode)

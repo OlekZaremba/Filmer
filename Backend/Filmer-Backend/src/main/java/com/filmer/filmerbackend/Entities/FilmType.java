@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import jakarta.persistence.*;
 
+/**
+ * Encja reprezentująca typ filmu.
+ */
 @Entity
 @Table(name = "film_type")
 @Getter
@@ -18,11 +21,17 @@ import jakarta.persistence.*;
 @AllArgsConstructor
 public class FilmType {
 
+    /**
+     * Identyfikator typu filmu.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_film_type")
     private Integer idFilmType;
 
+    /**
+     * Typ filmu (np. pełnometrażowy, dokumentalny).
+     */
     @Column(name = "film_type", nullable = false, length = 45)
     private String filmType;
 }

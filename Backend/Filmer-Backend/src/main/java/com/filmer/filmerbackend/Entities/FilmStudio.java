@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import jakarta.persistence.*;
 
+/**
+ * Encja reprezentująca studio filmowe.
+ */
 @Entity
 @Table(name = "film_studio")
 @Getter
@@ -18,11 +21,17 @@ import jakarta.persistence.*;
 @AllArgsConstructor
 public class FilmStudio {
 
+    /**
+     * Identyfikator studia filmowego.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_film_studio")
     private Integer idFilmStudio;
 
+    /**
+     * Nazwa studia filmowego.
+     */
     @Column(name = "studio_name", nullable = false, length = 45)
     private String studioName;
 }

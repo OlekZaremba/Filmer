@@ -8,6 +8,9 @@ import lombok.Setter;
 
 import java.util.Date;
 
+/**
+ * Encja reprezentująca relację znajomości pomiędzy dwoma użytkownikami.
+ */
 @Entity(name = "friends_list")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,16 +18,28 @@ import java.util.Date;
 @Setter
 public class FriendsList {
 
+    /**
+     * Identyfikator relacji znajomości.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_friends_list;
 
+    /**
+     * Identyfikator pierwszego użytkownika w relacji.
+     */
     @Column(name = "user1")
     private int user1;
 
+    /**
+     * Identyfikator drugiego użytkownika w relacji.
+     */
     @Column(name = "user2")
     private int user2;
 
+    /**
+     * Data utworzenia relacji znajomości.
+     */
     @Column(name = "created_at")
     private Date createdAt;
 }

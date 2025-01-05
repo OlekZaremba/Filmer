@@ -15,6 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Kontroler REST do operacji związanych z uwierzytelnianiem.
+ */
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -28,6 +31,12 @@ public class AuthController {
         this.jwtUtil = jwtUtil;
     }
 
+    /**
+     * Rejestruje nowego użytkownika.
+     *
+     * @param request obiekt żądania rejestracji zawierający pseudonim, adres e-mail i hasło
+     * @return obiekt ResponseEntity zawierający komunikat o wyniku rejestracji
+     */
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegistrationRequest request) {
         if (!request.getPassword().equals(request.getConfirmPassword())) {
@@ -40,6 +49,12 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
+    /**
+     * Uwierzytelnia użytkownika i generuje token JWT.
+     *
+     * @param loginRequest obiekt żądania logowania zawierający adres e-mail i hasło
+     * @return obiekt ResponseEntity zawierający token i dane użytkownika, jeśli uwierzytelnienie powiodło się
+     */
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest loginRequest) {
         Map<String, String> response = new HashMap<>();
@@ -61,6 +76,12 @@ public class AuthController {
         }
     }
 
+    /**
+     * Pobiera szczegóły użytkownika na podstawie jego adresu e-mail.
+     *
+     * @param email adres e-mail użytkownika
+     * @return obiekt ResponseEntity zawierający dane użytkownika, jeśli został znaleziony
+     */
     @GetMapping("/details")
     public ResponseEntity<UserDTO> getUserDetails(@RequestParam String email) {
         Optional<Users> user = userService.findUserByEmail(email);

@@ -15,6 +15,10 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+
+/**
+ * Implementacja interfejsu ResultsService do zarządzania wynikami głosowania w lobby oraz wysyłaia wyników mailem.
+ */
 @Service
 @RequiredArgsConstructor
 public class ResultsServiceImpl implements ResultsService {
@@ -23,6 +27,12 @@ public class ResultsServiceImpl implements ResultsService {
     private final LobbyResultsRepository lobbyResultsRepository;
     private final JavaMailSender mailSender;
 
+    /**
+     * Pobiera wyniki głosowania na podstawie kodu lobby.
+     *
+     * @param lobbyCode kod lobby
+     * @return mapa wyników, gdzie klucz to miejsce (np. 1, 2, 3), a wartość to lista filmów na danym miejscu
+     */
     @Override
     public Map<Integer, List<Films>> getResultsByLobbyCode(String lobbyCode) {
         Lobby lobby = lobbyRepository.findByLobbyCode(lobbyCode)
@@ -43,6 +53,12 @@ public class ResultsServiceImpl implements ResultsService {
         return sortedResults;
     }
 
+    /**
+     * Wysyła wyniki głosowania na e-mail.
+     *
+     * @param lobbyCode kod lobby
+     * @param email     adres e-mail odbiorcy
+     */
     @Override
     public void sendResultsEmail(String lobbyCode, String email) {
         Map<Integer, List<Films>> results = getResultsByLobbyCode(lobbyCode);
@@ -60,6 +76,12 @@ public class ResultsServiceImpl implements ResultsService {
         }
     }
 
+    /**
+     * Formatuje wyniki głosowania do formatu tekstowego.
+     *
+     * @param results mapa wyników głosowania
+     * @return sformatowany tekst wyników
+     */
     private String formatResults(Map<Integer, List<Films>> results) {
         StringBuilder sb = new StringBuilder("Wyniki głosowania:\n\n");
         results.forEach((place, films) -> {

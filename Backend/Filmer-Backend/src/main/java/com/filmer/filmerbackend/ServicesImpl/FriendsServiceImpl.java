@@ -15,6 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Implementacja interfejsu FriendsService do zarządzania znajomymi i powiązanymi operacjami.
+ */
 @Service
 public class FriendsServiceImpl implements FriendsService {
 
@@ -30,16 +33,37 @@ public class FriendsServiceImpl implements FriendsService {
         this.mailSender = mailSender;
     }
 
+    /**
+     * Pobiera listę znajomych dla określonego użytkownika.
+     *
+     * @param userId identyfikator użytkownika
+     * @return lista znajomych powiązanych z użytkownikiem
+     */
     @Override
     public List<Users> getFriendsByUserId(int userId) {
         return usersRepository.findFriendsByUserId(userId);
     }
 
+    /**
+     * Wyszukuje użytkowników na podstawie części ich pseudonimu.
+     *
+     * @param nick część pseudonimu użytkownika
+     * @return lista użytkowników spełniających kryteria wyszukiwania
+     */
     @Override
     public List<Users> searchUsersByNick(String nick) {
         return usersRepository.findByPartialNick(nick);
     }
 
+    /**
+     * Dodaje użytkownika do listy znajomych innego użytkownika.
+     *
+     * @param userId   identyfikator użytkownika, który dodaje znajomego
+     * @param friendId identyfikator dodawanego znajomego
+     * @throws IllegalArgumentException jeśli użytkownik próbuje dodać samego siebie,
+     *                                  jeden z użytkowników nie istnieje,
+     *                                  lub relacja między użytkownikami już istnieje
+     */
     @Override
     public void addFriend(int userId, int friendId) {
         if (userId == friendId) {
@@ -73,7 +97,14 @@ public class FriendsServiceImpl implements FriendsService {
         friendsListRepository.save(friendsList2);
     }
 
-
+    /**
+     * Przesyła zdjęcie profilowe dla danego użytkownika.
+     *
+     * @param userId identyfikator użytkownika
+     * @param file   plik zawierający zdjęcie profilowe
+     * @throws IllegalArgumentException jeśli użytkownik nie istnieje
+     * @throws RuntimeException         jeśli nie udało się zapisać zdjęcia profilowego
+     */
     @Override
     public void uploadProfilePicture(int userId, MultipartFile file) {
         Users user = usersRepository.findById(userId)
@@ -88,6 +119,13 @@ public class FriendsServiceImpl implements FriendsService {
         }
     }
 
+    /**
+     * Pobiera zdjęcie profilowe użytkownika.
+     *
+     * @param userId identyfikator użytkownika
+     * @return tablica bajtów reprezentująca zdjęcie profilowe
+     * @throws IllegalArgumentException jeśli użytkownik nie istnieje
+     */
     @Override
     public byte[] getProfilePicture(int userId) {
         Users user = usersRepository.findById(userId)
@@ -96,6 +134,14 @@ public class FriendsServiceImpl implements FriendsService {
         return user.getProfilePicture();
     }
 
+    /**
+     * Wysyła zaproszenie e-mail do znajomego.
+     *
+     * @param friendId  identyfikator znajomego
+     * @param lobbyLink link do lobby, które ma być przesłane w zaproszeniu
+     * @throws IllegalArgumentException jeśli znajomy lub jego dane wrażliwe nie istnieją
+     * @throws RuntimeException         jeśli wystąpił błąd podczas wysyłania e-maila
+     */
     @Override
     public void sendInviteEmail(int friendId, String lobbyLink) {
 

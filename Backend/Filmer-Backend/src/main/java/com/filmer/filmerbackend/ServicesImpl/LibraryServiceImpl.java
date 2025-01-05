@@ -24,6 +24,9 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementacja serwisu zarządzającego biblioteką filmów.
+ */
 @Service
 @RequiredArgsConstructor
 public class LibraryServiceImpl implements LibraryService {
@@ -33,16 +36,34 @@ public class LibraryServiceImpl implements LibraryService {
     private final WatchedMoviesRepository watchedMoviesRepository;
     private final UsersRepository usersRepository;
 
+    /**
+     * Pobiera film na podstawie identyfikatora.
+     *
+     * @param idFilm identyfikator filmu
+     * @return obiekt Optional zawierający film
+     */
     @Override
     public Optional<Films> getFilmById(Integer idFilm) {
         return filmsRepository.findById(idFilm);
     }
 
+    /**
+     * Pobiera wszystkie filmy z biblioteki.
+     *
+     * @return lista filmów
+     */
     @Override
     public List<Films> getAllFilms() {
         return filmsRepository.findAll();
     }
 
+    /**
+     * Generuje plik PDF z informacjami o filmie.
+     *
+     * @param title       tytuł filmu
+     * @param description opis filmu
+     * @return plik PDF jako ResponseEntity
+     */
     @Override
     public ResponseEntity<byte[]> generatePdf(String title, String description) {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -113,16 +134,39 @@ public class LibraryServiceImpl implements LibraryService {
                 .replace("ż", "z");
     }
 
+    /**
+     * Pobiera filmy na podstawie gatunku.
+     *
+     * @param genreName nazwa gatunku
+     * @return lista filmów
+     */
     @Override
     public List<Films> getFilmsByGenre(String genreName) {
         return filmsRepository.findByGenre(genreName);
     }
 
+    /**
+     * Wyszukuje filmy na podstawie nazwy.
+     *
+     * @param name nazwa filmu
+     * @return lista filmów
+     */
     @Override
     public List<Films> getFilmsByName(String name) {
         return filmsRepository.findByFilmNameContaining(name);
     }
 
+    /**
+     * Wysyła sugestię nowego filmu do administratora.
+     *
+     * @param title       tytuł filmu
+     * @param description opis filmu
+     * @param genre       gatunek filmu
+     * @param platform    platforma
+     * @param director    reżyser
+     * @param studio      studio
+     * @param type        typ filmu
+     */
     @Override
     public void sendFilmSuggestion(String title, String description, String genre, String platform, String director, String studio, String type) {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -138,12 +182,26 @@ public class LibraryServiceImpl implements LibraryService {
         mailSender.send(message);
     }
 
+    /**
+     * Pobiera ocenę filmu wystawioną przez użytkownika.
+     *
+     * @param filmId identyfikator filmu
+     * @param userId identyfikator użytkownika
+     * @return ocena filmu
+     */
     @Override
     public Optional<Integer> getRating(Integer filmId, Integer userId) {
         return watchedMoviesRepository.findByFilmIdAndUserId(filmId, userId)
                 .map(WatchedMovies::getRating);
     }
 
+    /**
+     * Ustawia ocenę filmu wystawioną przez użytkownika.
+     *
+     * @param filmId identyfikator filmu
+     * @param userId identyfikator użytkownika
+     * @param rating ocena filmu
+     */
     @Override
     public void setRating(Integer filmId, Integer userId, Integer rating) {
         WatchedMovies watchedMovie = watchedMoviesRepository.findByFilmIdAndUserId(filmId, userId)

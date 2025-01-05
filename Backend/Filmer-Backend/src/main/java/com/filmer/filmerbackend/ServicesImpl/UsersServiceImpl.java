@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementacja interfejsu UsersService do zarządzania użytkownikami i ich danymi.
+ */
 @Service
 public class UsersServiceImpl implements UsersService {
 
@@ -27,23 +30,50 @@ public class UsersServiceImpl implements UsersService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Wyszukuje użytkownika na podstawie jego pseudonimu.
+     *
+     * @param nick pseudonim użytkownika
+     * @return obiekt Optional zawierający użytkownika, jeśli został znaleziony
+     */
     @Override
     public Optional<Users> findUserByNick(String nick) {
         return usersRepository.findByNick(nick);
     }
 
+    /**
+     * Wyszukuje użytkownika na podstawie jego adresu e-mail.
+     *
+     * @param email adres e-mail użytkownika
+     * @return obiekt Optional zawierający użytkownika, jeśli został znaleziony
+     */
     @Override
     public Optional<Users> findUserByEmail(String email) {
         return userSensitiveDataRepository.findByEmail(email)
                 .flatMap(userSensitiveData -> usersRepository.findById(userSensitiveData.getUser().getId_user()));
     }
 
+    /**
+     * Uwierzytelnia użytkownika na podstawie adresu e-mail i hasła.
+     *
+     * @param email    adres e-mail użytkownika
+     * @param password hasło użytkownika
+     * @return true, jeśli uwierzytelnienie zakończyło się sukcesem, false w przeciwnym razie
+     */
     @Override
     public boolean authenticateUser(String email, String password) {
         Optional<UserSensitiveData> userSensitiveData = userSensitiveDataRepository.findByEmail(email);
         return userSensitiveData.isPresent() && passwordEncoder.matches(password, userSensitiveData.get().getPassword());
     }
 
+    /**
+     * Rejestruje nowego użytkownika.
+     *
+     * @param username pseudonim użytkownika
+     * @param email    adres e-mail użytkownika
+     * @param password hasło użytkownika
+     * @return komunikat o statusie rejestracji
+     */
     @Override
     public String registerUser(String username, String email, String password) {
         if (usersRepository.findByNick(username).isPresent() || userSensitiveDataRepository.findByEmail(email).isPresent()) {
@@ -63,6 +93,12 @@ public class UsersServiceImpl implements UsersService {
         return "User registered successfully";
     }
 
+    /**
+     * Pobiera listę znajomych dla określonego użytkownika.
+     *
+     * @param userId identyfikator użytkownika
+     * @return lista znajomych użytkownika
+     */
     @Override
     public List<Users> getFriendsByUserId(int userId) {
         return usersRepository.findFriendsByUserId(userId);

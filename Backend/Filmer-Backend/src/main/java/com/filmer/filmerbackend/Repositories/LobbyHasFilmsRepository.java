@@ -9,9 +9,19 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Repozytorium dla operacji na encji {@link LobbyHasFilms}.
+ * Umożliwia zarządzanie powiązaniami między lobby a filmami.
+ */
 @Repository
 public interface LobbyHasFilmsRepository extends JpaRepository<LobbyHasFilms, Integer> {
 
+    /**
+     * Wyszukuje wszystkie filmy przypisane do danego lobby.
+     *
+     * @param lobby obiekt lobby
+     * @return lista powiązań między lobby a filmami
+     */
     @Query("SELECT lhf FROM LobbyHasFilms lhf WHERE lhf.lobby = :lobby")
     List<LobbyHasFilms> findByLobby(@Param("lobby") Lobby lobby);
 }
