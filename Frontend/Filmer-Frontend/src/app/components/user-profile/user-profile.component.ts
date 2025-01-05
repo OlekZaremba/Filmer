@@ -5,6 +5,13 @@ import {MenuComponent} from '../menu/menu.component';
 import { FormsModule } from '@angular/forms';
 import {RouterModule} from '@angular/router';
 
+/**
+ * Komponent odpowiedzialny za wyświetlanie i zarządzanie profilem użytkownika.
+ * Obsługuje m.in. listę znajomych, ustawienia motywu i języka oraz zarządzanie zdjęciem profilowym.
+ * @export
+ * @class UserProfileComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'app-user-profile',
   standalone: true,
@@ -13,17 +20,67 @@ import {RouterModule} from '@angular/router';
   styleUrls: ['./user-profile.component.css'],
 })
 export class UserProfileComponent implements OnInit {
+  /**
+   * Nazwa użytkownika.
+   * @type {string}
+   */
   userName: string = '';
+
+  /**
+   * Adres e-mail użytkownika.
+   * @type {string}
+   */
   email: string = '';
+
+  /**
+   * Lista znajomych użytkownika.
+   * @type {any[]}
+   */
   friends: any[] = [];
+
+  /**
+   * Wyszukiwane hasło.
+   * @type {string}
+   */
   searchTerm: string = '';
+
+  /**
+   * Wyniki wyszukiwania użytkowników.
+   * @type {any[]}
+   */
   searchResults: any[] = [];
+
+  /**
+   * Wybrany plik zdjęcia profilowego.
+   * @type {File | null}
+   */
   selectedFile: File | null = null;
+
+  /**
+   * Obecny motyw aplikacji ('light' lub 'dark').
+   * @type {'light' | 'dark'}
+   */
   currentTheme: 'light' | 'dark' = 'dark';
+
+  /**
+   * Obecny język aplikacji ('polish' lub 'english').
+   * @type {'polish' | 'english'}
+   */
   currentLanguage: 'polish' | 'english' = 'english';
 
-  constructor(private friendsService: FriendsService, private renderer: Renderer2, private cdr: ChangeDetectorRef) {}
+  /**
+   * Tworzy instancję UserProfileComponent.
+   * @param {FriendsService} friendsService Serwis obsługujący znajomych.
+   * @param {Renderer2} renderer Renderer Angulara.
+   * @param {ChangeDetectorRef} cdr Referencja do detektora zmian.
+   */
+  constructor(private friendsService: FriendsService, private renderer: Renderer2, private cdr: ChangeDetectorRef) {
+  }
 
+  /**
+   * Metoda inicjalizująca komponent.
+   * Ładuje dane użytkownika, motyw i język oraz ustawia nasłuch na zmiany w localStorage.
+   */
   ngOnInit(): void {
     this.loadTheme();
     this.loadLanguage();
@@ -48,30 +105,52 @@ export class UserProfileComponent implements OnInit {
     window.addEventListener('storage', this.handleStorageChange.bind(this));
   }
 
+  /**
+   * Metoda wywoływana przy zniszczeniu komponentu.
+   * Usuwa nasłuch na zmiany w localStorage.
+   */
   ngOnDestroy(): void {
-    // Usuwanie nasłuchiwania po zniszczeniu komponentu
     window.removeEventListener('storage', this.handleStorageChange.bind(this));
   }
 
+  /**
+   * Ładuje preferowany język użytkownika z localStorage.
+   * @private
+   */
   private loadLanguage() {
     const savedLanguage = localStorage.getItem('language') as 'polish' | 'english';
     this.currentLanguage = savedLanguage || 'english';
-    this.cdr.detectChanges(); // Wymuszenie odświeżenia widoku
+    this.cdr.detectChanges();
   }
 
+  /**
+   * Obsługuje zmiany w localStorage, np. zmianę języka.
+   * @private
+   * @param {StorageEvent} event Zdarzenie zmiany w localStorage.
+   */
   private handleStorageChange(event: StorageEvent): void {
     if (event.key === 'language') {
       this.loadLanguage();
     }
   }
 
-  private loadTheme() {
+  /**
+   * Ładuje zapisany motyw użytkownika z localStorage i stosuje go w interfejsie.
+   * Jeśli brak danych w localStorage, domyślnie stosowany jest motyw 'dark'.
+   * @private
+   */
+  private loadTheme(): void {
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
     this.currentTheme = savedTheme || 'dark';
     this.applyTheme(this.currentTheme);
   }
 
-  private applyTheme(theme: 'light' | 'dark') {
+  /**
+   * Stosuje wybrany motyw ('light' lub 'dark') do interfejsu użytkownika.
+   * @private
+   * @param {'light' | 'dark'} theme Wybrany motyw.
+   */
+  private applyTheme(theme: 'light' | 'dark'): void {
     const container = document.querySelector('.section-user') as HTMLElement;
     if (theme === 'dark') {
       this.renderer.addClass(container, 'dark-theme');
@@ -82,12 +161,15 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
+  /**
+   * Pobiera listę znajomych użytkownika z serwera.
+   * @param {number} userId ID użytkownika.
+   */
   loadFriends(userId: number): void {
     this.friendsService.getFriends(userId).subscribe({
       next: (friends) => {
         this.friends = friends;
 
-        // Dla każdego znajomego pobierz jego zdjęcie profilowe
         this.friends.forEach(friend => {
           this.loadFriendPicture(friend);
         });
@@ -98,6 +180,11 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  /**
+   * Pobiera zdjęcie profilowe danego znajomego i przypisuje je do obiektu znajomego.
+   * Jeśli zdjęcie nie jest dostępne, stosuje domyślną ikonę użytkownika.
+   * @param {any} friend Obiekt znajomego.
+   */
   loadFriendPicture(friend: any): void {
     this.friendsService.getProfilePicture(friend.id).subscribe({
       next: (blob) => {
@@ -111,8 +198,10 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-
-
+  /**
+   * Pobiera zdjęcie profilowe użytkownika i ustawia je w interfejsie.
+   * @param {number} userId ID użytkownika.
+   */
   loadProfilePicture(userId: number): void {
     this.friendsService.getProfilePicture(userId).subscribe({
       next: (blob) => {
@@ -128,8 +217,10 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-
-
+  /**
+   * Wyszukuje użytkowników na podstawie wpisanego hasła i aktualizuje wyniki wyszukiwania.
+   * Dodaje domyślne zdjęcia profilowe dla użytkowników bez zdjęcia.
+   */
   searchUsers(): void {
     if (this.searchTerm.trim()) {
       this.friendsService.searchUsers(this.searchTerm).subscribe({
@@ -157,7 +248,10 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-
+  /**
+   * Dodaje użytkownika do listy znajomych.
+   * @param {number} friendId ID znajomego do dodania.
+   */
   addFriend(friendId: number): void {
     const userId = localStorage.getItem('userId');
 
@@ -177,6 +271,9 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
+  /**
+   * Otwiera okno wyboru pliku do przesłania zdjęcia profilowego.
+   */
   triggerFileInput(): void {
     const fileInput = document.getElementById('fileInput') as HTMLInputElement;
     if (fileInput) {
@@ -184,6 +281,10 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
+  /**
+   * Obsługuje wybór pliku zdjęcia profilowego przez użytkownika.
+   * @param {Event} event Zdarzenie wyboru pliku.
+   */
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
@@ -192,6 +293,10 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
+  /**
+   * Przesyła wybrane zdjęcie profilowe użytkownika na serwer.
+   * W razie powodzenia ładuje nowe zdjęcie do interfejsu.
+   */
   uploadProfilePicture(): void {
     if (!this.selectedFile) {
       alert('Nie wybrano zdjęcia.');
@@ -214,7 +319,6 @@ export class UserProfileComponent implements OnInit {
       },
       error: (err) => {
         console.error('Błąd podczas przesyłania zdjęcia:', err);
-        // alert('Nie udało się przesłać zdjęcia.');
         window.location.reload();
       },
     });

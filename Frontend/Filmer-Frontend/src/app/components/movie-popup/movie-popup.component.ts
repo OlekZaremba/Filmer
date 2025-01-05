@@ -4,6 +4,13 @@ import { PdfService } from '../../services/pdf.service';
 import { FilmService } from '../../services/film.service';
 import { FormsModule } from '@angular/forms';
 
+/**
+ * Komponent MoviePopupComponent odpowiedzialny za wyświetlanie popupu z informacjami o filmie,
+ * możliwością dodania recenzji oraz pobrania opisu filmu w formacie PDF.
+ * @export
+ * @class MoviePopupComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'app-movie-popup',
   standalone: true,
@@ -34,23 +41,61 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./movie-popup.component.css'],
 })
 export class MoviePopupComponent implements OnInit {
+  /**
+   * Flaga określająca, czy popup jest widoczny.
+   * @type {boolean}
+   */
   @Input() isVisible = false;
+
+  /**
+   * Tytuł filmu wyświetlany w popupie.
+   * @type {string}
+   */
   @Input() title!: string;
+
+  /**
+   * Opis filmu wyświetlany w popupie.
+   * @type {string}
+   */
   @Input() description = 'Opis';
+
+  /**
+   * Zdarzenie emitowane po zamknięciu popupu.
+   * @type {EventEmitter<void>}
+   */
   @Output() popupClosed = new EventEmitter<void>();
+
+  /**
+   * Aktualna ocena użytkownika dla filmu.
+   * @type {string}
+   */
   currentRating: string = 'Brak opinii';
 
+  /**
+   * Tworzy instancję MoviePopupComponent.
+   * @param {PdfService} pdfService Serwis do generowania plików PDF.
+   * @param {FilmService} filmService Serwis do obsługi danych o filmach.
+   */
   constructor(private pdfService: PdfService, private filmService: FilmService) {}
 
+  /**
+   * Inicjalizuje komponent, ładując ocenę filmu użytkownika, jeśli jest dostępna.
+   */
   ngOnInit(): void {
     this.loadRating();
   }
 
+  /**
+   * Zamyka popup i emituje zdarzenie `popupClosed`.
+   */
   closePopup(): void {
     this.isVisible = false;
     this.popupClosed.emit();
   }
 
+  /**
+   * Pobiera opis filmu i generuje plik PDF, który można pobrać.
+   */
   downloadPdf(): void {
     this.pdfService.generatePdf(this.title, this.description).subscribe((response: Blob) => {
       const url = window.URL.createObjectURL(response);
@@ -62,6 +107,9 @@ export class MoviePopupComponent implements OnInit {
     });
   }
 
+  /**
+   * Ładuje ocenę filmu użytkownika z serwera, jeśli jest dostępna.
+   */
   loadRating(): void {
     const userId = this.getUserId();
     if (userId) {
@@ -85,6 +133,10 @@ export class MoviePopupComponent implements OnInit {
     }
   }
 
+  /**
+   * Zapisuje ocenę filmu użytkownika na serwerze.
+   * Waliduje wprowadzone dane przed zapisem.
+   */
   saveRating(): void {
     const userId = this.getUserId();
     if (userId && this.currentRating !== 'Brak opinii') {
@@ -113,13 +165,20 @@ export class MoviePopupComponent implements OnInit {
     }
   }
 
-
+  /**
+   * Czyści pole oceny, jeśli zawiera wartość domyślną.
+   */
   clearInputIfDefault(): void {
     if (this.currentRating === 'Brak opinii') {
       this.currentRating = '';
     }
   }
 
+  /**
+   * Pobiera ID użytkownika z localStorage.
+   * @private
+   * @returns {number | null} ID użytkownika lub null, jeśli brak ID w localStorage.
+   */
   private getUserId(): number | null {
     const userId = localStorage.getItem('userId');
     return userId ? +userId : null;

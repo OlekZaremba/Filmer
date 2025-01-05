@@ -1,0 +1,3039 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>filmer-frontend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">filmer-frontend documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  LobbyComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/components/lobby/lobby.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Komponent zarządzający lobby, w którym użytkownicy mogą dołączać, wysyłać zaproszenia,
+ustawiać preferencje oraz monitorować status uczestników.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+                <code>OnDestroy</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-lobby</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>NgForOf</code>
+                            <code>NgIf</code>
+                            <code>FormsModule</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./lobby.component.css</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./lobby.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#canSendInvites" >canSendInvites</a>
+                            </li>
+                            <li>
+                                <a href="#currentLanguage" >currentLanguage</a>
+                            </li>
+                            <li>
+                                <a href="#currentTheme" >currentTheme</a>
+                            </li>
+                            <li>
+                                <a href="#email" >email</a>
+                            </li>
+                            <li>
+                                <a href="#friends" >friends</a>
+                            </li>
+                            <li>
+                                <a href="#isGeneratingLobby" >isGeneratingLobby</a>
+                            </li>
+                            <li>
+                                <a href="#lobbyLink" >lobbyLink</a>
+                            </li>
+                            <li>
+                                <a href="#participants" >participants</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#participantSubscription" >participantSubscription</a>
+                            </li>
+                            <li>
+                                <a href="#readyParticipantsCount" >readyParticipantsCount</a>
+                            </li>
+                            <li>
+                                <a href="#selectedGenre" >selectedGenre</a>
+                            </li>
+                            <li>
+                                <a href="#selectedPlatform" >selectedPlatform</a>
+                            </li>
+                            <li>
+                                <a href="#selectedType" >selectedType</a>
+                            </li>
+                            <li>
+                                <a href="#userName" >userName</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addUserToLobbyIfJoining" >addUserToLobbyIfJoining</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#applyTheme" >applyTheme</a>
+                            </li>
+                            <li>
+                                <a href="#checkGameStart" >checkGameStart</a>
+                            </li>
+                            <li>
+                                <a href="#extractLobbyCodeFromUrl" >extractLobbyCodeFromUrl</a>
+                            </li>
+                            <li>
+                                <a href="#generateLink" >generateLink</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#handleStorageChange" >handleStorageChange</a>
+                            </li>
+                            <li>
+                                <a href="#isCreatingNewLobbyDisabled" >isCreatingNewLobbyDisabled</a>
+                            </li>
+                            <li>
+                                <a href="#loadFriendPicture" >loadFriendPicture</a>
+                            </li>
+                            <li>
+                                <a href="#loadFriends" >loadFriends</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#loadLanguage" >loadLanguage</a>
+                            </li>
+                            <li>
+                                <a href="#loadParticipants" >loadParticipants</a>
+                            </li>
+                            <li>
+                                <a href="#loadProfilePicture" >loadProfilePicture</a>
+                            </li>
+                            <li>
+                                <a href="#loadReadyStatus" >loadReadyStatus</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#loadTheme" >loadTheme</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#savePreferences" >savePreferences</a>
+                            </li>
+                            <li>
+                                <a href="#sendInvite" >sendInvite</a>
+                            </li>
+                            <li>
+                                <a href="#startGame" >startGame</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(friendsService: <a href="../injectables/FriendsService.html" target="_self">FriendsService</a>, lobbyService: <a href="../injectables/LobbyService.html" target="_self">LobbyService</a>, router: Router, renderer: Renderer2)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="107" class="link-to-prism">src/app/components/lobby/lobby.component.ts:107</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Tworzy instancję komponentu.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>friendsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/FriendsService.html" target="_self" >FriendsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Usługa zarządzająca znajomymi użytkownika.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>lobbyService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/LobbyService.html" target="_self" >LobbyService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Usługa zarządzająca danymi lobby.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Router Angular do nawigacji.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>renderer</td>
+                                                  
+                                                        <td>
+                                                                    <code>Renderer2</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Renderer do manipulacji DOM.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addUserToLobbyIfJoining"></a>
+                    <span class="name">
+                        <span ><b>addUserToLobbyIfJoining</b></span>
+                        <a href="#addUserToLobbyIfJoining"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addUserToLobbyIfJoining(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="269"
+                                    class="link-to-prism">src/app/components/lobby/lobby.component.ts:269</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Dodaje użytkownika do lobby, jeśli lobbyCode jest obecny w URL.
+Po dodaniu użytkownika lista uczestników zostaje odświeżona.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>userId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>Identyfikator użytkownika.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="applyTheme"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>applyTheme</b></span>
+                        <a href="#applyTheme"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>applyTheme(theme: "light" | "dark")</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="201"
+                                    class="link-to-prism">src/app/components/lobby/lobby.component.ts:201</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Zastosowuje wybrany motyw aplikacji do elementu DOM.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>theme</td>
+                                            <td>
+                                                        <code>&quot;light&quot; | &quot;dark&quot;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>Wybrany motyw aplikacji.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkGameStart"></a>
+                    <span class="name">
+                        <span ><b>checkGameStart</b></span>
+                        <a href="#checkGameStart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>checkGameStart()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="466"
+                                    class="link-to-prism">src/app/components/lobby/lobby.component.ts:466</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Sprawdza, czy gra w lobby została już rozpoczęta.
+Jeśli gra została rozpoczęta, użytkownik jest przekierowywany na stronę gry.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="extractLobbyCodeFromUrl"></a>
+                    <span class="name">
+                        <span ><b>extractLobbyCodeFromUrl</b></span>
+                        <a href="#extractLobbyCodeFromUrl"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>extractLobbyCodeFromUrl()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="490"
+                                    class="link-to-prism">src/app/components/lobby/lobby.component.ts:490</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Wyciąga kod lobby z aktualnego URL.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>string | null</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Kod lobby, jeśli istnieje; w przeciwnym razie <code>null</code>.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="generateLink"></a>
+                    <span class="name">
+                        <span ><b>generateLink</b></span>
+                        <a href="#generateLink"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>generateLink()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="244"
+                                    class="link-to-prism">src/app/components/lobby/lobby.component.ts:244</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Generuje link do lobby i zapisuje go w localStorage.
+Po pomyślnym wygenerowaniu lobby użytkownik jest przekierowywany na stronę lobby.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleStorageChange"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>handleStorageChange</b></span>
+                        <a href="#handleStorageChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>handleStorageChange(event: StorageEvent)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="217"
+                                    class="link-to-prism">src/app/components/lobby/lobby.component.ts:217</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Obsługuje zmiany w localStorage, np. zmiany języka.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>StorageEvent</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>Wydarzenie zmiany w localStorage.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isCreatingNewLobbyDisabled"></a>
+                    <span class="name">
+                        <span ><b>isCreatingNewLobbyDisabled</b></span>
+                        <a href="#isCreatingNewLobbyDisabled"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isCreatingNewLobbyDisabled()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="289"
+                                    class="link-to-prism">src/app/components/lobby/lobby.component.ts:289</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Sprawdza, czy tworzenie nowego lobby jest zablokowane.
+Zwraca <code>true</code>, jeśli lobby jest już generowane lub link do lobby istnieje.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <ul>
+<li>Flaga wskazująca, czy tworzenie nowego lobby jest zablokowane.</li>
+</ul>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadFriendPicture"></a>
+                    <span class="name">
+                        <span ><b>loadFriendPicture</b></span>
+                        <a href="#loadFriendPicture"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadFriendPicture(friend: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="316"
+                                    class="link-to-prism">src/app/components/lobby/lobby.component.ts:316</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Ładuje zdjęcie profilowe znajomego.
+Jeśli wystąpi błąd, ustawia domyślny awatar dla znajomego.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>friend</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>Obiekt znajomego zawierający jego dane.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadFriends"></a>
+                    <span class="name">
+                        <span ><b>loadFriends</b></span>
+                        <a href="#loadFriends"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadFriends(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="297"
+                                    class="link-to-prism">src/app/components/lobby/lobby.component.ts:297</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Ładuje listę znajomych użytkownika i ich zdjęcia profilowe.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>userId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>Identyfikator użytkownika.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadLanguage"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>loadLanguage</b></span>
+                        <a href="#loadLanguage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadLanguage()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="181"
+                                    class="link-to-prism">src/app/components/lobby/lobby.component.ts:181</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Ładuje język aplikacji z localStorage.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadParticipants"></a>
+                    <span class="name">
+                        <span ><b>loadParticipants</b></span>
+                        <a href="#loadParticipants"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadParticipants()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="373"
+                                    class="link-to-prism">src/app/components/lobby/lobby.component.ts:373</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Pobiera listę uczestników lobby.
+Jeśli kod lobby istnieje, dane uczestników są ładowane z backendu.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadProfilePicture"></a>
+                    <span class="name">
+                        <span ><b>loadProfilePicture</b></span>
+                        <a href="#loadProfilePicture"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadProfilePicture(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="334"
+                                    class="link-to-prism">src/app/components/lobby/lobby.component.ts:334</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Ładuje zdjęcie profilowe użytkownika.
+Jeśli wystąpi błąd, zdjęcie profilowe nie zostanie załadowane.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>userId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>Identyfikator użytkownika.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadReadyStatus"></a>
+                    <span class="name">
+                        <span ><b>loadReadyStatus</b></span>
+                        <a href="#loadReadyStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadReadyStatus()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="226"
+                                    class="link-to-prism">src/app/components/lobby/lobby.component.ts:226</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Ładuje status gotowości uczestników lobby.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadTheme"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>loadTheme</b></span>
+                        <a href="#loadTheme"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadTheme()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="190"
+                                    class="link-to-prism">src/app/components/lobby/lobby.component.ts:190</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Ładuje zapisany motyw aplikacji z localStorage.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="170"
+                                    class="link-to-prism">src/app/components/lobby/lobby.component.ts:170</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Usuwa subskrypcję interwału oraz nasłuchiwanie na zmiany w localStorage.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="128"
+                                    class="link-to-prism">src/app/components/lobby/lobby.component.ts:128</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Inicjalizuje komponent, ładuje dane użytkownika, znajomych, uczestników lobby,
+język oraz motyw aplikacji. Ustawia nasłuchiwanie na zmiany w localStorage.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="savePreferences"></a>
+                    <span class="name">
+                        <span ><b>savePreferences</b></span>
+                        <a href="#savePreferences"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>savePreferences()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="392"
+                                    class="link-to-prism">src/app/components/lobby/lobby.component.ts:392</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Zapisuje preferencje użytkownika dotyczące platformy, gatunku i typu w kontekście lobby.
+Jeśli dane są niekompletne, wyświetlane jest ostrzeżenie.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendInvite"></a>
+                    <span class="name">
+                        <span ><b>sendInvite</b></span>
+                        <a href="#sendInvite"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>sendInvite(friend: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="354"
+                                    class="link-to-prism">src/app/components/lobby/lobby.component.ts:354</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Wysyła zaproszenie do znajomego za pomocą emaila.
+Używa wygenerowanego linku do lobby jako treści zaproszenia.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>friend</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>Obiekt znajomego, który ma otrzymać zaproszenie.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="startGame"></a>
+                    <span class="name">
+                        <span ><b>startGame</b></span>
+                        <a href="#startGame"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>startGame()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="432"
+                                    class="link-to-prism">src/app/components/lobby/lobby.component.ts:432</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Rozpoczyna grę w lobby, jeśli wszyscy uczestnicy są gotowi.
+Jeśli nie wszyscy uczestnicy są gotowi, wyświetlane jest ostrzeżenie.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canSendInvites"></a>
+                    <span class="name">
+                        <span ><b>canSendInvites</b></span>
+                        <a href="#canSendInvites"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/components/lobby/lobby.component.ts:59</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Flaga wskazująca, czy można wysyłać zaproszenia.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentLanguage"></a>
+                    <span class="name">
+                        <span ><b>currentLanguage</b></span>
+                        <a href="#currentLanguage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;polish&quot; | &quot;english&quot;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;polish&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="101" class="link-to-prism">src/app/components/lobby/lobby.component.ts:101</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Aktualny język aplikacji.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentTheme"></a>
+                    <span class="name">
+                        <span ><b>currentTheme</b></span>
+                        <a href="#currentTheme"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;light&quot; | &quot;dark&quot;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;dark&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="95" class="link-to-prism">src/app/components/lobby/lobby.component.ts:95</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Aktualny motyw aplikacji (jasny lub ciemny).</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="email"></a>
+                    <span class="name">
+                        <span ><b>email</b></span>
+                        <a href="#email"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/components/lobby/lobby.component.ts:35</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Email użytkownika.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="friends"></a>
+                    <span class="name">
+                        <span ><b>friends</b></span>
+                        <a href="#friends"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/components/lobby/lobby.component.ts:41</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lista znajomych użytkownika.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isGeneratingLobby"></a>
+                    <span class="name">
+                        <span ><b>isGeneratingLobby</b></span>
+                        <a href="#isGeneratingLobby"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/components/lobby/lobby.component.ts:65</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Flaga wskazująca, czy lobby jest obecnie generowane.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="lobbyLink"></a>
+                    <span class="name">
+                        <span ><b>lobbyLink</b></span>
+                        <a href="#lobbyLink"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/components/lobby/lobby.component.ts:47</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Link do lobby.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="participants"></a>
+                    <span class="name">
+                        <span ><b>participants</b></span>
+                        <a href="#participants"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/components/lobby/lobby.component.ts:53</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lista uczestników lobby.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="participantSubscription"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>participantSubscription</b></span>
+                        <a href="#participantSubscription"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subscription | undefined</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="107" class="link-to-prism">src/app/components/lobby/lobby.component.ts:107</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Subskrypcja interwału odświeżania listy uczestników.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="readyParticipantsCount"></a>
+                    <span class="name">
+                        <span ><b>readyParticipantsCount</b></span>
+                        <a href="#readyParticipantsCount"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="89" class="link-to-prism">src/app/components/lobby/lobby.component.ts:89</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Liczba uczestników gotowych do gry.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedGenre"></a>
+                    <span class="name">
+                        <span ><b>selectedGenre</b></span>
+                        <a href="#selectedGenre"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">src/app/components/lobby/lobby.component.ts:77</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Wybrany gatunek filmowy.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedPlatform"></a>
+                    <span class="name">
+                        <span ><b>selectedPlatform</b></span>
+                        <a href="#selectedPlatform"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/app/components/lobby/lobby.component.ts:71</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Wybrana platforma streamingowa.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedType"></a>
+                    <span class="name">
+                        <span ><b>selectedType</b></span>
+                        <a href="#selectedType"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">src/app/components/lobby/lobby.component.ts:83</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Wybrany typ (np. film lub serial).</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="userName"></a>
+                    <span class="name">
+                        <span ><b>userName</b></span>
+                        <a href="#userName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/components/lobby/lobby.component.ts:29</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Nazwa użytkownika.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, OnDestroy, Renderer2 } from &#x27;@angular/core&#x27;;
+import { FriendsService } from &#x27;../../services/friends.service&#x27;;
+import { LobbyService } from &#x27;../../services/lobby.service&#x27;;
+import { NgForOf, NgIf } from &#x27;@angular/common&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+import { interval, Subscription } from &#x27;rxjs&#x27;;
+import { FormsModule } from &#x27;@angular/forms&#x27;;
+
+/**
+ * Komponent zarządzający lobby, w którym użytkownicy mogą dołączać, wysyłać zaproszenia,
+ * ustawiać preferencje oraz monitorować status uczestników.
+ * @export
+ * @class LobbyComponent
+ * @implements {OnInit}
+ * @implements {OnDestroy}
+ */
+@Component({
+  selector: &#x27;app-lobby&#x27;,
+  standalone: true,
+  templateUrl: &#x27;./lobby.component.html&#x27;,
+  imports: [NgForOf, NgIf, FormsModule],
+  styleUrls: [&#x27;./lobby.component.css&#x27;],
+})
+export class LobbyComponent implements OnInit, OnDestroy {
+  /**
+   * Nazwa użytkownika.
+   * @type {string}
+   */
+  userName: string &#x3D; &#x27;&#x27;;
+
+  /**
+   * Email użytkownika.
+   * @type {string}
+   */
+  email: string &#x3D; &#x27;&#x27;;
+
+  /**
+   * Lista znajomych użytkownika.
+   * @type {any[]}
+   */
+  friends: any[] &#x3D; [];
+
+  /**
+   * Link do lobby.
+   * @type {string}
+   */
+  lobbyLink: string &#x3D; &#x27;&#x27;;
+
+  /**
+   * Lista uczestników lobby.
+   * @type {any[]}
+   */
+  participants: any[] &#x3D; [];
+
+  /**
+   * Flaga wskazująca, czy można wysyłać zaproszenia.
+   * @type {boolean}
+   */
+  canSendInvites: boolean &#x3D; false;
+
+  /**
+   * Flaga wskazująca, czy lobby jest obecnie generowane.
+   * @type {boolean}
+   */
+  isGeneratingLobby: boolean &#x3D; false;
+
+  /**
+   * Wybrana platforma streamingowa.
+   * @type {string}
+   */
+  selectedPlatform: string &#x3D; &#x27;&#x27;;
+
+  /**
+   * Wybrany gatunek filmowy.
+   * @type {string}
+   */
+  selectedGenre: string &#x3D; &#x27;&#x27;;
+
+  /**
+   * Wybrany typ (np. film lub serial).
+   * @type {string}
+   */
+  selectedType: string &#x3D; &#x27;&#x27;;
+
+  /**
+   * Liczba uczestników gotowych do gry.
+   * @type {number}
+   */
+  readyParticipantsCount: number &#x3D; 0;
+
+  /**
+   * Aktualny motyw aplikacji (jasny lub ciemny).
+   * @type {&#x27;light&#x27; | &#x27;dark&#x27;}
+   */
+  currentTheme: &#x27;light&#x27; | &#x27;dark&#x27; &#x3D; &#x27;dark&#x27;;
+
+  /**
+   * Aktualny język aplikacji.
+   * @type {&#x27;polish&#x27; | &#x27;english&#x27;}
+   */
+  currentLanguage: &#x27;polish&#x27; | &#x27;english&#x27; &#x3D; &#x27;polish&#x27;;
+
+  /**
+   * Subskrypcja interwału odświeżania listy uczestników.
+   * @type {Subscription | undefined}
+   */
+  private participantSubscription: Subscription | undefined;
+
+  /**
+   * Tworzy instancję komponentu.
+   * @param {FriendsService} friendsService - Usługa zarządzająca znajomymi użytkownika.
+   * @param {LobbyService} lobbyService - Usługa zarządzająca danymi lobby.
+   * @param {Router} router - Router Angular do nawigacji.
+   * @param {Renderer2} renderer - Renderer do manipulacji DOM.
+   */
+  constructor(
+    private friendsService: FriendsService,
+    private lobbyService: LobbyService,
+    private router: Router,
+    private renderer: Renderer2
+  ) {
+  }
+
+  /**
+   * Inicjalizuje komponent, ładuje dane użytkownika, znajomych, uczestników lobby,
+   * język oraz motyw aplikacji. Ustawia nasłuchiwanie na zmiany w localStorage.
+   */
+  ngOnInit(): void {
+    this.loadTheme();
+    this.loadLanguage();
+
+    const email &#x3D; localStorage.getItem(&#x27;email&#x27;);
+    const nick &#x3D; localStorage.getItem(&#x27;nick&#x27;);
+    const userId &#x3D; localStorage.getItem(&#x27;userId&#x27;);
+    const storedLobbyLink &#x3D; localStorage.getItem(&#x27;lobbyLink&#x27;);
+
+    if (storedLobbyLink) {
+      this.lobbyLink &#x3D; storedLobbyLink;
+      this.canSendInvites &#x3D; true;
+    }
+
+    if (email &amp;&amp; nick) {
+      this.userName &#x3D; nick;
+      this.email &#x3D; email;
+
+      if (userId) {
+        this.loadFriends(+userId);
+        this.loadProfilePicture(+userId);
+        this.addUserToLobbyIfJoining(+userId);
+      } else {
+        console.error(&#x27;ID użytkownika nie jest dostępne w localStorage.&#x27;);
+      }
+    } else {
+      console.error(&#x27;E-mail lub nick użytkownika nie są dostępne w localStorage.&#x27;);
+    }
+
+    this.participantSubscription &#x3D; interval(5000).subscribe(() &#x3D;&gt; {
+      this.loadParticipants();
+      this.loadReadyStatus();
+      this.checkGameStart();
+    });
+
+    this.loadParticipants();
+    window.addEventListener(&#x27;storage&#x27;, this.handleStorageChange.bind(this));
+  }
+
+  /**
+   * Usuwa subskrypcję interwału oraz nasłuchiwanie na zmiany w localStorage.
+   */
+  ngOnDestroy(): void {
+    if (this.participantSubscription) {
+      this.participantSubscription.unsubscribe();
+    }
+    window.removeEventListener(&#x27;storage&#x27;, this.handleStorageChange.bind(this));
+  }
+
+  /**
+   * Ładuje język aplikacji z localStorage.
+   * @private
+   */
+  private loadLanguage(): void {
+    const savedLanguage &#x3D; localStorage.getItem(&#x27;language&#x27;) as &#x27;polish&#x27; | &#x27;english&#x27;;
+    this.currentLanguage &#x3D; savedLanguage || &#x27;polish&#x27;;
+  }
+
+  /**
+   * Ładuje zapisany motyw aplikacji z localStorage.
+   * @private
+   */
+  private loadTheme(): void {
+    const savedTheme &#x3D; localStorage.getItem(&#x27;theme&#x27;) as &#x27;light&#x27; | &#x27;dark&#x27;;
+    this.currentTheme &#x3D; savedTheme || &#x27;dark&#x27;;
+    this.applyTheme(this.currentTheme);
+  }
+
+  /**
+   * Zastosowuje wybrany motyw aplikacji do elementu DOM.
+   * @private
+   * @param {&#x27;light&#x27; | &#x27;dark&#x27;} theme - Wybrany motyw aplikacji.
+   */
+  private applyTheme(theme: &#x27;light&#x27; | &#x27;dark&#x27;): void {
+    const container &#x3D; document.querySelector(&#x27;.bg&#x27;) as HTMLElement;
+    if (theme &#x3D;&#x3D;&#x3D; &#x27;dark&#x27;) {
+      this.renderer.addClass(container, &#x27;dark-theme&#x27;);
+      this.renderer.removeClass(container, &#x27;light-theme&#x27;);
+    } else {
+      this.renderer.addClass(container, &#x27;light-theme&#x27;);
+      this.renderer.removeClass(container, &#x27;dark-theme&#x27;);
+    }
+  }
+
+  /**
+   * Obsługuje zmiany w localStorage, np. zmiany języka.
+   * @private
+   * @param {StorageEvent} event - Wydarzenie zmiany w localStorage.
+   */
+  private handleStorageChange(event: StorageEvent): void {
+    if (event.key &#x3D;&#x3D;&#x3D; &#x27;language&#x27;) {
+      this.loadLanguage();
+    }
+  }
+
+  /**
+   * Ładuje status gotowości uczestników lobby.
+   */
+  loadReadyStatus(): void {
+    const lobbyCode &#x3D; this.extractLobbyCodeFromUrl();
+    if (lobbyCode) {
+      this.lobbyService.getParticipants(lobbyCode).subscribe({
+        next: (participants) &#x3D;&gt; {
+          this.readyParticipantsCount &#x3D; participants.filter((p) &#x3D;&gt; p.isReady).length;
+        },
+        error: (err) &#x3D;&gt; {
+          console.error(&#x27;Nie udało się pobrać statusu gotowości:&#x27;, err);
+        },
+      });
+    }
+  }
+
+  /**
+   * Generuje link do lobby i zapisuje go w localStorage.
+   * Po pomyślnym wygenerowaniu lobby użytkownik jest przekierowywany na stronę lobby.
+   */
+  generateLink(): void {
+    const userId &#x3D; localStorage.getItem(&#x27;userId&#x27;);
+    if (userId) {
+      this.isGeneratingLobby &#x3D; true;
+      this.lobbyService.createLobby(+userId).subscribe({
+        next: (lobby) &#x3D;&gt; {
+          this.lobbyLink &#x3D; &#x60;http://localhost:4200/lobby/${lobby.lobbyCode}&#x60;;
+          localStorage.setItem(&#x27;lobbyLink&#x27;, this.lobbyLink);
+          this.canSendInvites &#x3D; true;
+          this.isGeneratingLobby &#x3D; false;
+          this.router.navigate([&#x60;/lobby/${lobby.lobbyCode}&#x60;]);
+        },
+        error: (err) &#x3D;&gt; {
+          console.error(&#x27;Nie udało się utworzyć lobby:&#x27;, err);
+          this.isGeneratingLobby &#x3D; false;
+        },
+      });
+    }
+  }
+
+  /**
+   * Dodaje użytkownika do lobby, jeśli lobbyCode jest obecny w URL.
+   * Po dodaniu użytkownika lista uczestników zostaje odświeżona.
+   * @param {number} userId - Identyfikator użytkownika.
+   */
+  addUserToLobbyIfJoining(userId: number): void {
+    const lobbyCode &#x3D; this.extractLobbyCodeFromUrl();
+    if (lobbyCode) {
+      this.lobbyService.addUserToLobby(lobbyCode, userId).subscribe({
+        next: () &#x3D;&gt; {
+          console.log(&#x27;Użytkownik został dodany do lobby.&#x27;);
+          this.loadParticipants();
+        },
+        error: (err) &#x3D;&gt; {
+          console.error(&#x27;Nie udało się dodać użytkownika do lobby:&#x27;, err);
+        },
+      });
+    }
+  }
+
+  /**
+   * Sprawdza, czy tworzenie nowego lobby jest zablokowane.
+   * Zwraca &#x60;true&#x60;, jeśli lobby jest już generowane lub link do lobby istnieje.
+   * @returns {boolean} - Flaga wskazująca, czy tworzenie nowego lobby jest zablokowane.
+   */
+  isCreatingNewLobbyDisabled(): boolean {
+    return this.isGeneratingLobby || !!this.lobbyLink;
+  }
+
+  /**
+   * Ładuje listę znajomych użytkownika i ich zdjęcia profilowe.
+   * @param {number} userId - Identyfikator użytkownika.
+   */
+  loadFriends(userId: number): void {
+    this.friendsService.getFriends(userId).subscribe({
+      next: (friends) &#x3D;&gt; {
+        this.friends &#x3D; friends;
+        this.friends.forEach((friend) &#x3D;&gt; {
+          this.loadFriendPicture(friend);
+        });
+      },
+      error: (err) &#x3D;&gt; {
+        console.error(&#x27;Nie udało się pobrać listy znajomych:&#x27;, err);
+      },
+    });
+  }
+
+  /**
+   * Ładuje zdjęcie profilowe znajomego.
+   * Jeśli wystąpi błąd, ustawia domyślny awatar dla znajomego.
+   * @param {any} friend - Obiekt znajomego zawierający jego dane.
+   */
+  loadFriendPicture(friend: any): void {
+    this.friendsService.getProfilePicture(friend.id).subscribe({
+      next: (blob) &#x3D;&gt; {
+        const objectURL &#x3D; URL.createObjectURL(blob);
+        friend.avatar &#x3D; objectURL;
+      },
+      error: (err) &#x3D;&gt; {
+        console.error(&#x60;Nie udało się pobrać zdjęcia dla użytkownika ${friend.id}:&#x60;, err);
+        friend.avatar &#x3D; &#x27;assets/images/user.png&#x27;;
+      },
+    });
+  }
+
+  /**
+   * Ładuje zdjęcie profilowe użytkownika.
+   * Jeśli wystąpi błąd, zdjęcie profilowe nie zostanie załadowane.
+   * @param {number} userId - Identyfikator użytkownika.
+   */
+  loadProfilePicture(userId: number): void {
+    this.friendsService.getProfilePicture(userId).subscribe({
+      next: (blob) &#x3D;&gt; {
+        const objectURL &#x3D; URL.createObjectURL(blob);
+        const imgElement &#x3D; document.querySelector(&#x27;.profile-picture&#x27;) as HTMLImageElement;
+        if (imgElement) {
+          imgElement.src &#x3D; objectURL;
+        }
+      },
+      error: (err) &#x3D;&gt; {
+        console.error(&#x27;Błąd podczas ładowania zdjęcia profilowego:&#x27;, err);
+      },
+    });
+  }
+
+  /**
+   * Wysyła zaproszenie do znajomego za pomocą emaila.
+   * Używa wygenerowanego linku do lobby jako treści zaproszenia.
+   * @param {any} friend - Obiekt znajomego, który ma otrzymać zaproszenie.
+   */
+  sendInvite(friend: any): void {
+    if (this.canSendInvites &amp;&amp; this.lobbyLink) {
+      this.friendsService.sendInviteEmail(friend.id, this.lobbyLink).subscribe({
+        next: () &#x3D;&gt; {
+          console.log(&#x60;Zaproszenie wysłane do ${friend.nick}&#x60;);
+        },
+        error: (err) &#x3D;&gt; {
+          console.error(&#x27;Nie udało się wysłać zaproszenia:&#x27;, err);
+        },
+      });
+    } else {
+      console.error(&#x27;Link do lobby nie został jeszcze wygenerowany lub wysyłanie zaproszeń jest zablokowane.&#x27;);
+    }
+  }
+
+  /**
+   * Pobiera listę uczestników lobby.
+   * Jeśli kod lobby istnieje, dane uczestników są ładowane z backendu.
+   */
+  loadParticipants(): void {
+    const lobbyCode &#x3D; this.extractLobbyCodeFromUrl();
+    if (lobbyCode) {
+      this.lobbyService.getParticipants(lobbyCode).subscribe({
+        next: (participants) &#x3D;&gt; {
+          console.log(&#x27;Pobrani uczestnicy:&#x27;, participants);
+          this.participants &#x3D; participants;
+        },
+        error: (err) &#x3D;&gt; {
+          console.error(&#x27;Nie udało się pobrać listy uczestników:&#x27;, err);
+        },
+      });
+    }
+  }
+
+  /**
+   * Zapisuje preferencje użytkownika dotyczące platformy, gatunku i typu w kontekście lobby.
+   * Jeśli dane są niekompletne, wyświetlane jest ostrzeżenie.
+   */
+  savePreferences(): void {
+    const userId &#x3D; localStorage.getItem(&#x27;userId&#x27;);
+    const lobbyCode &#x3D; this.extractLobbyCodeFromUrl();
+
+    if (!userId || !lobbyCode) {
+      console.error(&#x27;Brak wymaganych danych: userId lub lobbyCode.&#x27;);
+      alert(&#x27;Nie można zapisać preferencji: brakuje danych użytkownika lub kodu lobby.&#x27;);
+      return;
+    }
+
+    this.lobbyService
+      .savePreferences(lobbyCode, +userId, this.selectedPlatform, this.selectedGenre, this.selectedType)
+      .subscribe({
+        next: (response) &#x3D;&gt; {
+          if (response.status &#x3D;&#x3D;&#x3D; 200) {
+            console.log(&#x27;Preferencje zapisane pomyślnie:&#x27;, response.body);
+            const message &#x3D; response.body?.message || &#x27;Preferencje zostały zapisane pomyślnie.&#x27;;
+            alert(message);
+          } else {
+            console.error(&#x27;Nieoczekiwany status odpowiedzi:&#x27;, response.status);
+            alert(&#x27;Wystąpił problem z zapisywaniem preferencji. Spróbuj ponownie.&#x27;);
+          }
+        },
+        error: (err) &#x3D;&gt; {
+          if (err.status &#x3D;&#x3D;&#x3D; 400) {
+            console.error(&#x27;Nie udało się zapisać preferencji:&#x27;, err.error);
+            const errorMessage &#x3D; err.error?.error || &#x27;Wystąpił błąd podczas zapisywania preferencji. Sprawdź dane i spróbuj ponownie.&#x27;;
+            alert(errorMessage);
+          } else {
+            console.error(&#x27;Nieznany błąd:&#x27;, err);
+            alert(&#x27;Nieznany błąd. Skontaktuj się z administratorem.&#x27;);
+          }
+        },
+      });
+  }
+
+  /**
+   * Rozpoczyna grę w lobby, jeśli wszyscy uczestnicy są gotowi.
+   * Jeśli nie wszyscy uczestnicy są gotowi, wyświetlane jest ostrzeżenie.
+   */
+  startGame(): void {
+    const lobbyCode &#x3D; this.extractLobbyCodeFromUrl();
+    if (!lobbyCode) {
+      console.error(&#x27;Nieprawidłowy kod lobby.&#x27;);
+      return;
+    }
+
+    this.lobbyService.getReadyStatus(lobbyCode).subscribe({
+      next: (allReady) &#x3D;&gt; {
+        if (allReady) {
+          alert(&#x27;Gra się rozpoczyna!&#x27;);
+          this.lobbyService.startGame(lobbyCode).subscribe({
+            next: () &#x3D;&gt; {
+              console.log(&#x27;Gra została rozpoczęta.&#x27;);
+              this.router.navigate([&#x60;/draw/${lobbyCode}&#x60;]);
+            },
+            error: (err) &#x3D;&gt; {
+              console.error(&#x27;Wystąpił problem podczas rozpoczynania gry:&#x27;, err);
+            },
+          });
+        } else {
+          alert(&#x27;Nie wszyscy uczestnicy są gotowi!&#x27;);
+        }
+      },
+      error: (err) &#x3D;&gt; {
+        console.error(&#x27;Nie udało się sprawdzić statusu gotowości uczestników:&#x27;, err);
+      },
+    });
+  }
+
+  /**
+   * Sprawdza, czy gra w lobby została już rozpoczęta.
+   * Jeśli gra została rozpoczęta, użytkownik jest przekierowywany na stronę gry.
+   */
+  checkGameStart(): void {
+    const lobbyCode &#x3D; this.extractLobbyCodeFromUrl();
+    if (!lobbyCode) {
+      console.error(&#x27;Nieprawidłowy kod lobby.&#x27;);
+      return;
+    }
+
+    this.lobbyService.isGameStarted(lobbyCode).subscribe({
+      next: (isStarted) &#x3D;&gt; {
+        if (isStarted) {
+          console.log(&#x27;Gra została rozpoczęta. Przenoszę na stronę gry.&#x27;);
+          this.router.navigate([&#x60;/draw/${lobbyCode}&#x60;]);
+        }
+      },
+      error: (err) &#x3D;&gt; {
+        console.error(&#x27;Błąd podczas sprawdzania statusu gry:&#x27;, err);
+      },
+    });
+  }
+
+  /**
+   * Wyciąga kod lobby z aktualnego URL.
+   * @returns {string | null} Kod lobby, jeśli istnieje; w przeciwnym razie &#x60;null&#x60;.
+   */
+  extractLobbyCodeFromUrl(): string | null {
+    const url &#x3D; window.location.href;
+    const parts &#x3D; url.split(&#x27;/&#x27;);
+    const code &#x3D; parts[parts.length - 1];
+    console.log(&#x27;Extracted lobby code:&#x27;, code);
+    return code || null;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;bg&quot;&gt;
+  &lt;div class&#x3D;&quot;main-container&quot;&gt;
+    &lt;div class&#x3D;&quot;friends-component&quot;&gt;
+      &lt;div class&#x3D;&quot;joining-users&quot;&gt;
+        &lt;h2&gt;{{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Uczestnicy&#x27; : &#x27;Participants&#x27; }} {{participants.length}}/5&lt;/h2&gt;
+        &lt;ul&gt;
+          &lt;li *ngFor&#x3D;&quot;let participant of participants&quot;&gt;
+            {{ participant.nick }}
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;initial-settings&quot;&gt;
+        &lt;h2&gt;{{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Wstępne ustawienia&#x27; : &#x27;Initial settings&#x27; }}&lt;/h2&gt;
+
+        &lt;div class&#x3D;&quot;streaming-platform&quot;&gt;
+          &lt;h3&gt;{{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Platforma streamingowa:&#x27; : &#x27;Streaming platform:&#x27; }}&lt;/h3&gt;
+          &lt;input list&#x3D;&quot;streaming-platform&quot; [(ngModel)]&#x3D;&quot;selectedPlatform&quot; onfocus&#x3D;&quot;this.value&#x3D;&#x27;&#x27;&quot;&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;genre&quot;&gt;
+          &lt;h3&gt;{{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Gatunek filmu:&#x27; : &#x27;Movie genre:&#x27; }}&lt;/h3&gt;
+          &lt;input list&#x3D;&quot;genre&quot; [(ngModel)]&#x3D;&quot;selectedGenre&quot; onfocus&#x3D;&quot;this.value&#x3D;&#x27;&#x27;&quot;&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;type&quot;&gt;
+          &lt;h3&gt;{{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Typ:&#x27; : &#x27;Type:&#x27; }}&lt;/h3&gt;
+          &lt;input list&#x3D;&quot;type&quot; [(ngModel)]&#x3D;&quot;selectedType&quot; onfocus&#x3D;&quot;this.value&#x3D;&#x27;&#x27;&quot;&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;submit-buttons&quot;&gt;
+          &lt;button class&#x3D;&quot;submit&quot; (click)&#x3D;&quot;savePreferences()&quot;&gt;
+            {{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Zapisz preferencje&#x27; : &#x27;Save preferences&#x27; }}
+          &lt;/button&gt;
+          &lt;button class&#x3D;&quot;submit&quot; (click)&#x3D;&quot;generateLink()&quot; [disabled]&#x3D;&quot;isCreatingNewLobbyDisabled()&quot;&gt;
+            {{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Generuj link&#x27; : &#x27;Generate link&#x27; }}
+          &lt;/button&gt;
+          &lt;button class&#x3D;&quot;submit&quot; (click)&#x3D;&quot;startGame()&quot;&gt;
+            {{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Rozpocznij&#x27; : &#x27;Start game&#x27; }}
+          &lt;/button&gt;
+        &lt;/div&gt;
+
+        &lt;p&gt;{{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Twój link do lobby:&#x27; : &#x27;Your lobby link:&#x27; }}&lt;/p&gt;
+        &lt;div *ngIf&#x3D;&quot;lobbyLink&quot; class&#x3D;&quot;lobby-link&quot;&gt;
+          &lt;p&gt;&lt;a [href]&#x3D;&quot;lobbyLink&quot; target&#x3D;&quot;_blank&quot;&gt;{{ lobbyLink }}&lt;/a&gt;&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;friends-list&quot;&gt;
+        &lt;div *ngIf&#x3D;&quot;friends.length &#x3D;&#x3D;&#x3D; 0&quot; class&#x3D;&quot;no-friends&quot;&gt;
+          {{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Brak znajomych do wyświetlenia.&#x27; : &#x27;No friends to display.&#x27; }}
+        &lt;/div&gt;
+        &lt;h2&gt;{{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Twoi znajomi&#x27; : &#x27;Your friends&#x27; }}&lt;/h2&gt;
+        &lt;ul *ngIf&#x3D;&quot;friends.length &gt; 0&quot;&gt;
+          &lt;li *ngFor&#x3D;&quot;let friend of friends&quot; class&#x3D;&quot;friend-item&quot;&gt;
+            &lt;img
+              [src]&#x3D;&quot;friend.avatar || &#x27;assets/images/user.png&#x27;&quot;
+              class&#x3D;&quot;friend-avatar&quot;
+              [alt]&#x3D;&quot;currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Zdjęcie znajomego&#x27; : &#x27;Friend photo&#x27;&quot;&gt;
+            &lt;div class&#x3D;&quot;friend-invite&quot;&gt;
+              &lt;div class&#x3D;&quot;friend-info&quot;&gt;
+                &lt;span class&#x3D;&quot;friend-nick&quot;&gt;{{ friend.nick }}&lt;/span&gt;
+              &lt;/div&gt;
+              &lt;div class&#x3D;&quot;invite-button&quot;&gt;
+                &lt;button (click)&#x3D;&quot;sendInvite(friend)&quot; [disabled]&#x3D;&quot;!canSendInvites&quot;&gt;
+                  {{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Wyślij zaproszenie&#x27; : &#x27;Send invite&#x27; }}
+                &lt;/button&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;datalist id&#x3D;&quot;streaming-platform&quot;&gt;
+  &lt;option value&#x3D;&quot;{{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Netflix&#x27; : &#x27;Netflix&#x27; }}&quot;&gt;
+  &lt;option value&#x3D;&quot;{{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Disney+&#x27; : &#x27;Disney+&#x27; }}&quot;&gt;
+  &lt;option value&#x3D;&quot;{{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Max&#x27; : &#x27;Max&#x27; }}&quot;&gt;
+  &lt;option value&#x3D;&quot;{{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Showtime&#x27; : &#x27;Showtime&#x27; }}&quot;&gt;
+  &lt;option value&#x3D;&quot;{{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Amazon&#x27; : &#x27;Amazon&#x27; }}&quot;&gt;
+&lt;/datalist&gt;
+
+&lt;datalist id&#x3D;&quot;genre&quot;&gt;
+  &lt;option value&#x3D;&quot;{{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Dramat&#x27; : &#x27;Drama&#x27; }}&quot;&gt;
+  &lt;option value&#x3D;&quot;{{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Komedia&#x27; : &#x27;Comedy&#x27; }}&quot;&gt;
+  &lt;option value&#x3D;&quot;{{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Horror&#x27; : &#x27;Horror&#x27; }}&quot;&gt;
+  &lt;option value&#x3D;&quot;{{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Thriller&#x27; : &#x27;Thriller&#x27; }}&quot;&gt;
+  &lt;option value&#x3D;&quot;{{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Psychologiczny&#x27; : &#x27;Psychological&#x27; }}&quot;&gt;
+&lt;/datalist&gt;
+
+&lt;datalist id&#x3D;&quot;type&quot;&gt;
+  &lt;option value&#x3D;&quot;{{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Film&#x27; : &#x27;Movie&#x27; }}&quot;&gt;
+  &lt;option value&#x3D;&quot;{{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Serial&#x27; : &#x27;Series&#x27; }}&quot;&gt;
+&lt;/datalist&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./lobby.component.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import url(&#x27;https://fonts.googleapis.com/css2?family&#x3D;Oswald:wght@200..700&amp;display&#x3D;swap&#x27;);
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.bg.light-theme {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-image: url(&#x27;../../../assets/images/section-one-background.png&#x27;);
+}
+
+.bg.dark-theme {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-image: url(&#x27;../../../assets/images/bglight.png&#x27;);
+}
+
+.main-container {
+  padding: 1rem;
+  width: 90%;
+  height: 90vh;
+  background-color: rgba(239, 236, 243, 0.1);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  font-family: &quot;Oswald&quot;, sans-serif;
+}
+
+.bg.light-theme .joining-users {
+  height: 570px;
+  width: 30%;
+  padding: 5px 10px;
+  border-radius: 15px;
+  background-color: #2e2e2e;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bg.dark-theme .joining-users {
+  height: 570px;
+  width: 30%;
+  padding: 5px 10px;
+  border-radius: 15px;
+  background-color: lightgrey;
+  color: #2e2e2e;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.joining-users ul {
+  width: 80%;
+}
+
+.joining-users li {
+  width: 100%;
+  height: 3rem;
+  border-radius: 7px;
+  margin-left: -10px;
+  background-color: #fff;
+  list-style-type: none;
+  color: #222222;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2px;
+  margin-top: 2px;
+}
+
+.bg.light-theme .friends-component {
+  width: 100%;
+  height: 650px;
+  border-radius: 15px;
+  background-color: rgb(34, 34, 34);
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  color: #fff;
+}
+
+.bg.dark-theme .friends-component {
+  width: 100%;
+  height: 650px;
+  border-radius: 15px;
+  background-color: gainsboro;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  color: #fff;
+}
+
+.bg.light-theme .friends-list {
+  width: 30%;
+  height: 570px;
+  border-radius: 15px;
+  padding: 5px 10px;
+  background-color: #2e2e2e;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none;
+  overflow-y: auto;
+}
+
+.bg.dark-theme .friends-list {
+  width: 30%;
+  height: 570px;
+  border-radius: 15px;
+  padding: 5px 10px;
+  background-color: lightgrey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none;
+  overflow-y: auto;
+  color: #2e2e2e;
+}
+
+.friends-list ul {
+  margin-left: -70px;
+}
+
+.friends-list img {
+  height: 85px;
+  width: 85px;
+  border-radius: 100px;
+}
+.no-friends {
+  font-size: 14px;
+  color: #888;
+  text-align: center;
+  padding: 20px;
+}
+
+.friend-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  margin-bottom: 10px;
+  background: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.friend-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 2px solid #ddd;
+  object-fit: cover;
+}
+
+.friend-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.friend-nick {
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.friend-email {
+  font-size: 12px;
+  color: #777;
+}
+.invite-button button {
+  background-color: rgb(139, 0, 0);
+  padding: 0.7rem;
+  border-radius: 7px;
+  border: none;
+  color: #ffffff;
+  font-weight: 500;
+  transition: 0.2s all ease-in-out;
+}
+
+.invite-button {
+  margin-left: auto;
+}
+
+.invite-button button:hover {
+  background-color: firebrick;
+  cursor: pointer;
+}
+
+.bg.light-theme .initial-settings {
+  width: 40%;
+  height: 570px;
+  padding: 5px 10px;
+  border-radius: 15px;
+  background-color: #2e2e2e;
+  border: none;
+  overflow-y: auto;
+  color: #fff;
+}
+
+.bg.dark-theme .initial-settings {
+  width: 40%;
+  height: 570px;
+  padding: 5px 10px;
+  border-radius: 15px;
+  background-color: lightgrey;
+  border: none;
+  overflow-y: auto;
+  color: #2e2e2e;
+}
+
+input {
+  width: 95%;
+  height: 2rem;
+  border-radius: 7px;
+  border: none;
+}
+
+.submit-buttons {
+  margin-top: 2rem;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+}
+
+.submit-buttons button {
+  width: 80%;
+  height: 3rem;
+  background-color: rgb(139, 0, 0);
+  border-radius: 25px;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: .2s all ease-in-out;
+}
+
+.submit-buttons button:hover {
+  cursor: pointer;
+  background-color: firebrick;
+}
+
+.lobby-link {
+  background-color: #fff;
+  padding-left: 1rem;
+  border-radius: 7px;
+  text-wrap: nowrap;
+  overflow: auto;
+  color: #777777;
+}
+
+.lobby-link a {
+  text-decoration: none;
+}
+
+.lobby-link::-webkit-scrollbar{
+  display: none;
+}
+
+.friend-invite {
+  margin-left: -10px;
+  display:flex;
+  flex-direction: column;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="bg">  <div class="main-container">    <div class="friends-component">      <div class="joining-users">        <h2>{{ currentLanguage === \'polish\' ? \'Uczestnicy\' : \'Participants\' }} {{participants.length}}/5</h2>        <ul>          <li *ngFor="let participant of participants">            {{ participant.nick }}          </li>        </ul>      </div>      <div class="initial-settings">        <h2>{{ currentLanguage === \'polish\' ? \'Wstępne ustawienia\' : \'Initial settings\' }}</h2>        <div class="streaming-platform">          <h3>{{ currentLanguage === \'polish\' ? \'Platforma streamingowa:\' : \'Streaming platform:\' }}</h3>          <input list="streaming-platform" [(ngModel)]="selectedPlatform" onfocus="this.value=\'\'">        </div>        <div class="genre">          <h3>{{ currentLanguage === \'polish\' ? \'Gatunek filmu:\' : \'Movie genre:\' }}</h3>          <input list="genre" [(ngModel)]="selectedGenre" onfocus="this.value=\'\'">        </div>        <div class="type">          <h3>{{ currentLanguage === \'polish\' ? \'Typ:\' : \'Type:\' }}</h3>          <input list="type" [(ngModel)]="selectedType" onfocus="this.value=\'\'">        </div>        <div class="submit-buttons">          <button class="submit" (click)="savePreferences()">            {{ currentLanguage === \'polish\' ? \'Zapisz preferencje\' : \'Save preferences\' }}          </button>          <button class="submit" (click)="generateLink()" [disabled]="isCreatingNewLobbyDisabled()">            {{ currentLanguage === \'polish\' ? \'Generuj link\' : \'Generate link\' }}          </button>          <button class="submit" (click)="startGame()">            {{ currentLanguage === \'polish\' ? \'Rozpocznij\' : \'Start game\' }}          </button>        </div>        <p>{{ currentLanguage === \'polish\' ? \'Twój link do lobby:\' : \'Your lobby link:\' }}</p>        <div *ngIf="lobbyLink" class="lobby-link">          <p><a [href]="lobbyLink" target="_blank">{{ lobbyLink }}</a></p>        </div>      </div>      <div class="friends-list">        <div *ngIf="friends.length === 0" class="no-friends">          {{ currentLanguage === \'polish\' ? \'Brak znajomych do wyświetlenia.\' : \'No friends to display.\' }}        </div>        <h2>{{ currentLanguage === \'polish\' ? \'Twoi znajomi\' : \'Your friends\' }}</h2>        <ul *ngIf="friends.length > 0">          <li *ngFor="let friend of friends" class="friend-item">            <img              [src]="friend.avatar || \'assets/images/user.png\'"              class="friend-avatar"              [alt]="currentLanguage === \'polish\' ? \'Zdjęcie znajomego\' : \'Friend photo\'">            <div class="friend-invite">              <div class="friend-info">                <span class="friend-nick">{{ friend.nick }}</span>              </div>              <div class="invite-button">                <button (click)="sendInvite(friend)" [disabled]="!canSendInvites">                  {{ currentLanguage === \'polish\' ? \'Wyślij zaproszenie\' : \'Send invite\' }}                </button>              </div>            </div>          </li>        </ul>      </div>    </div>  </div></div><datalist id="streaming-platform">  <option value="{{ currentLanguage === \'polish\' ? \'Netflix\' : \'Netflix\' }}">  <option value="{{ currentLanguage === \'polish\' ? \'Disney+\' : \'Disney+\' }}">  <option value="{{ currentLanguage === \'polish\' ? \'Max\' : \'Max\' }}">  <option value="{{ currentLanguage === \'polish\' ? \'Showtime\' : \'Showtime\' }}">  <option value="{{ currentLanguage === \'polish\' ? \'Amazon\' : \'Amazon\' }}"></datalist><datalist id="genre">  <option value="{{ currentLanguage === \'polish\' ? \'Dramat\' : \'Drama\' }}">  <option value="{{ currentLanguage === \'polish\' ? \'Komedia\' : \'Comedy\' }}">  <option value="{{ currentLanguage === \'polish\' ? \'Horror\' : \'Horror\' }}">  <option value="{{ currentLanguage === \'polish\' ? \'Thriller\' : \'Thriller\' }}">  <option value="{{ currentLanguage === \'polish\' ? \'Psychologiczny\' : \'Psychological\' }}"></datalist><datalist id="type">  <option value="{{ currentLanguage === \'polish\' ? \'Film\' : \'Movie\' }}">  <option value="{{ currentLanguage === \'polish\' ? \'Serial\' : \'Series\' }}"></datalist></div>'
+    var COMPONENTS = [{'name': 'AddMoviePopupComponent', 'selector': 'app-add-movie-popup'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'DrawComponent', 'selector': 'app-draw'},{'name': 'FriendsListComponent', 'selector': 'app-friends-list'},{'name': 'LibraryComponent', 'selector': 'app-library'},{'name': 'LobbyComponent', 'selector': 'app-lobby'},{'name': 'LoginPageComponent', 'selector': 'app-login-page'},{'name': 'MenuComponent', 'selector': 'app-menu'},{'name': 'MoviePopupComponent', 'selector': 'app-movie-popup'},{'name': 'PopUpComponent', 'selector': 'app-popup'},{'name': 'ResultsComponent', 'selector': 'app-results'},{'name': 'SectionOneComponent', 'selector': 'app-section-one'},{'name': 'UserProfileComponent', 'selector': 'app-user-profile'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'LobbyComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'LobbyComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

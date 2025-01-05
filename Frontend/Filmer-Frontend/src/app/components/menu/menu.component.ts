@@ -4,6 +4,13 @@ import { AuthService } from '../../services/auth.service';
 import { FriendsService } from '../../services/friends.service';
 import { AsyncPipe, NgIf } from '@angular/common';
 
+/**
+ * Komponent odpowiedzialny za menu nawigacyjne aplikacji.
+ * Zawiera funkcje logowania, wylogowania, zmiany języka, motywu oraz wyświetlania zdjęcia użytkownika.
+ * @export
+ * @class MenuComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'app-menu',
   standalone: true,
@@ -12,11 +19,36 @@ import { AsyncPipe, NgIf } from '@angular/common';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
+  /**
+   * Strumień określający, czy użytkownik jest zalogowany.
+   * @type {Observable<boolean>}
+   */
   isLoggedIn$;
-  userPhoto: string | null = null;
-  currentTheme: 'light' | 'dark' = 'dark'; // Domyślny motyw
-  currentLanguage: 'polish' | 'english' = 'english'; // Domyślny motyw
 
+  /**
+   * Adres URL zdjęcia użytkownika.
+   * @type {string | null}
+   */
+  userPhoto: string | null = null;
+
+  /**
+   * Aktualny motyw aplikacji (jasny lub ciemny).
+   * @type {'light' | 'dark'}
+   */
+  currentTheme: 'light' | 'dark' = 'dark';
+
+  /**
+   * Aktualny język aplikacji.
+   * @type {'polish' | 'english'}
+   */
+  currentLanguage: 'polish' | 'english' = 'english';
+
+  /**
+   * Tworzy instancję komponentu.
+   * @param {AuthService} authService - Usługa odpowiedzialna za uwierzytelnianie użytkownika.
+   * @param {FriendsService} friendsService - Usługa do zarządzania znajomymi i pobierania zdjęcia użytkownika.
+   * @param {Renderer2} renderer - Renderer do manipulacji DOM.
+   */
   constructor(
     private authService: AuthService,
     private friendsService: FriendsService,
@@ -25,7 +57,10 @@ export class MenuComponent implements OnInit {
     this.isLoggedIn$ = this.authService.isLoggedIn$;
   }
 
-  ngOnInit() {
+  /**
+   * Inicjalizuje komponent, ładuje zdjęcie użytkownika, język oraz motyw aplikacji.
+   */
+  ngOnInit(): void {
     this.isLoggedIn$.subscribe((isLoggedIn) => {
       if (isLoggedIn) {
         this.loadUserPhoto();
@@ -36,24 +71,44 @@ export class MenuComponent implements OnInit {
     this.loadTheme();
     this.loadLanguage();
   }
-  changeLanguage() {
+
+  /**
+   * Zmienia język aplikacji na przeciwny (polski/angielski).
+   * Zapisuje zmiany w localStorage i odświeża stronę.
+   */
+  changeLanguage(): void {
     this.currentLanguage = this.currentLanguage === 'english' ? 'polish' : 'english';
     localStorage.setItem('language', this.currentLanguage);
 
     window.location.reload();
   }
 
-  private loadLanguage() {
+  /**
+   * Ładuje zapisany język aplikacji z localStorage.
+   * Jeśli język nie jest zapisany, domyślnie ustawia język angielski.
+   * @private
+   */
+  private loadLanguage(): void {
     const savedLanguage = localStorage.getItem('language') as 'polish' | 'english';
     this.currentLanguage = savedLanguage || 'english';
   }
-  toggleTheme() {
+
+  /**
+   * Przełącza motyw aplikacji między jasnym a ciemnym.
+   * Zapisuje zmiany w localStorage.
+   */
+  toggleTheme(): void {
     this.currentTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
     this.applyTheme(this.currentTheme);
     localStorage.setItem('theme', this.currentTheme);
   }
 
-  private applyTheme(theme: 'light' | 'dark') {
+  /**
+   * Zastosowuje wybrany motyw aplikacji do elementu DOM.
+   * @private
+   * @param {'light' | 'dark'} theme - Wybrany motyw aplikacji.
+   */
+  private applyTheme(theme: 'light' | 'dark'): void {
     if (theme === 'dark') {
       this.renderer.addClass(document.body, 'dark-theme');
       this.renderer.removeClass(document.body, 'light-theme');
@@ -63,12 +118,22 @@ export class MenuComponent implements OnInit {
     }
   }
 
-  private loadTheme() {
+  /**
+   * Ładuje zapisany motyw aplikacji z localStorage.
+   * Jeśli motyw nie jest zapisany, domyślnie ustawia motyw ciemny.
+   * @private
+   */
+  private loadTheme(): void {
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
     this.currentTheme = savedTheme || 'dark';
     this.applyTheme(this.currentTheme);
   }
 
+  /**
+   * Ładuje zdjęcie profilowe użytkownika.
+   * Jeśli użytkownik nie ma zdjęcia, ustawiane jest zdjęcie domyślne.
+   * @private
+   */
   private loadUserPhoto(): void {
     const userId = localStorage.getItem('userId');
     if (userId) {
@@ -86,11 +151,17 @@ export class MenuComponent implements OnInit {
     }
   }
 
-  login() {
+  /**
+   * Wywołuje proces logowania za pomocą usługi AuthService.
+   */
+  login(): void {
     this.authService.login('email@example.com', 'password', 'captcha-mock-response');
   }
 
-  logout() {
+  /**
+   * Wywołuje proces wylogowania za pomocą usługi AuthService.
+   */
+  logout(): void {
     this.authService.logout();
   }
 }

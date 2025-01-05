@@ -1,11 +1,19 @@
-import {Component, OnInit, OnDestroy, Renderer2} from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { FriendsService } from '../../services/friends.service';
 import { LobbyService } from '../../services/lobby.service';
 import { NgForOf, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { interval, Subscription } from 'rxjs';
-import {FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
+/**
+ * Komponent zarządzający lobby, w którym użytkownicy mogą dołączać, wysyłać zaproszenia,
+ * ustawiać preferencje oraz monitorować status uczestników.
+ * @export
+ * @class LobbyComponent
+ * @implements {OnInit}
+ * @implements {OnDestroy}
+ */
 @Component({
   selector: 'app-lobby',
   standalone: true,
@@ -14,32 +22,113 @@ import {FormsModule} from '@angular/forms';
   styleUrls: ['./lobby.component.css'],
 })
 export class LobbyComponent implements OnInit, OnDestroy {
+  /**
+   * Nazwa użytkownika.
+   * @type {string}
+   */
   userName: string = '';
+
+  /**
+   * Email użytkownika.
+   * @type {string}
+   */
   email: string = '';
+
+  /**
+   * Lista znajomych użytkownika.
+   * @type {any[]}
+   */
   friends: any[] = [];
+
+  /**
+   * Link do lobby.
+   * @type {string}
+   */
   lobbyLink: string = '';
+
+  /**
+   * Lista uczestników lobby.
+   * @type {any[]}
+   */
   participants: any[] = [];
+
+  /**
+   * Flaga wskazująca, czy można wysyłać zaproszenia.
+   * @type {boolean}
+   */
   canSendInvites: boolean = false;
+
+  /**
+   * Flaga wskazująca, czy lobby jest obecnie generowane.
+   * @type {boolean}
+   */
   isGeneratingLobby: boolean = false;
+
+  /**
+   * Wybrana platforma streamingowa.
+   * @type {string}
+   */
   selectedPlatform: string = '';
+
+  /**
+   * Wybrany gatunek filmowy.
+   * @type {string}
+   */
   selectedGenre: string = '';
+
+  /**
+   * Wybrany typ (np. film lub serial).
+   * @type {string}
+   */
   selectedType: string = '';
+
+  /**
+   * Liczba uczestników gotowych do gry.
+   * @type {number}
+   */
   readyParticipantsCount: number = 0;
+
+  /**
+   * Aktualny motyw aplikacji (jasny lub ciemny).
+   * @type {'light' | 'dark'}
+   */
   currentTheme: 'light' | 'dark' = 'dark';
+
+  /**
+   * Aktualny język aplikacji.
+   * @type {'polish' | 'english'}
+   */
   currentLanguage: 'polish' | 'english' = 'polish';
 
+  /**
+   * Subskrypcja interwału odświeżania listy uczestników.
+   * @type {Subscription | undefined}
+   */
   private participantSubscription: Subscription | undefined;
 
+  /**
+   * Tworzy instancję komponentu.
+   * @param {FriendsService} friendsService - Usługa zarządzająca znajomymi użytkownika.
+   * @param {LobbyService} lobbyService - Usługa zarządzająca danymi lobby.
+   * @param {Router} router - Router Angular do nawigacji.
+   * @param {Renderer2} renderer - Renderer do manipulacji DOM.
+   */
   constructor(
     private friendsService: FriendsService,
     private lobbyService: LobbyService,
     private router: Router,
     private renderer: Renderer2
-  ) {}
+  ) {
+  }
 
+  /**
+   * Inicjalizuje komponent, ładuje dane użytkownika, znajomych, uczestników lobby,
+   * język oraz motyw aplikacji. Ustawia nasłuchiwanie na zmiany w localStorage.
+   */
   ngOnInit(): void {
     this.loadTheme();
     this.loadLanguage();
+
     const email = localStorage.getItem('email');
     const nick = localStorage.getItem('nick');
     const userId = localStorage.getItem('userId');
@@ -75,18 +164,41 @@ export class LobbyComponent implements OnInit, OnDestroy {
     window.addEventListener('storage', this.handleStorageChange.bind(this));
   }
 
+  /**
+   * Usuwa subskrypcję interwału oraz nasłuchiwanie na zmiany w localStorage.
+   */
+  ngOnDestroy(): void {
+    if (this.participantSubscription) {
+      this.participantSubscription.unsubscribe();
+    }
+    window.removeEventListener('storage', this.handleStorageChange.bind(this));
+  }
+
+  /**
+   * Ładuje język aplikacji z localStorage.
+   * @private
+   */
   private loadLanguage(): void {
     const savedLanguage = localStorage.getItem('language') as 'polish' | 'english';
     this.currentLanguage = savedLanguage || 'polish';
   }
 
-  private loadTheme() {
+  /**
+   * Ładuje zapisany motyw aplikacji z localStorage.
+   * @private
+   */
+  private loadTheme(): void {
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
     this.currentTheme = savedTheme || 'dark';
     this.applyTheme(this.currentTheme);
   }
 
-  private applyTheme(theme: 'light' | 'dark') {
+  /**
+   * Zastosowuje wybrany motyw aplikacji do elementu DOM.
+   * @private
+   * @param {'light' | 'dark'} theme - Wybrany motyw aplikacji.
+   */
+  private applyTheme(theme: 'light' | 'dark'): void {
     const container = document.querySelector('.bg') as HTMLElement;
     if (theme === 'dark') {
       this.renderer.addClass(container, 'dark-theme');
@@ -97,25 +209,26 @@ export class LobbyComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
-    if (this.participantSubscription) {
-      this.participantSubscription.unsubscribe();
-    }
-    window.removeEventListener('storage', this.handleStorageChange.bind(this));
-  }
-
+  /**
+   * Obsługuje zmiany w localStorage, np. zmiany języka.
+   * @private
+   * @param {StorageEvent} event - Wydarzenie zmiany w localStorage.
+   */
   private handleStorageChange(event: StorageEvent): void {
     if (event.key === 'language') {
       this.loadLanguage();
     }
   }
 
+  /**
+   * Ładuje status gotowości uczestników lobby.
+   */
   loadReadyStatus(): void {
     const lobbyCode = this.extractLobbyCodeFromUrl();
     if (lobbyCode) {
       this.lobbyService.getParticipants(lobbyCode).subscribe({
         next: (participants) => {
-          this.readyParticipantsCount = participants.filter(p => p.isReady).length;
+          this.readyParticipantsCount = participants.filter((p) => p.isReady).length;
         },
         error: (err) => {
           console.error('Nie udało się pobrać statusu gotowości:', err);
@@ -124,6 +237,10 @@ export class LobbyComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Generuje link do lobby i zapisuje go w localStorage.
+   * Po pomyślnym wygenerowaniu lobby użytkownik jest przekierowywany na stronę lobby.
+   */
   generateLink(): void {
     const userId = localStorage.getItem('userId');
     if (userId) {
@@ -144,6 +261,11 @@ export class LobbyComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Dodaje użytkownika do lobby, jeśli lobbyCode jest obecny w URL.
+   * Po dodaniu użytkownika lista uczestników zostaje odświeżona.
+   * @param {number} userId - Identyfikator użytkownika.
+   */
   addUserToLobbyIfJoining(userId: number): void {
     const lobbyCode = this.extractLobbyCodeFromUrl();
     if (lobbyCode) {
@@ -159,10 +281,19 @@ export class LobbyComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Sprawdza, czy tworzenie nowego lobby jest zablokowane.
+   * Zwraca `true`, jeśli lobby jest już generowane lub link do lobby istnieje.
+   * @returns {boolean} - Flaga wskazująca, czy tworzenie nowego lobby jest zablokowane.
+   */
   isCreatingNewLobbyDisabled(): boolean {
     return this.isGeneratingLobby || !!this.lobbyLink;
   }
 
+  /**
+   * Ładuje listę znajomych użytkownika i ich zdjęcia profilowe.
+   * @param {number} userId - Identyfikator użytkownika.
+   */
   loadFriends(userId: number): void {
     this.friendsService.getFriends(userId).subscribe({
       next: (friends) => {
@@ -177,6 +308,11 @@ export class LobbyComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Ładuje zdjęcie profilowe znajomego.
+   * Jeśli wystąpi błąd, ustawia domyślny awatar dla znajomego.
+   * @param {any} friend - Obiekt znajomego zawierający jego dane.
+   */
   loadFriendPicture(friend: any): void {
     this.friendsService.getProfilePicture(friend.id).subscribe({
       next: (blob) => {
@@ -190,6 +326,11 @@ export class LobbyComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Ładuje zdjęcie profilowe użytkownika.
+   * Jeśli wystąpi błąd, zdjęcie profilowe nie zostanie załadowane.
+   * @param {number} userId - Identyfikator użytkownika.
+   */
   loadProfilePicture(userId: number): void {
     this.friendsService.getProfilePicture(userId).subscribe({
       next: (blob) => {
@@ -205,6 +346,11 @@ export class LobbyComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Wysyła zaproszenie do znajomego za pomocą emaila.
+   * Używa wygenerowanego linku do lobby jako treści zaproszenia.
+   * @param {any} friend - Obiekt znajomego, który ma otrzymać zaproszenie.
+   */
   sendInvite(friend: any): void {
     if (this.canSendInvites && this.lobbyLink) {
       this.friendsService.sendInviteEmail(friend.id, this.lobbyLink).subscribe({
@@ -220,6 +366,10 @@ export class LobbyComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Pobiera listę uczestników lobby.
+   * Jeśli kod lobby istnieje, dane uczestników są ładowane z backendu.
+   */
   loadParticipants(): void {
     const lobbyCode = this.extractLobbyCodeFromUrl();
     if (lobbyCode) {
@@ -235,6 +385,10 @@ export class LobbyComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Zapisuje preferencje użytkownika dotyczące platformy, gatunku i typu w kontekście lobby.
+   * Jeśli dane są niekompletne, wyświetlane jest ostrzeżenie.
+   */
   savePreferences(): void {
     const userId = localStorage.getItem('userId');
     const lobbyCode = this.extractLobbyCodeFromUrl();
@@ -271,9 +425,10 @@ export class LobbyComponent implements OnInit, OnDestroy {
       });
   }
 
-
-
-
+  /**
+   * Rozpoczyna grę w lobby, jeśli wszyscy uczestnicy są gotowi.
+   * Jeśli nie wszyscy uczestnicy są gotowi, wyświetlane jest ostrzeżenie.
+   */
   startGame(): void {
     const lobbyCode = this.extractLobbyCodeFromUrl();
     if (!lobbyCode) {
@@ -296,7 +451,6 @@ export class LobbyComponent implements OnInit, OnDestroy {
           });
         } else {
           alert('Nie wszyscy uczestnicy są gotowi!');
-
         }
       },
       error: (err) => {
@@ -305,8 +459,10 @@ export class LobbyComponent implements OnInit, OnDestroy {
     });
   }
 
-
-
+  /**
+   * Sprawdza, czy gra w lobby została już rozpoczęta.
+   * Jeśli gra została rozpoczęta, użytkownik jest przekierowywany na stronę gry.
+   */
   checkGameStart(): void {
     const lobbyCode = this.extractLobbyCodeFromUrl();
     if (!lobbyCode) {
@@ -327,6 +483,10 @@ export class LobbyComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Wyciąga kod lobby z aktualnego URL.
+   * @returns {string | null} Kod lobby, jeśli istnieje; w przeciwnym razie `null`.
+   */
   extractLobbyCodeFromUrl(): string | null {
     const url = window.location.href;
     const parts = url.split('/');
@@ -334,5 +494,4 @@ export class LobbyComponent implements OnInit, OnDestroy {
     console.log('Extracted lobby code:', code);
     return code || null;
   }
-
 }

@@ -1,0 +1,1655 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>filmer-frontend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">filmer-frontend documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  ResultsComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/components/results/results.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Komponent ResultsComponent odpowiedzialny za wyświetlanie wyników głosowania
+w lobby, zarządzanie motywem aplikacji oraz interakcję z pop-upem z informacjami
+o filmach. Obsługuje mechanizm okresowego sprawdzania statusu głosowania.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-results</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>NgIf</code>
+                            <code>RouterLink</code>
+                            <code>RouterLinkActive</code>
+                            <code>RouterModule</code>
+                                <code><a href="../components/PopUpComponent.html" target="_self" >PopUpComponent</a></code>
+                            <code>CommonModule</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./results.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./results.component.css</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#currentTheme" >currentTheme</a>
+                            </li>
+                            <li>
+                                <a href="#isPopupVisible" >isPopupVisible</a>
+                            </li>
+                            <li>
+                                <a href="#lobbyCode" >lobbyCode</a>
+                            </li>
+                            <li>
+                                <a href="#pollingSubscription" >pollingSubscription</a>
+                            </li>
+                            <li>
+                                <a href="#popupItems" >popupItems</a>
+                            </li>
+                            <li>
+                                <a href="#popupTitle" >popupTitle</a>
+                            </li>
+                            <li>
+                                <a href="#results" >results</a>
+                            </li>
+                            <li>
+                                <a href="#userId" >userId</a>
+                            </li>
+                            <li>
+                                <a href="#votingCompleted" >votingCompleted</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#applyTheme" >applyTheme</a>
+                            </li>
+                            <li>
+                                <a href="#checkVotingStatus" >checkVotingStatus</a>
+                            </li>
+                            <li>
+                                <a href="#closePopup" >closePopup</a>
+                            </li>
+                            <li>
+                                <a href="#loadResults" >loadResults</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#loadTheme" >loadTheme</a>
+                            </li>
+                            <li>
+                                <a href="#ngAfterViewChecked" >ngAfterViewChecked</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#sendResults" >sendResults</a>
+                            </li>
+                            <li>
+                                <a href="#showPopupForPlace" >showPopupForPlace</a>
+                            </li>
+                            <li>
+                                <a href="#startPolling" >startPolling</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(route: ActivatedRoute, drawService: <a href="../injectables/DrawService.html" target="_self">DrawService</a>, router: Router, resultsService: <a href="../injectables/ResultsService.html" target="_self">ResultsService</a>, renderer: Renderer2)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/app/components/results/results.component.ts:78</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Tworzy instancję ResultsComponent.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>route</td>
+                                                  
+                                                        <td>
+                                                                    <code>ActivatedRoute</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Serwis do obsługi aktywnej trasy.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>drawService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DrawService.html" target="_self" >DrawService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Serwis do obsługi statusu głosowania.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Router Angulara.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>resultsService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ResultsService.html" target="_self" >ResultsService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Serwis do pobierania i wysyłania wyników.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>renderer</td>
+                                                  
+                                                        <td>
+                                                                    <code>Renderer2</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Renderer Angulara do modyfikacji DOM.</p>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="applyTheme"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>applyTheme</b></span>
+                        <a href="#applyTheme"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>applyTheme(theme: "light" | "dark")</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="140"
+                                    class="link-to-prism">src/app/components/results/results.component.ts:140</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Stosuje wybrany motyw (&#39;light&#39; lub &#39;dark&#39;) do interfejsu użytkownika.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>theme</td>
+                                            <td>
+                                                        <code>&quot;light&quot; | &quot;dark&quot;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Wybrany motyw.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkVotingStatus"></a>
+                    <span class="name">
+                        <span ><b>checkVotingStatus</b></span>
+                        <a href="#checkVotingStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>checkVotingStatus()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="199"
+                                    class="link-to-prism">src/app/components/results/results.component.ts:199</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Sprawdza status głosowania w lobby i aktualizuje wyniki, gdy głosowanie
+zostanie zakończone.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closePopup"></a>
+                    <span class="name">
+                        <span ><b>closePopup</b></span>
+                        <a href="#closePopup"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closePopup()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="182"
+                                    class="link-to-prism">src/app/components/results/results.component.ts:182</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Zamyka pop-up.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadResults"></a>
+                    <span class="name">
+                        <span ><b>loadResults</b></span>
+                        <a href="#loadResults"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadResults()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="167"
+                                    class="link-to-prism">src/app/components/results/results.component.ts:167</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Pobiera wyniki głosowania z serwera.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadTheme"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>loadTheme</b></span>
+                        <a href="#loadTheme"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadTheme()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="129"
+                                    class="link-to-prism">src/app/components/results/results.component.ts:129</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Ładuje motyw z localStorage i stosuje go w interfejsie.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngAfterViewChecked"></a>
+                    <span class="name">
+                        <span ><b>ngAfterViewChecked</b></span>
+                        <a href="#ngAfterViewChecked"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngAfterViewChecked()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="121"
+                                    class="link-to-prism">src/app/components/results/results.component.ts:121</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Sprawdza i stosuje motyw po każdej aktualizacji widoku.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="100"
+                                    class="link-to-prism">src/app/components/results/results.component.ts:100</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Inicjalizuje komponent, ustawiając kod lobby i userId oraz rozpoczynając
+okresowe sprawdzanie statusu głosowania.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendResults"></a>
+                    <span class="name">
+                        <span ><b>sendResults</b></span>
+                        <a href="#sendResults"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>sendResults()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="219"
+                                    class="link-to-prism">src/app/components/results/results.component.ts:219</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Wysyła wyniki głosowania na e-mail użytkownika.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showPopupForPlace"></a>
+                    <span class="name">
+                        <span ><b>showPopupForPlace</b></span>
+                        <a href="#showPopupForPlace"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>showPopupForPlace(place: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, placeKey: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="156"
+                                    class="link-to-prism">src/app/components/results/results.component.ts:156</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Wyświetla pop-up z listą filmów dla wybranego miejsca w głosowaniu.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>place</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Nazwa miejsca.</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>placeKey</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Klucz miejsca w wynikach.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="startPolling"></a>
+                    <span class="name">
+                        <span ><b>startPolling</b></span>
+                        <a href="#startPolling"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>startPolling()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="189"
+                                    class="link-to-prism">src/app/components/results/results.component.ts:189</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Rozpoczyna okresowe sprawdzanie statusu głosowania.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentTheme"></a>
+                    <span class="name">
+                        <span ><b>currentTheme</b></span>
+                        <a href="#currentTheme"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;light&quot; | &quot;dark&quot;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;dark&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/app/components/results/results.component.ts:78</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Obecny motyw aplikacji (&#39;light&#39; lub &#39;dark&#39;).</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isPopupVisible"></a>
+                    <span class="name">
+                        <span ><b>isPopupVisible</b></span>
+                        <a href="#isPopupVisible"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/app/components/results/results.component.ts:60</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Flaga określająca, czy pop-up jest widoczny.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="lobbyCode"></a>
+                    <span class="name">
+                        <span ><b>lobbyCode</b></span>
+                        <a href="#lobbyCode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/components/results/results.component.ts:30</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Kod lobby aktualnie otwartego.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pollingSubscription"></a>
+                    <span class="name">
+                        <span ><b>pollingSubscription</b></span>
+                        <a href="#pollingSubscription"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subscription | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/components/results/results.component.ts:48</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Subskrypcja używana do okresowego sprawdzania statusu głosowania.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="popupItems"></a>
+                    <span class="name">
+                        <span ><b>popupItems</b></span>
+                        <a href="#popupItems"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">src/app/components/results/results.component.ts:72</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lista elementów wyświetlana w pop-upie.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="popupTitle"></a>
+                    <span class="name">
+                        <span ><b>popupTitle</b></span>
+                        <a href="#popupTitle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/app/components/results/results.component.ts:66</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Tytuł wyświetlany w pop-upie.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="results"></a>
+                    <span class="name">
+                        <span ><b>results</b></span>
+                        <a href="#results"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/components/results/results.component.ts:54</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Wyniki głosowania w lobby.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="userId"></a>
+                    <span class="name">
+                        <span ><b>userId</b></span>
+                        <a href="#userId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>number | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/components/results/results.component.ts:36</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>ID użytkownika zalogowanego.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="votingCompleted"></a>
+                    <span class="name">
+                        <span ><b>votingCompleted</b></span>
+                        <a href="#votingCompleted"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/components/results/results.component.ts:42</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Flaga określająca, czy głosowanie zostało zakończone.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, OnInit, Renderer2} from &#x27;@angular/core&#x27;;
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from &#x27;@angular/router&#x27;;
+import { DrawService } from &#x27;../../services/draw.service&#x27;;
+import { interval, Subscription } from &#x27;rxjs&#x27;;
+import {CommonModule, NgIf} from &#x27;@angular/common&#x27;;
+import { RouterModule } from &#x27;@angular/router&#x27;;
+import { PopUpComponent } from &#x27;../popup/popup.component&#x27;;
+import {ResultsService} from &#x27;../../services/results.service&#x27;;
+
+/**
+ * Komponent ResultsComponent odpowiedzialny za wyświetlanie wyników głosowania
+ * w lobby, zarządzanie motywem aplikacji oraz interakcję z pop-upem z informacjami
+ * o filmach. Obsługuje mechanizm okresowego sprawdzania statusu głosowania.
+ * @export
+ * @class ResultsComponent
+ * @implements {OnInit}
+ */
+@Component({
+  selector: &#x27;app-results&#x27;,
+  standalone: true,
+  imports: [NgIf, RouterLink, RouterLinkActive, RouterModule, PopUpComponent, CommonModule],
+  templateUrl: &#x27;./results.component.html&#x27;,
+  styleUrl: &#x27;./results.component.css&#x27;,
+})
+export class ResultsComponent implements OnInit {
+  /**
+   * Kod lobby aktualnie otwartego.
+   * @type {string | null}
+   */
+  lobbyCode: string | null &#x3D; null;
+
+  /**
+   * ID użytkownika zalogowanego.
+   * @type {number | null}
+   */
+  userId: number | null &#x3D; null;
+
+  /**
+   * Flaga określająca, czy głosowanie zostało zakończone.
+   * @type {boolean}
+   */
+  votingCompleted &#x3D; false;
+
+  /**
+   * Subskrypcja używana do okresowego sprawdzania statusu głosowania.
+   * @type {Subscription | null}
+   */
+  pollingSubscription: Subscription | null &#x3D; null;
+
+  /**
+   * Wyniki głosowania w lobby.
+   * @type {{ [key: number]: string[] }}
+   */
+  results: { [key: number]: string[] } &#x3D; {};
+
+  /**
+   * Flaga określająca, czy pop-up jest widoczny.
+   * @type {boolean}
+   */
+  isPopupVisible &#x3D; false;
+
+  /**
+   * Tytuł wyświetlany w pop-upie.
+   * @type {string}
+   */
+  popupTitle &#x3D; &#x27;&#x27;;
+
+  /**
+   * Lista elementów wyświetlana w pop-upie.
+   * @type {string[]}
+   */
+  popupItems: string[] &#x3D; [];
+
+  /**
+   * Obecny motyw aplikacji (&#x27;light&#x27; lub &#x27;dark&#x27;).
+   * @type {&#x27;light&#x27; | &#x27;dark&#x27;}
+   */
+  currentTheme: &#x27;light&#x27; | &#x27;dark&#x27; &#x3D; &#x27;dark&#x27;;
+
+  /**
+   * Tworzy instancję ResultsComponent.
+   * @param {ActivatedRoute} route Serwis do obsługi aktywnej trasy.
+   * @param {DrawService} drawService Serwis do obsługi statusu głosowania.
+   * @param {Router} router Router Angulara.
+   * @param {ResultsService} resultsService Serwis do pobierania i wysyłania wyników.
+   * @param {Renderer2} renderer Renderer Angulara do modyfikacji DOM.
+   */
+  constructor(
+    private route: ActivatedRoute,
+    private drawService: DrawService,
+    private router: Router,
+    private resultsService: ResultsService,
+    private renderer: Renderer2
+  ) {}
+
+  /**
+   * Inicjalizuje komponent, ustawiając kod lobby i userId oraz rozpoczynając
+   * okresowe sprawdzanie statusu głosowania.
+   */
+  ngOnInit(): void {
+    this.lobbyCode &#x3D; this.route.snapshot.paramMap.get(&#x27;lobbyCode&#x27;);
+    const storedUserId &#x3D; localStorage.getItem(&#x27;userId&#x27;);
+
+    if (storedUserId) {
+      this.userId &#x3D; Number(storedUserId);
+    } else {
+      console.error(&#x27;Brak userId w localStorage.&#x27;);
+      return;
+    }
+
+    if (this.lobbyCode) {
+      this.startPolling();
+    } else {
+      console.error(&#x27;Brak lobbyCode w URL.&#x27;);
+    }
+  }
+
+  /**
+   * Sprawdza i stosuje motyw po każdej aktualizacji widoku.
+   */
+  ngAfterViewChecked(): void {
+    this.applyTheme(this.currentTheme);
+  }
+
+  /**
+   * Ładuje motyw z localStorage i stosuje go w interfejsie.
+   * @private
+   */
+  private loadTheme(): void {
+    const savedTheme &#x3D; localStorage.getItem(&#x27;theme&#x27;) as &#x27;light&#x27; | &#x27;dark&#x27;;
+    this.currentTheme &#x3D; savedTheme || &#x27;dark&#x27;;
+    this.applyTheme(this.currentTheme);
+  }
+
+  /**
+   * Stosuje wybrany motyw (&#x27;light&#x27; lub &#x27;dark&#x27;) do interfejsu użytkownika.
+   * @private
+   * @param {&#x27;light&#x27; | &#x27;dark&#x27;} theme Wybrany motyw.
+   */
+  private applyTheme(theme: &#x27;light&#x27; | &#x27;dark&#x27;): void {
+    const container &#x3D; document.querySelector(&#x27;.section-user&#x27;) as HTMLElement;
+    if (theme &#x3D;&#x3D;&#x3D; &#x27;dark&#x27;) {
+      this.renderer.addClass(container, &#x27;dark-theme&#x27;);
+      this.renderer.removeClass(container, &#x27;light-theme&#x27;);
+    } else {
+      this.renderer.addClass(container, &#x27;light-theme&#x27;);
+      this.renderer.removeClass(container, &#x27;dark-theme&#x27;);
+    }
+  }
+
+  /**
+   * Wyświetla pop-up z listą filmów dla wybranego miejsca w głosowaniu.
+   * @param {string} place Nazwa miejsca.
+   * @param {number} placeKey Klucz miejsca w wynikach.
+   */
+  showPopupForPlace(place: string, placeKey: number): void {
+    this.popupTitle &#x3D; &#x60;Filmy z miejsca ${place}&#x60;;
+    this.popupItems &#x3D; (this.results[placeKey] || []).map(
+      (film: any) &#x3D;&gt; &#x60;${film.filmName} - ${film.filmDesc}&#x60;
+    );
+    this.isPopupVisible &#x3D; true;
+  }
+
+  /**
+   * Pobiera wyniki głosowania z serwera.
+   */
+  loadResults(): void {
+    if (this.lobbyCode) {
+      this.resultsService.getResults(this.lobbyCode).subscribe({
+        next: (results) &#x3D;&gt; {
+          console.log(&#x27;Wyniki pobrane z backendu:&#x27;, results);
+          this.results &#x3D; results;
+        },
+        error: (err) &#x3D;&gt; console.error(&#x27;Błąd podczas pobierania wyników:&#x27;, err),
+      });
+    }
+  }
+
+  /**
+   * Zamyka pop-up.
+   */
+  closePopup(): void {
+    this.isPopupVisible &#x3D; false;
+  }
+
+  /**
+   * Rozpoczyna okresowe sprawdzanie statusu głosowania.
+   */
+  startPolling(): void {
+    this.pollingSubscription &#x3D; interval(5000).subscribe(() &#x3D;&gt; {
+      this.checkVotingStatus();
+    });
+  }
+
+  /**
+   * Sprawdza status głosowania w lobby i aktualizuje wyniki, gdy głosowanie
+   * zostanie zakończone.
+   */
+  checkVotingStatus(): void {
+    if (this.lobbyCode &amp;&amp; this.userId !&#x3D;&#x3D; null) {
+      this.drawService.checkVotingStatus(this.lobbyCode, this.userId).subscribe({
+        next: (isCompleted: boolean) &#x3D;&gt; {
+          this.votingCompleted &#x3D; isCompleted;
+          if (this.votingCompleted) {
+            this.pollingSubscription?.unsubscribe();
+            this.loadResults();
+          }
+        },
+        error: (err) &#x3D;&gt; console.error(&#x27;Błąd podczas sprawdzania statusu głosowania:&#x27;, err),
+      });
+    } else {
+      console.error(&#x27;Nie ustawiono userId lub lobbyCode.&#x27;);
+    }
+  }
+
+  /**
+   * Wysyła wyniki głosowania na e-mail użytkownika.
+   */
+  sendResults(): void {
+    const email &#x3D; localStorage.getItem(&#x27;email&#x27;);
+    if (!email || !this.lobbyCode) {
+      alert(&#x27;Brak e-maila użytkownika lub kodu lobby.&#x27;);
+      return;
+    }
+
+    this.resultsService.sendResultsEmail(this.lobbyCode, email).subscribe({
+      next: () &#x3D;&gt; {
+        alert(&#x27;Wyniki zostały wysłane na Twój e-mail.&#x27;);
+      },
+      error: (err) &#x3D;&gt; {
+        console.error(&#x27;Błąd podczas wysyłania wyników:&#x27;, err);
+        alert(&#x27;Nie udało się wysłać wyników.&#x27;);
+      },
+    });
+  }
+}
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div *ngIf&#x3D;&quot;!votingCompleted&quot;&gt;
+  &lt;div class&#x3D;&quot;section-user&quot;&gt;
+    &lt;div class&#x3D;&quot;content&quot;&gt;
+      &lt;h1&gt;Oczekiwanie na resztę graczy...&lt;/h1&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div *ngIf&#x3D;&quot;votingCompleted&quot;&gt;
+  &lt;div class&#x3D;&quot;section-user&quot;&gt;
+    &lt;div class&#x3D;&quot;content&quot;&gt;
+      &lt;h1&gt;Odkryj wyniki!&lt;/h1&gt;
+      &lt;div class&#x3D;&quot;canvas&quot;&gt;
+        &lt;div class&#x3D;&quot;results&quot;&gt;
+          &lt;div class&#x3D;&quot;cards&quot;&gt;
+            &lt;img
+              src&#x3D;&quot;assets/images/second.png&quot;
+              class&#x3D;&quot;second-place-card&quot;
+              alt&#x3D;&quot;cards&quot;
+              (click)&#x3D;&quot;showPopupForPlace(&#x27;Drugie&#x27;, 2)&quot;
+            /&gt;
+            &lt;img
+              src&#x3D;&quot;assets/images/first.png&quot;
+              class&#x3D;&quot;first-place-card&quot;
+              alt&#x3D;&quot;cards&quot;
+              (click)&#x3D;&quot;showPopupForPlace(&#x27;Pierwsze&#x27;, 1)&quot;
+            /&gt;
+            &lt;img
+              src&#x3D;&quot;assets/images/third.png&quot;
+              class&#x3D;&quot;third-place-card&quot;
+              alt&#x3D;&quot;cards&quot;
+              (click)&#x3D;&quot;showPopupForPlace(&#x27;Trzecie&#x27;, 3)&quot;
+            /&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;button routerLink&#x3D;&quot;/&quot; routerLinkActive&#x3D;&quot;active&quot;&gt;Wróć na stronę główną&lt;/button&gt;
+        &lt;button (click)&#x3D;&quot;sendResults()&quot;&gt;Wyślij wyniki na e-mail&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;app-popup
+    [isVisible]&#x3D;&quot;isPopupVisible&quot;
+    [title]&#x3D;&quot;popupTitle&quot;
+    [items]&#x3D;&quot;popupItems&quot;
+    (popupClosed)&#x3D;&quot;closePopup()&quot;
+  &gt;&lt;/app-popup&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div *ngIf="!votingCompleted">  <div class="section-user">    <div class="content">      <h1>Oczekiwanie na resztę graczy...</h1>    </div>  </div></div><div *ngIf="votingCompleted">  <div class="section-user">    <div class="content">      <h1>Odkryj wyniki!</h1>      <div class="canvas">        <div class="results">          <div class="cards">            <img              src="assets/images/second.png"              class="second-place-card"              alt="cards"              (click)="showPopupForPlace(\'Drugie\', 2)"            />            <img              src="assets/images/first.png"              class="first-place-card"              alt="cards"              (click)="showPopupForPlace(\'Pierwsze\', 1)"            />            <img              src="assets/images/third.png"              class="third-place-card"              alt="cards"              (click)="showPopupForPlace(\'Trzecie\', 3)"            />          </div>        </div>        <button routerLink="/" routerLinkActive="active">Wróć na stronę główną</button>        <button (click)="sendResults()">Wyślij wyniki na e-mail</button>      </div>    </div>  </div>  <app-popup    [isVisible]="isPopupVisible"    [title]="popupTitle"    [items]="popupItems"    (popupClosed)="closePopup()"  ></app-popup></div></div>'
+    var COMPONENTS = [{'name': 'AddMoviePopupComponent', 'selector': 'app-add-movie-popup'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'DrawComponent', 'selector': 'app-draw'},{'name': 'FriendsListComponent', 'selector': 'app-friends-list'},{'name': 'LibraryComponent', 'selector': 'app-library'},{'name': 'LobbyComponent', 'selector': 'app-lobby'},{'name': 'LoginPageComponent', 'selector': 'app-login-page'},{'name': 'MenuComponent', 'selector': 'app-menu'},{'name': 'MoviePopupComponent', 'selector': 'app-movie-popup'},{'name': 'PopUpComponent', 'selector': 'app-popup'},{'name': 'ResultsComponent', 'selector': 'app-results'},{'name': 'SectionOneComponent', 'selector': 'app-section-one'},{'name': 'UserProfileComponent', 'selector': 'app-user-profile'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ResultsComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ResultsComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

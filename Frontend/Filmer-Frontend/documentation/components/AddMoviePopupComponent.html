@@ -1,0 +1,1146 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>filmer-frontend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">filmer-frontend documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  AddMoviePopupComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/components/add-movie-popup/add-movie-popup.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Komponent odpowiedzialny za wyświetlanie okna popup do dodawania nowych filmów.</p>
+
+    </p>
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-add-movie-popup</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>ReactiveFormsModule</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./add-movie-popup.component.css</code></td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">template</td>
+                <td class="col-md-9"><pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;popup-overlay&quot; (click)&#x3D;&quot;closePopup()&quot;&gt;
+  &lt;div class&#x3D;&quot;popup-content&quot; (click)&#x3D;&quot;$event.stopPropagation()&quot;&gt;
+    &lt;h2&gt;Dodaj nowy film&lt;/h2&gt;
+    &lt;!-- Formularz dodawania filmu --&gt;
+    &lt;form [formGroup]&#x3D;&quot;movieForm&quot; (ngSubmit)&#x3D;&quot;submitForm()&quot;&gt;
+      &lt;!-- Pola formularza --&gt;
+      &lt;label&gt;
+        &lt;span&gt;Tytuł filmu:&lt;/span&gt;
+        &lt;input formControlName&#x3D;&quot;title&quot; type&#x3D;&quot;text&quot; placeholder&#x3D;&quot;Wprowadź tytuł filmu&quot; /&gt;
+      &lt;/label&gt;
+      &lt;label&gt;
+        &lt;span&gt;Opis:&lt;/span&gt;
+        &lt;textarea formControlName&#x3D;&quot;description&quot; placeholder&#x3D;&quot;Wprowadź opis&quot;&gt;&lt;/textarea&gt;
+      &lt;/label&gt;
+      &lt;label&gt;
+        &lt;span&gt;Reżyser:&lt;/span&gt;
+        &lt;input formControlName&#x3D;&quot;director&quot; type&#x3D;&quot;text&quot; placeholder&#x3D;&quot;Wprowadź reżysera&quot; /&gt;
+      &lt;/label&gt;
+      &lt;label&gt;
+        &lt;span&gt;Studio:&lt;/span&gt;
+        &lt;input formControlName&#x3D;&quot;studio&quot; type&#x3D;&quot;text&quot; placeholder&#x3D;&quot;Wprowadź studio&quot; /&gt;
+      &lt;/label&gt;
+      &lt;label&gt;
+        &lt;span&gt;Serial/Film:&lt;/span&gt;
+        &lt;select formControlName&#x3D;&quot;type&quot;&gt;
+          &lt;option value&#x3D;&quot;Film&quot;&gt;Film&lt;/option&gt;
+          &lt;option value&#x3D;&quot;Serial&quot;&gt;Serial&lt;/option&gt;
+        &lt;/select&gt;
+      &lt;/label&gt;
+      &lt;label&gt;
+        &lt;span&gt;Platforma:&lt;/span&gt;
+        &lt;input formControlName&#x3D;&quot;platform&quot; type&#x3D;&quot;text&quot; placeholder&#x3D;&quot;Wprowadź platformę streamingową&quot; /&gt;
+      &lt;/label&gt;
+      &lt;label&gt;
+        &lt;span&gt;Gatunek:&lt;/span&gt;
+        &lt;input formControlName&#x3D;&quot;genre&quot; type&#x3D;&quot;text&quot; placeholder&#x3D;&quot;Wprowadź gatunek&quot; /&gt;
+      &lt;/label&gt;
+      &lt;div class&#x3D;&quot;button-group&quot;&gt;
+        &lt;button type&#x3D;&quot;submit&quot; [disabled]&#x3D;&quot;movieForm.invalid&quot;&gt;Zapisz&lt;/button&gt;
+        &lt;button type&#x3D;&quot;button&quot; (click)&#x3D;&quot;closePopup()&quot;&gt;Anuluj&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#currentTheme" >currentTheme</a>
+                            </li>
+                            <li>
+                                <a href="#movieForm" >movieForm</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#applyTheme" >applyTheme</a>
+                            </li>
+                            <li>
+                                <a href="#closePopup" >closePopup</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#loadTheme" >loadTheme</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#submitForm" >submitForm</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#movieAdded" >movieAdded</a>
+                            </li>
+                            <li>
+                                <a href="#popupClosed" >popupClosed</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(fb: FormBuilder, http: HttpClient, renderer: Renderer2)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">src/app/components/add-movie-popup/add-movie-popup.component.ts:85</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Tworzy instancję komponentu.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                    <code>FormBuilder</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Usługa do tworzenia formularzy.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                    <code>HttpClient</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Klient HTTP do obsługi żądań.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>renderer</td>
+                                                  
+                                                        <td>
+                                                                    <code>Renderer2</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Renderer do manipulacji DOM.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section data-compodoc="block-outputs">
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="movieAdded"></a>
+                        <b>movieAdded</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">src/app/components/add-movie-popup/add-movie-popup.component.ts:73</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emituje zdarzenie dodania nowego filmu.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="popupClosed"></a>
+                        <b>popupClosed</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">src/app/components/add-movie-popup/add-movie-popup.component.ts:67</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emituje zdarzenie zamknięcia popupu.</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="applyTheme"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>applyTheme</b></span>
+                        <a href="#applyTheme"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>applyTheme()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="126"
+                                    class="link-to-prism">src/app/components/add-movie-popup/add-movie-popup.component.ts:126</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Zastosowuje wybrany motyw aplikacji do popupu.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closePopup"></a>
+                    <span class="name">
+                        <span ><b>closePopup</b></span>
+                        <a href="#closePopup"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closePopup()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="145"
+                                    class="link-to-prism">src/app/components/add-movie-popup/add-movie-popup.component.ts:145</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Zamyka popup i emituje zdarzenie zamknięcia.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadTheme"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>loadTheme</b></span>
+                        <a href="#loadTheme"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadTheme()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="116"
+                                    class="link-to-prism">src/app/components/add-movie-popup/add-movie-popup.component.ts:116</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Ładuje zapisany motyw aplikacji z pamięci lokalnej.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="108"
+                                    class="link-to-prism">src/app/components/add-movie-popup/add-movie-popup.component.ts:108</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Inicjalizuje komponent i ładuje motyw aplikacji.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="submitForm"></a>
+                    <span class="name">
+                        <span ><b>submitForm</b></span>
+                        <a href="#submitForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>submitForm()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="152"
+                                    class="link-to-prism">src/app/components/add-movie-popup/add-movie-popup.component.ts:152</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Wysyła dane formularza do API i obsługuje odpowiedź.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentTheme"></a>
+                    <span class="name">
+                        <span ><b>currentTheme</b></span>
+                        <a href="#currentTheme"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;light&quot; | &quot;dark&quot;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;dark&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="79" class="link-to-prism">src/app/components/add-movie-popup/add-movie-popup.component.ts:79</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Aktualny motyw aplikacji (jasny lub ciemny).</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="movieForm"></a>
+                    <span class="name">
+                        <span ><b>movieForm</b></span>
+                        <a href="#movieForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FormGroup</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">src/app/components/add-movie-popup/add-movie-popup.component.ts:85</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Formularz do dodawania filmu.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, EventEmitter, Output, Renderer2} from &#x27;@angular/core&#x27;;
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from &#x27;@angular/forms&#x27;;
+import {HttpClient} from &#x27;@angular/common/http&#x27;;
+
+/**
+ * Komponent odpowiedzialny za wyświetlanie okna popup do dodawania nowych filmów.
+ * @export
+ * @class AddMoviePopupComponent
+ */
+@Component({
+  selector: &#x27;app-add-movie-popup&#x27;,
+  standalone: true,
+  imports: [ReactiveFormsModule],
+  template: &#x60;
+    &lt;div class&#x3D;&quot;popup-overlay&quot; (click)&#x3D;&quot;closePopup()&quot;&gt;
+      &lt;div class&#x3D;&quot;popup-content&quot; (click)&#x3D;&quot;$event.stopPropagation()&quot;&gt;
+        &lt;h2&gt;Dodaj nowy film&lt;/h2&gt;
+        &lt;!-- Formularz dodawania filmu --&gt;
+        &lt;form [formGroup]&#x3D;&quot;movieForm&quot; (ngSubmit)&#x3D;&quot;submitForm()&quot;&gt;
+          &lt;!-- Pola formularza --&gt;
+          &lt;label&gt;
+            &lt;span&gt;Tytuł filmu:&lt;/span&gt;
+            &lt;input formControlName&#x3D;&quot;title&quot; type&#x3D;&quot;text&quot; placeholder&#x3D;&quot;Wprowadź tytuł filmu&quot; /&gt;
+          &lt;/label&gt;
+          &lt;label&gt;
+            &lt;span&gt;Opis:&lt;/span&gt;
+            &lt;textarea formControlName&#x3D;&quot;description&quot; placeholder&#x3D;&quot;Wprowadź opis&quot;&gt;&lt;/textarea&gt;
+          &lt;/label&gt;
+          &lt;label&gt;
+            &lt;span&gt;Reżyser:&lt;/span&gt;
+            &lt;input formControlName&#x3D;&quot;director&quot; type&#x3D;&quot;text&quot; placeholder&#x3D;&quot;Wprowadź reżysera&quot; /&gt;
+          &lt;/label&gt;
+          &lt;label&gt;
+            &lt;span&gt;Studio:&lt;/span&gt;
+            &lt;input formControlName&#x3D;&quot;studio&quot; type&#x3D;&quot;text&quot; placeholder&#x3D;&quot;Wprowadź studio&quot; /&gt;
+          &lt;/label&gt;
+          &lt;label&gt;
+            &lt;span&gt;Serial/Film:&lt;/span&gt;
+            &lt;select formControlName&#x3D;&quot;type&quot;&gt;
+              &lt;option value&#x3D;&quot;Film&quot;&gt;Film&lt;/option&gt;
+              &lt;option value&#x3D;&quot;Serial&quot;&gt;Serial&lt;/option&gt;
+            &lt;/select&gt;
+          &lt;/label&gt;
+          &lt;label&gt;
+            &lt;span&gt;Platforma:&lt;/span&gt;
+            &lt;input formControlName&#x3D;&quot;platform&quot; type&#x3D;&quot;text&quot; placeholder&#x3D;&quot;Wprowadź platformę streamingową&quot; /&gt;
+          &lt;/label&gt;
+          &lt;label&gt;
+            &lt;span&gt;Gatunek:&lt;/span&gt;
+            &lt;input formControlName&#x3D;&quot;genre&quot; type&#x3D;&quot;text&quot; placeholder&#x3D;&quot;Wprowadź gatunek&quot; /&gt;
+          &lt;/label&gt;
+          &lt;div class&#x3D;&quot;button-group&quot;&gt;
+            &lt;button type&#x3D;&quot;submit&quot; [disabled]&#x3D;&quot;movieForm.invalid&quot;&gt;Zapisz&lt;/button&gt;
+            &lt;button type&#x3D;&quot;button&quot; (click)&#x3D;&quot;closePopup()&quot;&gt;Anuluj&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/form&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &#x60;,
+  styleUrls: [&#x27;./add-movie-popup.component.css&#x27;],
+})
+export class AddMoviePopupComponent {
+  /**
+   * Emituje zdarzenie zamknięcia popupu.
+   * @type {EventEmitter&lt;void&gt;}
+   */
+  @Output() popupClosed &#x3D; new EventEmitter&lt;void&gt;();
+
+  /**
+   * Emituje zdarzenie dodania nowego filmu.
+   * @type {EventEmitter&lt;any&gt;}
+   */
+  @Output() movieAdded &#x3D; new EventEmitter&lt;any&gt;();
+
+  /**
+   * Aktualny motyw aplikacji (jasny lub ciemny).
+   * @type {&#x27;light&#x27; | &#x27;dark&#x27;}
+   */
+  currentTheme: &#x27;light&#x27; | &#x27;dark&#x27; &#x3D; &#x27;dark&#x27;;
+
+  /**
+   * Formularz do dodawania filmu.
+   * @type {FormGroup}
+   */
+  movieForm: FormGroup;
+
+  /**
+   * Tworzy instancję komponentu.
+   * @param {FormBuilder} fb - Usługa do tworzenia formularzy.
+   * @param {HttpClient} http - Klient HTTP do obsługi żądań.
+   * @param {Renderer2} renderer - Renderer do manipulacji DOM.
+   */
+  constructor(private fb: FormBuilder, private http: HttpClient, private renderer: Renderer2) {
+    this.movieForm &#x3D; this.fb.group({
+      title: [&#x27;&#x27;, Validators.required],
+      description: [&#x27;&#x27;, Validators.required],
+      director: [&#x27;&#x27;, Validators.required],
+      studio: [&#x27;&#x27;, Validators.required],
+      type: [&#x27;Film&#x27;, Validators.required],
+      platform: [&#x27;&#x27;, Validators.required],
+      genre: [&#x27;&#x27;, Validators.required],
+    });
+  }
+
+  /**
+   * Inicjalizuje komponent i ładuje motyw aplikacji.
+   */
+  ngOnInit(): void {
+    this.loadTheme();
+  }
+
+  /**
+   * Ładuje zapisany motyw aplikacji z pamięci lokalnej.
+   * @private
+   */
+  private loadTheme(): void {
+    const savedTheme &#x3D; localStorage.getItem(&#x27;theme&#x27;) as &#x27;light&#x27; | &#x27;dark&#x27;;
+    this.currentTheme &#x3D; savedTheme || &#x27;dark&#x27;;
+    this.applyTheme();
+  }
+
+  /**
+   * Zastosowuje wybrany motyw aplikacji do popupu.
+   * @private
+   */
+  private applyTheme(): void {
+    const popupElement &#x3D; document.querySelector(&#x27;.popup-overlay&#x27;) as HTMLElement;
+    if (!popupElement) {
+      console.warn(&#x27;Element .popup-overlay nie istnieje w DOM.&#x27;);
+      return;
+    }
+
+    if (this.currentTheme &#x3D;&#x3D;&#x3D; &#x27;dark&#x27;) {
+      this.renderer.addClass(popupElement, &#x27;dark-theme&#x27;);
+      this.renderer.removeClass(popupElement, &#x27;light-theme&#x27;);
+    } else {
+      this.renderer.addClass(popupElement, &#x27;light-theme&#x27;);
+      this.renderer.removeClass(popupElement, &#x27;dark-theme&#x27;);
+    }
+  }
+
+  /**
+   * Zamyka popup i emituje zdarzenie zamknięcia.
+   */
+  closePopup(): void {
+    this.popupClosed.emit();
+  }
+
+  /**
+   * Wysyła dane formularza do API i obsługuje odpowiedź.
+   */
+  submitForm(): void {
+    if (this.movieForm.valid) {
+      const formData &#x3D; this.movieForm.value;
+      this.http.post&lt;{ message: string }&gt;(&#x27;http://localhost:8080/api/library/suggest-film&#x27;, formData)
+        .subscribe({
+          next: (response) &#x3D;&gt; {
+            alert(response.message);
+            this.closePopup();
+          },
+          error: () &#x3D;&gt; {
+            alert(&#x27;Wystąpił błąd podczas wysyłania sugestii.&#x27;);
+          }
+        });
+    }
+  }
+}
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./add-movie-popup.component.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.popup-overlay.dark-theme {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-overlay.light-theme {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background-color: #2e2e2e;
+  padding: 2rem;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 500px;
+  color: #fff;
+  font-family: &#x27;Oswald&#x27;, sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.popup-content label {
+  display: flex;
+  align-items: center; /* Wyrównanie tekstu i inputu w jednej linii */
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  width: 100%; /* Pełna szerokość dla wyrównania */
+  font-family: &#x27;Oswald&#x27;, sans-serif;
+}
+
+.popup-content label span {
+  width: 150px; /* Ujednolicona szerokość etykiet */
+  font-weight: bold;
+  text-align: left;
+}
+
+.popup-content input,
+.popup-content textarea,
+.popup-content select {
+  flex: 1; /* Input wypełnia pozostałą przestrzeń */
+  padding: 0.5rem;
+  border-radius: 7px;
+  border: none;
+  font-family: &#x27;Oswald&#x27;, sans-serif;
+  margin-left: 1rem; /* Lekki odstęp między etykietą a polem */
+}
+
+.popup-content textarea {
+  resize: vertical; /* Pozwala na zmianę rozmiaru tylko w pionie */
+}
+
+.popup-content .button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.popup-content button {
+  margin: 0.5rem;
+  background-color: darkred;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  font-family: &#x27;Oswald&#x27;, sans-serif;
+}
+
+.popup-content button:hover {
+  background-color: red;
+  transform: scale(1.05);
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="popup-overlay" (click)="closePopup()">  <div class="popup-content" (click)="$event.stopPropagation()">    <h2>Dodaj nowy film</h2>    <!-- Formularz dodawania filmu -->    <form [formGroup]="movieForm" (ngSubmit)="submitForm()">      <!-- Pola formularza -->      <label>        <span>Tytuł filmu:</span>        <input formControlName="title" type="text" placeholder="Wprowadź tytuł filmu" />      </label>      <label>        <span>Opis:</span>        <textarea formControlName="description" placeholder="Wprowadź opis"></textarea>      </label>      <label>        <span>Reżyser:</span>        <input formControlName="director" type="text" placeholder="Wprowadź reżysera" />      </label>      <label>        <span>Studio:</span>        <input formControlName="studio" type="text" placeholder="Wprowadź studio" />      </label>      <label>        <span>Serial/Film:</span>        <select formControlName="type">          <option value="Film">Film</option>          <option value="Serial">Serial</option>        </select>      </label>      <label>        <span>Platforma:</span>        <input formControlName="platform" type="text" placeholder="Wprowadź platformę streamingową" />      </label>      <label>        <span>Gatunek:</span>        <input formControlName="genre" type="text" placeholder="Wprowadź gatunek" />      </label>      <div class="button-group">        <button type="submit" [disabled]="movieForm.invalid">Zapisz</button>        <button type="button" (click)="closePopup()">Anuluj</button>      </div>    </form>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AddMoviePopupComponent', 'selector': 'app-add-movie-popup'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'DrawComponent', 'selector': 'app-draw'},{'name': 'FriendsListComponent', 'selector': 'app-friends-list'},{'name': 'LibraryComponent', 'selector': 'app-library'},{'name': 'LobbyComponent', 'selector': 'app-lobby'},{'name': 'LoginPageComponent', 'selector': 'app-login-page'},{'name': 'MenuComponent', 'selector': 'app-menu'},{'name': 'MoviePopupComponent', 'selector': 'app-movie-popup'},{'name': 'PopUpComponent', 'selector': 'app-popup'},{'name': 'ResultsComponent', 'selector': 'app-results'},{'name': 'SectionOneComponent', 'selector': 'app-section-one'},{'name': 'UserProfileComponent', 'selector': 'app-user-profile'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'AddMoviePopupComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'AddMoviePopupComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

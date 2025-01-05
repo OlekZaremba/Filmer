@@ -1,0 +1,1931 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>filmer-frontend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">filmer-frontend documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  LibraryComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/components/library/library.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Komponent zarządzający biblioteką filmów.
+Umożliwia filtrowanie, wyszukiwanie oraz dodawanie nowych filmów.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-library</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>NgForOf</code>
+                            <code>NgIf</code>
+                            <code>ReactiveFormsModule</code>
+                                <code><a href="../components/MoviePopupComponent.html" target="_self" >MoviePopupComponent</a></code>
+                                <code><a href="../components/AddMoviePopupComponent.html" target="_self" >AddMoviePopupComponent</a></code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./library.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./library.component.css</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#activeFilter" >activeFilter</a>
+                            </li>
+                            <li>
+                                <a href="#currentLanguage" >currentLanguage</a>
+                            </li>
+                            <li>
+                                <a href="#currentTheme" >currentTheme</a>
+                            </li>
+                            <li>
+                                <a href="#films" >films</a>
+                            </li>
+                            <li>
+                                <a href="#filteredFilms" >filteredFilms</a>
+                            </li>
+                            <li>
+                                <a href="#isAddPopupVisible" >isAddPopupVisible</a>
+                            </li>
+                            <li>
+                                <a href="#isPopupVisible" >isPopupVisible</a>
+                            </li>
+                            <li>
+                                <a href="#selectedFilm" >selectedFilm</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#applyTheme" >applyTheme</a>
+                            </li>
+                            <li>
+                                <a href="#closeAddPopup" >closeAddPopup</a>
+                            </li>
+                            <li>
+                                <a href="#closePopup" >closePopup</a>
+                            </li>
+                            <li>
+                                <a href="#filterFilms" >filterFilms</a>
+                            </li>
+                            <li>
+                                <a href="#handleMovieAdded" >handleMovieAdded</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#handleStorageChange" >handleStorageChange</a>
+                            </li>
+                            <li>
+                                <a href="#loadFilms" >loadFilms</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#loadLanguage" >loadLanguage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#loadTheme" >loadTheme</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#openAddPopup" >openAddPopup</a>
+                            </li>
+                            <li>
+                                <a href="#searchFilmsByName" >searchFilmsByName</a>
+                            </li>
+                            <li>
+                                <a href="#showFilmInfo" >showFilmInfo</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(filmService: <a href="../injectables/FilmService.html" target="_self">FilmService</a>, renderer: Renderer2, cdr: ChangeDetectorRef)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">src/app/components/library/library.component.ts:76</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Tworzy instancję komponentu.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>filmService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/FilmService.html" target="_self" >FilmService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Usługa do zarządzania danymi filmów.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>renderer</td>
+                                                  
+                                                        <td>
+                                                                    <code>Renderer2</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Renderer do manipulacji DOM.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>cdr</td>
+                                                  
+                                                        <td>
+                                                                    <code>ChangeDetectorRef</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Usługa wymuszająca odświeżenie widoku.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="applyTheme"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>applyTheme</b></span>
+                        <a href="#applyTheme"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>applyTheme(theme: "light" | "dark")</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="145"
+                                    class="link-to-prism">src/app/components/library/library.component.ts:145</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Zastosowuje wybrany motyw aplikacji do elementu DOM.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>theme</td>
+                                            <td>
+                                                        <code>&quot;light&quot; | &quot;dark&quot;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>Wybrany motyw aplikacji.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeAddPopup"></a>
+                    <span class="name">
+                        <span ><b>closeAddPopup</b></span>
+                        <a href="#closeAddPopup"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closeAddPopup()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="221"
+                                    class="link-to-prism">src/app/components/library/library.component.ts:221</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Zamyka popup do dodawania nowego filmu.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closePopup"></a>
+                    <span class="name">
+                        <span ><b>closePopup</b></span>
+                        <a href="#closePopup"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closePopup()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="206"
+                                    class="link-to-prism">src/app/components/library/library.component.ts:206</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Zamyka popup z informacjami o filmie.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filterFilms"></a>
+                    <span class="name">
+                        <span ><b>filterFilms</b></span>
+                        <a href="#filterFilms"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>filterFilms(filter: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="170"
+                                    class="link-to-prism">src/app/components/library/library.component.ts:170</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Filtruje listę filmów na podstawie wybranego gatunku.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>filter</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>Gatunek do filtrowania.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleMovieAdded"></a>
+                    <span class="name">
+                        <span ><b>handleMovieAdded</b></span>
+                        <a href="#handleMovieAdded"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>handleMovieAdded(movie: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="229"
+                                    class="link-to-prism">src/app/components/library/library.component.ts:229</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Obsługuje zdarzenie dodania nowego filmu.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>movie</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>Obiekt nowo dodanego filmu.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleStorageChange"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>handleStorageChange</b></span>
+                        <a href="#handleStorageChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>handleStorageChange(event: StorageEvent)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="124"
+                                    class="link-to-prism">src/app/components/library/library.component.ts:124</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Obsługuje zmiany w localStorage, np. zmiany języka.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>StorageEvent</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>Wydarzenie zmiany w localStorage.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadFilms"></a>
+                    <span class="name">
+                        <span ><b>loadFilms</b></span>
+                        <a href="#loadFilms"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadFilms()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="159"
+                                    class="link-to-prism">src/app/components/library/library.component.ts:159</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Ładuje listę filmów z serwera.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadLanguage"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>loadLanguage</b></span>
+                        <a href="#loadLanguage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadLanguage()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="113"
+                                    class="link-to-prism">src/app/components/library/library.component.ts:113</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Ładuje język aplikacji z localStorage.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadTheme"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>loadTheme</b></span>
+                        <a href="#loadTheme"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadTheme()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="134"
+                                    class="link-to-prism">src/app/components/library/library.component.ts:134</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Ładuje zapisany motyw aplikacji z localStorage.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="105"
+                                    class="link-to-prism">src/app/components/library/library.component.ts:105</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Usuwa nasłuchiwanie zmian w localStorage po zniszczeniu komponentu.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="93"
+                                    class="link-to-prism">src/app/components/library/library.component.ts:93</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Inicjalizuje komponent, ładując filmy, motyw oraz język aplikacji.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openAddPopup"></a>
+                    <span class="name">
+                        <span ><b>openAddPopup</b></span>
+                        <a href="#openAddPopup"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openAddPopup()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="214"
+                                    class="link-to-prism">src/app/components/library/library.component.ts:214</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Otwiera popup do dodawania nowego filmu.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="searchFilmsByName"></a>
+                    <span class="name">
+                        <span ><b>searchFilmsByName</b></span>
+                        <a href="#searchFilmsByName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>searchFilmsByName(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="185"
+                                    class="link-to-prism">src/app/components/library/library.component.ts:185</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Wyszukuje filmy na podstawie nazwy.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>name</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>Nazwa filmu do wyszukania.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showFilmInfo"></a>
+                    <span class="name">
+                        <span ><b>showFilmInfo</b></span>
+                        <a href="#showFilmInfo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>showFilmInfo(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="196"
+                                    class="link-to-prism">src/app/components/library/library.component.ts:196</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Wyświetla szczegóły wybranego filmu w popupie.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>Identyfikator filmu.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="activeFilter"></a>
+                    <span class="name">
+                        <span ><b>activeFilter</b></span>
+                        <a href="#activeFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;all&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/components/library/library.component.ts:58</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Aktywny filtr gatunku.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentLanguage"></a>
+                    <span class="name">
+                        <span ><b>currentLanguage</b></span>
+                        <a href="#currentLanguage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;polish&quot; | &quot;english&quot;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;english&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">src/app/components/library/library.component.ts:76</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Aktualny język aplikacji.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentTheme"></a>
+                    <span class="name">
+                        <span ><b>currentTheme</b></span>
+                        <a href="#currentTheme"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;light&quot; | &quot;dark&quot;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;dark&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/app/components/library/library.component.ts:70</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Aktualny motyw aplikacji (jasny lub ciemny).</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="films"></a>
+                    <span class="name">
+                        <span ><b>films</b></span>
+                        <a href="#films"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Film[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/components/library/library.component.ts:34</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lista wszystkich filmów w bibliotece.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filteredFilms"></a>
+                    <span class="name">
+                        <span ><b>filteredFilms</b></span>
+                        <a href="#filteredFilms"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Film[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/components/library/library.component.ts:40</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lista przefiltrowanych filmów wyświetlana użytkownikowi.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isAddPopupVisible"></a>
+                    <span class="name">
+                        <span ><b>isAddPopupVisible</b></span>
+                        <a href="#isAddPopupVisible"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/app/components/library/library.component.ts:64</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Flaga widoczności popupu do dodawania nowego filmu.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isPopupVisible"></a>
+                    <span class="name">
+                        <span ><b>isPopupVisible</b></span>
+                        <a href="#isPopupVisible"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/components/library/library.component.ts:46</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Flaga widoczności popupu z informacjami o filmie.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedFilm"></a>
+                    <span class="name">
+                        <span ><b>selectedFilm</b></span>
+                        <a href="#selectedFilm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Film | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/components/library/library.component.ts:52</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Wybrany film do wyświetlenia w popupie.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {ChangeDetectorRef, Component, OnInit, Renderer2} from &#x27;@angular/core&#x27;;
+import {NgForOf, NgIf} from &#x27;@angular/common&#x27;;
+import {ReactiveFormsModule} from &#x27;@angular/forms&#x27;;
+import { MoviePopupComponent } from &#x27;../movie-popup/movie-popup.component&#x27;;
+import { AddMoviePopupComponent } from &#x27;../add-movie-popup/add-movie-popup.component&#x27;;
+import {FilmService} from &#x27;../../services/film.service&#x27;;
+import {Film} from &#x27;../../services/film.service&#x27;;
+
+/**
+ * Komponent zarządzający biblioteką filmów.
+ * Umożliwia filtrowanie, wyszukiwanie oraz dodawanie nowych filmów.
+ * @export
+ * @class LibraryComponent
+ * @implements {OnInit}
+ */
+@Component({
+  selector: &#x27;app-library&#x27;,
+  standalone: true,
+  imports: [
+    NgForOf,
+    NgIf,
+    ReactiveFormsModule,
+    MoviePopupComponent,
+    AddMoviePopupComponent,
+  ],
+  templateUrl: &#x27;./library.component.html&#x27;,
+  styleUrl: &#x27;./library.component.css&#x27;,
+})
+export class LibraryComponent implements OnInit {
+  /**
+   * Lista wszystkich filmów w bibliotece.
+   * @type {Film[]}
+   */
+  films: Film[] &#x3D; [];
+
+  /**
+   * Lista przefiltrowanych filmów wyświetlana użytkownikowi.
+   * @type {Film[]}
+   */
+  filteredFilms: Film[] &#x3D; [];
+
+  /**
+   * Flaga widoczności popupu z informacjami o filmie.
+   * @type {boolean}
+   */
+  isPopupVisible &#x3D; false;
+
+  /**
+   * Wybrany film do wyświetlenia w popupie.
+   * @type {Film | null}
+   */
+  selectedFilm: Film | null &#x3D; null;
+
+  /**
+   * Aktywny filtr gatunku.
+   * @type {string}
+   */
+  activeFilter: string &#x3D; &#x27;all&#x27;;
+
+  /**
+   * Flaga widoczności popupu do dodawania nowego filmu.
+   * @type {boolean}
+   */
+  isAddPopupVisible &#x3D; false;
+
+  /**
+   * Aktualny motyw aplikacji (jasny lub ciemny).
+   * @type {&#x27;light&#x27; | &#x27;dark&#x27;}
+   */
+  currentTheme: &#x27;light&#x27; | &#x27;dark&#x27; &#x3D; &#x27;dark&#x27;;
+
+  /**
+   * Aktualny język aplikacji.
+   * @type {&#x27;polish&#x27; | &#x27;english&#x27;}
+   */
+  currentLanguage: &#x27;polish&#x27; | &#x27;english&#x27; &#x3D; &#x27;english&#x27;;
+
+  /**
+   * Tworzy instancję komponentu.
+   * @param {FilmService} filmService - Usługa do zarządzania danymi filmów.
+   * @param {Renderer2} renderer - Renderer do manipulacji DOM.
+   * @param {ChangeDetectorRef} cdr - Usługa wymuszająca odświeżenie widoku.
+   */
+  constructor(
+    private filmService: FilmService,
+    private renderer: Renderer2,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  /**
+   * Inicjalizuje komponent, ładując filmy, motyw oraz język aplikacji.
+   */
+  ngOnInit(): void {
+    this.loadTheme();
+    this.loadFilms();
+    this.loadLanguage();
+
+    // Nasłuchiwanie zmian w localStorage
+    window.addEventListener(&#x27;storage&#x27;, this.handleStorageChange.bind(this));
+  }
+
+  /**
+   * Usuwa nasłuchiwanie zmian w localStorage po zniszczeniu komponentu.
+   */
+  ngOnDestroy(): void {
+    window.removeEventListener(&#x27;storage&#x27;, this.handleStorageChange.bind(this));
+  }
+
+  /**
+   * Ładuje język aplikacji z localStorage.
+   * @private
+   */
+  private loadLanguage(): void {
+    const savedLanguage &#x3D; localStorage.getItem(&#x27;language&#x27;) as &#x27;polish&#x27; | &#x27;english&#x27;;
+    this.currentLanguage &#x3D; savedLanguage || &#x27;english&#x27;;
+    this.cdr.detectChanges(); // Wymuszenie odświeżenia widoku
+  }
+
+  /**
+   * Obsługuje zmiany w localStorage, np. zmiany języka.
+   * @private
+   * @param {StorageEvent} event - Wydarzenie zmiany w localStorage.
+   */
+  private handleStorageChange(event: StorageEvent): void {
+    if (event.key &#x3D;&#x3D;&#x3D; &#x27;language&#x27;) {
+      this.loadLanguage();
+    }
+  }
+
+  /**
+   * Ładuje zapisany motyw aplikacji z localStorage.
+   * @private
+   */
+  private loadTheme(): void {
+    const savedTheme &#x3D; localStorage.getItem(&#x27;theme&#x27;) as &#x27;light&#x27; | &#x27;dark&#x27;;
+    this.currentTheme &#x3D; savedTheme || &#x27;dark&#x27;;
+    this.applyTheme(this.currentTheme);
+  }
+
+  /**
+   * Zastosowuje wybrany motyw aplikacji do elementu DOM.
+   * @private
+   * @param {&#x27;light&#x27; | &#x27;dark&#x27;} theme - Wybrany motyw aplikacji.
+   */
+  private applyTheme(theme: &#x27;light&#x27; | &#x27;dark&#x27;): void {
+    const container &#x3D; document.querySelector(&#x27;.bg&#x27;) as HTMLElement;
+    if (theme &#x3D;&#x3D;&#x3D; &#x27;dark&#x27;) {
+      this.renderer.addClass(container, &#x27;dark-theme&#x27;);
+      this.renderer.removeClass(container, &#x27;light-theme&#x27;);
+    } else {
+      this.renderer.addClass(container, &#x27;light-theme&#x27;);
+      this.renderer.removeClass(container, &#x27;dark-theme&#x27;);
+    }
+  }
+
+  /**
+   * Ładuje listę filmów z serwera.
+   */
+  loadFilms(): void {
+    this.filmService.getAllFilms().subscribe((data) &#x3D;&gt; {
+      this.films &#x3D; data;
+      this.filteredFilms &#x3D; data;
+    });
+  }
+
+  /**
+   * Filtruje listę filmów na podstawie wybranego gatunku.
+   * @param {string} filter - Gatunek do filtrowania.
+   */
+  filterFilms(filter: string): void {
+    this.activeFilter &#x3D; filter;
+    if (filter &#x3D;&#x3D;&#x3D; &#x27;all&#x27;) {
+      this.loadFilms();
+    } else {
+      this.filmService.getFilmsByGenre(filter).subscribe((data) &#x3D;&gt; {
+        this.filteredFilms &#x3D; data;
+      });
+    }
+  }
+
+  /**
+   * Wyszukuje filmy na podstawie nazwy.
+   * @param {string} name - Nazwa filmu do wyszukania.
+   */
+  searchFilmsByName(name: string): void {
+    this.filmService.getFilmsByName(name).subscribe((data) &#x3D;&gt; {
+      this.filteredFilms &#x3D; data;
+      console.log(&#x27;Searched films:&#x27;, data); // Debug
+    });
+  }
+
+  /**
+   * Wyświetla szczegóły wybranego filmu w popupie.
+   * @param {number} id - Identyfikator filmu.
+   */
+  showFilmInfo(id: number): void {
+    this.filmService.getFilmById(id).subscribe((film) &#x3D;&gt; {
+      this.selectedFilm &#x3D; film;
+      this.isPopupVisible &#x3D; true;
+    });
+  }
+
+  /**
+   * Zamyka popup z informacjami o filmie.
+   */
+  closePopup(): void {
+    this.isPopupVisible &#x3D; false;
+    this.selectedFilm &#x3D; null;
+  }
+
+  /**
+   * Otwiera popup do dodawania nowego filmu.
+   */
+  openAddPopup(): void {
+    this.isAddPopupVisible &#x3D; true;
+  }
+
+  /**
+   * Zamyka popup do dodawania nowego filmu.
+   */
+  closeAddPopup(): void {
+    this.isAddPopupVisible &#x3D; false;
+  }
+
+  /**
+   * Obsługuje zdarzenie dodania nowego filmu.
+   * @param {any} movie - Obiekt nowo dodanego filmu.
+   */
+  handleMovieAdded(movie: any): void {
+    console.log(&#x27;Dodano film:&#x27;, movie);
+    this.closeAddPopup();
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;bg&quot;&gt;
+  &lt;div class&#x3D;&quot;main-container&quot;&gt;
+    &lt;div class&#x3D;&quot;friends-component&quot;&gt;
+      &lt;div class&#x3D;&quot;filter-settings&quot;&gt;
+        &lt;h2&gt;{{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Filtry:&#x27; : &#x27;Filters:&#x27; }}&lt;/h2&gt;
+        &lt;button
+          class&#x3D;&quot;filter-button&quot;
+          [class.active]&#x3D;&quot;activeFilter &#x3D;&#x3D;&#x3D; &#x27;all&#x27;&quot;
+          (click)&#x3D;&quot;filterFilms(&#x27;all&#x27;)&quot;&gt;
+          {{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Pokaż wszystkie&#x27; : &#x27;Show all&#x27; }}
+        &lt;/button&gt;
+        &lt;button
+          class&#x3D;&quot;filter-button&quot;
+          [class.active]&#x3D;&quot;activeFilter &#x3D;&#x3D;&#x3D; &#x27;Dramat&#x27;&quot;
+          (click)&#x3D;&quot;filterFilms(&#x27;Dramat&#x27;)&quot;&gt;
+          {{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Dramat&#x27; : &#x27;Drama&#x27; }}
+        &lt;/button&gt;
+        &lt;button
+          class&#x3D;&quot;filter-button&quot;
+          [class.active]&#x3D;&quot;activeFilter &#x3D;&#x3D;&#x3D; &#x27;Komedia&#x27;&quot;
+          (click)&#x3D;&quot;filterFilms(&#x27;Komedia&#x27;)&quot;&gt;
+          {{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Komedia&#x27; : &#x27;Comedy&#x27; }}
+        &lt;/button&gt;
+        &lt;button
+          class&#x3D;&quot;filter-button&quot;
+          [class.active]&#x3D;&quot;activeFilter &#x3D;&#x3D;&#x3D; &#x27;Horror&#x27;&quot;
+          (click)&#x3D;&quot;filterFilms(&#x27;Horror&#x27;)&quot;&gt;
+          {{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Horror&#x27; : &#x27;Horror&#x27; }}
+        &lt;/button&gt;
+        &lt;button
+          class&#x3D;&quot;filter-button&quot;
+          [class.active]&#x3D;&quot;activeFilter &#x3D;&#x3D;&#x3D; &#x27;Thriller&#x27;&quot;
+          (click)&#x3D;&quot;filterFilms(&#x27;Thriller&#x27;)&quot;&gt;
+          {{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Thriller&#x27; : &#x27;Thriller&#x27; }}
+        &lt;/button&gt;
+        &lt;button
+          class&#x3D;&quot;filter-button&quot;
+          [class.active]&#x3D;&quot;activeFilter &#x3D;&#x3D;&#x3D; &#x27;Psychologiczny&#x27;&quot;
+          (click)&#x3D;&quot;filterFilms(&#x27;Psychologiczny&#x27;)&quot;&gt;
+          {{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Psychologiczny&#x27; : &#x27;Psychological&#x27; }}
+        &lt;/button&gt;
+
+        &lt;h3&gt;{{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Twój pomysł&#x27; : &#x27;Your idea&#x27; }}&lt;/h3&gt;
+        &lt;p&gt;{{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Nie znalazłeś filmu dla siebie? Zaproponuj nam coś!&#x27; : &#x27;Didn’t find a movie for yourself? Suggest one to us!&#x27; }}&lt;/p&gt;
+        &lt;button class&#x3D;&quot;add-button&quot; (click)&#x3D;&quot;openAddPopup()&quot;&gt;
+          {{ currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Zaproponuj swój film!&#x27; : &#x27;Suggest your movie!&#x27; }}
+        &lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;movie-list&quot;&gt;
+        &lt;div class&#x3D;&quot;search-movie&quot;&gt;
+          &lt;input
+            type&#x3D;&quot;text&quot;
+            #searchInput
+            [placeholder]&#x3D;&quot;currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Wprowadź nazwę filmu...&#x27; : &#x27;Enter the movie name...&#x27;&quot; /&gt;
+          &lt;button (click)&#x3D;&quot;searchFilmsByName(searchInput.value); searchInput.value &#x3D; &#x27;&#x27;&quot;&gt;
+            &lt;img src&#x3D;&quot;assets/images/search.png&quot; [alt]&#x3D;&quot;currentLanguage &#x3D;&#x3D;&#x3D; &#x27;polish&#x27; ? &#x27;Szukaj&#x27; : &#x27;Search&#x27;&quot;&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
+        &lt;ul&gt;
+          &lt;li *ngFor&#x3D;&quot;let film of filteredFilms&quot;&gt;
+            {{ film.filmName }}
+            &lt;button class&#x3D;&quot;info-button&quot; (click)&#x3D;&quot;showFilmInfo(film.idFilm)&quot;&gt;
+              &amp;#11157;
+            &lt;/button&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;app-movie-popup
+    *ngIf&#x3D;&quot;selectedFilm&quot;
+    [isVisible]&#x3D;&quot;isPopupVisible&quot;
+    [title]&#x3D;&quot;selectedFilm.filmName&quot;
+    [description]&#x3D;&quot;selectedFilm.filmDesc&quot;
+    (popupClosed)&#x3D;&quot;closePopup()&quot;
+  &gt;&lt;/app-movie-popup&gt;
+
+  &lt;app-add-movie-popup
+    *ngIf&#x3D;&quot;isAddPopupVisible&quot;
+    (popupClosed)&#x3D;&quot;closeAddPopup()&quot;
+    (movieAdded)&#x3D;&quot;handleMovieAdded($event)&quot;
+  &gt;&lt;/app-add-movie-popup&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="bg">  <div class="main-container">    <div class="friends-component">      <div class="filter-settings">        <h2>{{ currentLanguage === \'polish\' ? \'Filtry:\' : \'Filters:\' }}</h2>        <button          class="filter-button"          [class.active]="activeFilter === \'all\'"          (click)="filterFilms(\'all\')">          {{ currentLanguage === \'polish\' ? \'Pokaż wszystkie\' : \'Show all\' }}        </button>        <button          class="filter-button"          [class.active]="activeFilter === \'Dramat\'"          (click)="filterFilms(\'Dramat\')">          {{ currentLanguage === \'polish\' ? \'Dramat\' : \'Drama\' }}        </button>        <button          class="filter-button"          [class.active]="activeFilter === \'Komedia\'"          (click)="filterFilms(\'Komedia\')">          {{ currentLanguage === \'polish\' ? \'Komedia\' : \'Comedy\' }}        </button>        <button          class="filter-button"          [class.active]="activeFilter === \'Horror\'"          (click)="filterFilms(\'Horror\')">          {{ currentLanguage === \'polish\' ? \'Horror\' : \'Horror\' }}        </button>        <button          class="filter-button"          [class.active]="activeFilter === \'Thriller\'"          (click)="filterFilms(\'Thriller\')">          {{ currentLanguage === \'polish\' ? \'Thriller\' : \'Thriller\' }}        </button>        <button          class="filter-button"          [class.active]="activeFilter === \'Psychologiczny\'"          (click)="filterFilms(\'Psychologiczny\')">          {{ currentLanguage === \'polish\' ? \'Psychologiczny\' : \'Psychological\' }}        </button>        <h3>{{ currentLanguage === \'polish\' ? \'Twój pomysł\' : \'Your idea\' }}</h3>        <p>{{ currentLanguage === \'polish\' ? \'Nie znalazłeś filmu dla siebie? Zaproponuj nam coś!\' : \'Didn’t find a movie for yourself? Suggest one to us!\' }}</p>        <button class="add-button" (click)="openAddPopup()">          {{ currentLanguage === \'polish\' ? \'Zaproponuj swój film!\' : \'Suggest your movie!\' }}        </button>      </div>      <div class="movie-list">        <div class="search-movie">          <input            type="text"            #searchInput            [placeholder]="currentLanguage === \'polish\' ? \'Wprowadź nazwę filmu...\' : \'Enter the movie name...\'" />          <button (click)="searchFilmsByName(searchInput.value); searchInput.value = \'\'">            <img src="assets/images/search.png" [alt]="currentLanguage === \'polish\' ? \'Szukaj\' : \'Search\'">          </button>        </div>        <ul>          <li *ngFor="let film of filteredFilms">            {{ film.filmName }}            <button class="info-button" (click)="showFilmInfo(film.idFilm)">              &#11157;            </button>          </li>        </ul>      </div>    </div>  </div>  <app-movie-popup    *ngIf="selectedFilm"    [isVisible]="isPopupVisible"    [title]="selectedFilm.filmName"    [description]="selectedFilm.filmDesc"    (popupClosed)="closePopup()"  ></app-movie-popup>  <app-add-movie-popup    *ngIf="isAddPopupVisible"    (popupClosed)="closeAddPopup()"    (movieAdded)="handleMovieAdded($event)"  ></app-add-movie-popup></div></div>'
+    var COMPONENTS = [{'name': 'AddMoviePopupComponent', 'selector': 'app-add-movie-popup'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'DrawComponent', 'selector': 'app-draw'},{'name': 'FriendsListComponent', 'selector': 'app-friends-list'},{'name': 'LibraryComponent', 'selector': 'app-library'},{'name': 'LobbyComponent', 'selector': 'app-lobby'},{'name': 'LoginPageComponent', 'selector': 'app-login-page'},{'name': 'MenuComponent', 'selector': 'app-menu'},{'name': 'MoviePopupComponent', 'selector': 'app-movie-popup'},{'name': 'PopUpComponent', 'selector': 'app-popup'},{'name': 'ResultsComponent', 'selector': 'app-results'},{'name': 'SectionOneComponent', 'selector': 'app-section-one'},{'name': 'UserProfileComponent', 'selector': 'app-user-profile'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'LibraryComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'LibraryComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

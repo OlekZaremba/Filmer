@@ -1,9 +1,15 @@
-import {Component, OnInit, Renderer2} from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DrawService, Film } from '../../services/draw.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import {NgClass, NgForOf, NgIf} from '@angular/common';
+import { NgClass, NgForOf, NgIf } from '@angular/common';
 
+/**
+ * Komponent odpowiedzialny za proces głosowania na filmy w lobby.
+ * @export
+ * @class DrawComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'app-draw',
   standalone: true,
@@ -12,14 +18,55 @@ import {NgClass, NgForOf, NgIf} from '@angular/common';
   styleUrl: './draw.component.css'
 })
 export class DrawComponent implements OnInit {
+  /**
+   * Kod lobby, pobierany z URL.
+   * @type {string | null}
+   */
   lobbyCode: string | null = null;
+
+  /**
+   * Identyfikator użytkownika, pobierany z localStorage.
+   * @type {number | null}
+   */
   userId: number | null = null;
+
+  /**
+   * Lista filmów do głosowania.
+   * @type {Film[]}
+   */
   films: Film[] = [];
+
+  /**
+   * Indeks aktualnie wyświetlanego filmu.
+   * @type {number}
+   */
   currentFilmIndex = 0;
+
+  /**
+   * Flaga oznaczająca animację przesuwania w lewo.
+   * @type {boolean}
+   */
   isSwipingLeft = false;
+
+  /**
+   * Flaga oznaczająca animację przesuwania w prawo.
+   * @type {boolean}
+   */
   isSwipingRight = false;
+
+  /**
+   * Aktualny motyw aplikacji (jasny lub ciemny).
+   * @type {'light' | 'dark'}
+   */
   currentTheme: 'light' | 'dark' = 'dark';
 
+  /**
+   * Tworzy instancję komponentu.
+   * @param {ActivatedRoute} route - Usługa do zarządzania trasami i pobierania parametrów URL.
+   * @param {Router} router - Router Angular do nawigacji między widokami.
+   * @param {DrawService} drawService - Usługa do zarządzania głosowaniem na filmy.
+   * @param {Renderer2} renderer - Renderer do manipulacji DOM.
+   */
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -27,8 +74,10 @@ export class DrawComponent implements OnInit {
     private renderer: Renderer2
   ) {}
 
+  /**
+   * Inicjalizacja komponentu, pobiera kod lobby i identyfikator użytkownika oraz filmy do głosowania.
+   */
   ngOnInit(): void {
-
     this.lobbyCode = this.route.snapshot.paramMap.get('lobbyCode');
     const storedUserId = localStorage.getItem('userId');
 
@@ -46,33 +95,16 @@ export class DrawComponent implements OnInit {
     }
   }
 
+  /**
+   * Ustawia motyw aplikacji po wyrenderowaniu widoku.
+   */
   ngAfterViewChecked(): void {
     this.applyTheme();
   }
 
-  private loadTheme() {
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
-    this.currentTheme = savedTheme || 'dark';
-    this.applyTheme();
-  }
-
-  private applyTheme(): void {
-    const container = document.querySelector('.section-user2') as HTMLElement;
-    if (!container) {
-      console.warn('Element .section-user2 nie istnieje w DOM.');
-      return;
-    }
-
-    if (this.currentTheme === 'dark') {
-      this.renderer.addClass(container, 'dark-theme');
-      this.renderer.removeClass(container, 'light-theme');
-    } else {
-      this.renderer.addClass(container, 'light-theme');
-      this.renderer.removeClass(container, 'dark-theme');
-    }
-  }
-
-
+  /**
+   * Pobiera listę filmów do głosowania z serwera.
+   */
   fetchDrawFilms(): void {
     this.drawService.getDrawFilms(this.lobbyCode!)
       .subscribe({
@@ -81,22 +113,32 @@ export class DrawComponent implements OnInit {
       });
   }
 
+  /**
+   * Obsługuje akceptację filmu przez użytkownika (przesunięcie w prawo).
+   */
   acceptFilm(): void {
     this.isSwipingRight = true;
     setTimeout(() => {
       this.isSwipingRight = false;
       this.submitVote(true);
-    }, 500); // Czas trwania animacji
+    }, 500);
   }
 
+  /**
+   * Obsługuje odrzucenie filmu przez użytkownika (przesunięcie w lewo).
+   */
   declineFilm(): void {
     this.isSwipingLeft = true;
     setTimeout(() => {
       this.isSwipingLeft = false;
       this.submitVote(false);
-    }, 500); // Czas trwania animacji
+    }, 500);
   }
 
+  /**
+   * Wysyła głos użytkownika na wybrany film do serwera.
+   * @param {boolean} accepted - Czy film został zaakceptowany.
+   */
   submitVote(accepted: boolean): void {
     if (this.lobbyCode && this.userId !== null && this.films.length > this.currentFilmIndex) {
       const filmId = this.films[this.currentFilmIndex].idFilm;
@@ -120,6 +162,10 @@ export class DrawComponent implements OnInit {
     }
   }
 
+  /**
+   * Sprawdza, czy użytkownik zakończył głosowanie na wszystkie filmy.
+   * Jeśli tak, informuje backend i przekierowuje na stronę wyników.
+   */
   checkIfEndOfVoting(): void {
     if (this.currentFilmIndex >= this.films.length) {
       if (!this.lobbyCode) {
@@ -139,6 +185,33 @@ export class DrawComponent implements OnInit {
     }
   }
 
+  /**
+   * Ładuje zapisany motyw aplikacji z pamięci lokalnej.
+   * @private
+   */
+  private loadTheme(): void {
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
+    this.currentTheme = savedTheme || 'dark';
+    this.applyTheme();
+  }
 
+  /**
+   * Zastosowuje aktualny motyw aplikacji do elementu DOM.
+   * @private
+   */
+  private applyTheme(): void {
+    const container = document.querySelector('.section-user2') as HTMLElement;
+    if (!container) {
+      console.warn('Element .section-user2 nie istnieje w DOM.');
+      return;
+    }
 
+    if (this.currentTheme === 'dark') {
+      this.renderer.addClass(container, 'dark-theme');
+      this.renderer.removeClass(container, 'light-theme');
+    } else {
+      this.renderer.addClass(container, 'light-theme');
+      this.renderer.removeClass(container, 'dark-theme');
+    }
+  }
 }

@@ -1,0 +1,1456 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>filmer-frontend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">filmer-frontend documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  DrawComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/components/draw/draw.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Komponent odpowiedzialny za proces głosowania na filmy w lobby.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-draw</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>NgForOf</code>
+                            <code>NgIf</code>
+                            <code>ReactiveFormsModule</code>
+                            <code>NgClass</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./draw.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./draw.component.css</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#currentFilmIndex" >currentFilmIndex</a>
+                            </li>
+                            <li>
+                                <a href="#currentTheme" >currentTheme</a>
+                            </li>
+                            <li>
+                                <a href="#films" >films</a>
+                            </li>
+                            <li>
+                                <a href="#isSwipingLeft" >isSwipingLeft</a>
+                            </li>
+                            <li>
+                                <a href="#isSwipingRight" >isSwipingRight</a>
+                            </li>
+                            <li>
+                                <a href="#lobbyCode" >lobbyCode</a>
+                            </li>
+                            <li>
+                                <a href="#userId" >userId</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#acceptFilm" >acceptFilm</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#applyTheme" >applyTheme</a>
+                            </li>
+                            <li>
+                                <a href="#checkIfEndOfVoting" >checkIfEndOfVoting</a>
+                            </li>
+                            <li>
+                                <a href="#declineFilm" >declineFilm</a>
+                            </li>
+                            <li>
+                                <a href="#fetchDrawFilms" >fetchDrawFilms</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#loadTheme" >loadTheme</a>
+                            </li>
+                            <li>
+                                <a href="#ngAfterViewChecked" >ngAfterViewChecked</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#submitVote" >submitVote</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(route: ActivatedRoute, router: Router, drawService: <a href="../injectables/DrawService.html" target="_self">DrawService</a>, renderer: Renderer2)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/components/draw/draw.component.ts:61</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Tworzy instancję komponentu.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>route</td>
+                                                  
+                                                        <td>
+                                                                    <code>ActivatedRoute</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Usługa do zarządzania trasami i pobierania parametrów URL.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Router Angular do nawigacji między widokami.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>drawService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DrawService.html" target="_self" >DrawService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Usługa do zarządzania głosowaniem na filmy.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>renderer</td>
+                                                  
+                                                        <td>
+                                                                    <code>Renderer2</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <ul>
+<li>Renderer do manipulacji DOM.</li>
+</ul>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="acceptFilm"></a>
+                    <span class="name">
+                        <span ><b>acceptFilm</b></span>
+                        <a href="#acceptFilm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>acceptFilm()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="119"
+                                    class="link-to-prism">src/app/components/draw/draw.component.ts:119</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Obsługuje akceptację filmu przez użytkownika (przesunięcie w prawo).</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="applyTheme"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>applyTheme</b></span>
+                        <a href="#applyTheme"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>applyTheme()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="202"
+                                    class="link-to-prism">src/app/components/draw/draw.component.ts:202</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Zastosowuje aktualny motyw aplikacji do elementu DOM.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkIfEndOfVoting"></a>
+                    <span class="name">
+                        <span ><b>checkIfEndOfVoting</b></span>
+                        <a href="#checkIfEndOfVoting"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>checkIfEndOfVoting()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="169"
+                                    class="link-to-prism">src/app/components/draw/draw.component.ts:169</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Sprawdza, czy użytkownik zakończył głosowanie na wszystkie filmy.
+Jeśli tak, informuje backend i przekierowuje na stronę wyników.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="declineFilm"></a>
+                    <span class="name">
+                        <span ><b>declineFilm</b></span>
+                        <a href="#declineFilm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>declineFilm()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="130"
+                                    class="link-to-prism">src/app/components/draw/draw.component.ts:130</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Obsługuje odrzucenie filmu przez użytkownika (przesunięcie w lewo).</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fetchDrawFilms"></a>
+                    <span class="name">
+                        <span ><b>fetchDrawFilms</b></span>
+                        <a href="#fetchDrawFilms"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>fetchDrawFilms()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="108"
+                                    class="link-to-prism">src/app/components/draw/draw.component.ts:108</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Pobiera listę filmów do głosowania z serwera.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadTheme"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>loadTheme</b></span>
+                        <a href="#loadTheme"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>loadTheme()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="192"
+                                    class="link-to-prism">src/app/components/draw/draw.component.ts:192</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Ładuje zapisany motyw aplikacji z pamięci lokalnej.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngAfterViewChecked"></a>
+                    <span class="name">
+                        <span ><b>ngAfterViewChecked</b></span>
+                        <a href="#ngAfterViewChecked"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngAfterViewChecked()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="101"
+                                    class="link-to-prism">src/app/components/draw/draw.component.ts:101</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Ustawia motyw aplikacji po wyrenderowaniu widoku.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="80"
+                                    class="link-to-prism">src/app/components/draw/draw.component.ts:80</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Inicjalizacja komponentu, pobiera kod lobby i identyfikator użytkownika oraz filmy do głosowania.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="submitVote"></a>
+                    <span class="name">
+                        <span ><b>submitVote</b></span>
+                        <a href="#submitVote"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>submitVote(accepted: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="142"
+                                    class="link-to-prism">src/app/components/draw/draw.component.ts:142</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Wysyła głos użytkownika na wybrany film do serwera.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>accepted</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>Czy film został zaakceptowany.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentFilmIndex"></a>
+                    <span class="name">
+                        <span ><b>currentFilmIndex</b></span>
+                        <a href="#currentFilmIndex"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/components/draw/draw.component.ts:43</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Indeks aktualnie wyświetlanego filmu.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentTheme"></a>
+                    <span class="name">
+                        <span ><b>currentTheme</b></span>
+                        <a href="#currentTheme"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;light&quot; | &quot;dark&quot;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;dark&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/components/draw/draw.component.ts:61</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Aktualny motyw aplikacji (jasny lub ciemny).</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="films"></a>
+                    <span class="name">
+                        <span ><b>films</b></span>
+                        <a href="#films"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Film[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/components/draw/draw.component.ts:37</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lista filmów do głosowania.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isSwipingLeft"></a>
+                    <span class="name">
+                        <span ><b>isSwipingLeft</b></span>
+                        <a href="#isSwipingLeft"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/components/draw/draw.component.ts:49</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Flaga oznaczająca animację przesuwania w lewo.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isSwipingRight"></a>
+                    <span class="name">
+                        <span ><b>isSwipingRight</b></span>
+                        <a href="#isSwipingRight"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/components/draw/draw.component.ts:55</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Flaga oznaczająca animację przesuwania w prawo.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="lobbyCode"></a>
+                    <span class="name">
+                        <span ><b>lobbyCode</b></span>
+                        <a href="#lobbyCode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/components/draw/draw.component.ts:25</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Kod lobby, pobierany z URL.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="userId"></a>
+                    <span class="name">
+                        <span ><b>userId</b></span>
+                        <a href="#userId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>number | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/components/draw/draw.component.ts:31</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Identyfikator użytkownika, pobierany z localStorage.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, Renderer2 } from &#x27;@angular/core&#x27;;
+import { ActivatedRoute, Router } from &#x27;@angular/router&#x27;;
+import { DrawService, Film } from &#x27;../../services/draw.service&#x27;;
+import { ReactiveFormsModule } from &#x27;@angular/forms&#x27;;
+import { NgClass, NgForOf, NgIf } from &#x27;@angular/common&#x27;;
+
+/**
+ * Komponent odpowiedzialny za proces głosowania na filmy w lobby.
+ * @export
+ * @class DrawComponent
+ * @implements {OnInit}
+ */
+@Component({
+  selector: &#x27;app-draw&#x27;,
+  standalone: true,
+  imports: [NgForOf, NgIf, ReactiveFormsModule, NgClass],
+  templateUrl: &#x27;./draw.component.html&#x27;,
+  styleUrl: &#x27;./draw.component.css&#x27;
+})
+export class DrawComponent implements OnInit {
+  /**
+   * Kod lobby, pobierany z URL.
+   * @type {string | null}
+   */
+  lobbyCode: string | null &#x3D; null;
+
+  /**
+   * Identyfikator użytkownika, pobierany z localStorage.
+   * @type {number | null}
+   */
+  userId: number | null &#x3D; null;
+
+  /**
+   * Lista filmów do głosowania.
+   * @type {Film[]}
+   */
+  films: Film[] &#x3D; [];
+
+  /**
+   * Indeks aktualnie wyświetlanego filmu.
+   * @type {number}
+   */
+  currentFilmIndex &#x3D; 0;
+
+  /**
+   * Flaga oznaczająca animację przesuwania w lewo.
+   * @type {boolean}
+   */
+  isSwipingLeft &#x3D; false;
+
+  /**
+   * Flaga oznaczająca animację przesuwania w prawo.
+   * @type {boolean}
+   */
+  isSwipingRight &#x3D; false;
+
+  /**
+   * Aktualny motyw aplikacji (jasny lub ciemny).
+   * @type {&#x27;light&#x27; | &#x27;dark&#x27;}
+   */
+  currentTheme: &#x27;light&#x27; | &#x27;dark&#x27; &#x3D; &#x27;dark&#x27;;
+
+  /**
+   * Tworzy instancję komponentu.
+   * @param {ActivatedRoute} route - Usługa do zarządzania trasami i pobierania parametrów URL.
+   * @param {Router} router - Router Angular do nawigacji między widokami.
+   * @param {DrawService} drawService - Usługa do zarządzania głosowaniem na filmy.
+   * @param {Renderer2} renderer - Renderer do manipulacji DOM.
+   */
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private drawService: DrawService,
+    private renderer: Renderer2
+  ) {}
+
+  /**
+   * Inicjalizacja komponentu, pobiera kod lobby i identyfikator użytkownika oraz filmy do głosowania.
+   */
+  ngOnInit(): void {
+    this.lobbyCode &#x3D; this.route.snapshot.paramMap.get(&#x27;lobbyCode&#x27;);
+    const storedUserId &#x3D; localStorage.getItem(&#x27;userId&#x27;);
+
+    if (storedUserId) {
+      this.userId &#x3D; Number(storedUserId);
+    } else {
+      console.error(&#x27;Błąd: Brak userId w localStorage. Użytkownik musi być zalogowany.&#x27;);
+      return;
+    }
+
+    if (this.lobbyCode) {
+      this.fetchDrawFilms();
+    } else {
+      console.error(&#x27;Błąd: Brak kodu lobby w URL.&#x27;);
+    }
+  }
+
+  /**
+   * Ustawia motyw aplikacji po wyrenderowaniu widoku.
+   */
+  ngAfterViewChecked(): void {
+    this.applyTheme();
+  }
+
+  /**
+   * Pobiera listę filmów do głosowania z serwera.
+   */
+  fetchDrawFilms(): void {
+    this.drawService.getDrawFilms(this.lobbyCode!)
+      .subscribe({
+        next: (data) &#x3D;&gt; this.films &#x3D; data,
+        error: (err) &#x3D;&gt; console.error(&#x27;Błąd pobierania filmów:&#x27;, err)
+      });
+  }
+
+  /**
+   * Obsługuje akceptację filmu przez użytkownika (przesunięcie w prawo).
+   */
+  acceptFilm(): void {
+    this.isSwipingRight &#x3D; true;
+    setTimeout(() &#x3D;&gt; {
+      this.isSwipingRight &#x3D; false;
+      this.submitVote(true);
+    }, 500);
+  }
+
+  /**
+   * Obsługuje odrzucenie filmu przez użytkownika (przesunięcie w lewo).
+   */
+  declineFilm(): void {
+    this.isSwipingLeft &#x3D; true;
+    setTimeout(() &#x3D;&gt; {
+      this.isSwipingLeft &#x3D; false;
+      this.submitVote(false);
+    }, 500);
+  }
+
+  /**
+   * Wysyła głos użytkownika na wybrany film do serwera.
+   * @param {boolean} accepted - Czy film został zaakceptowany.
+   */
+  submitVote(accepted: boolean): void {
+    if (this.lobbyCode &amp;&amp; this.userId !&#x3D;&#x3D; null &amp;&amp; this.films.length &gt; this.currentFilmIndex) {
+      const filmId &#x3D; this.films[this.currentFilmIndex].idFilm;
+
+      if (accepted) {
+        this.drawService.submitVote(this.lobbyCode, filmId, this.userId).subscribe({
+          next: () &#x3D;&gt; {
+            console.log(&#x60;Film zaakceptowany&#x60;);
+            this.currentFilmIndex++;
+            this.checkIfEndOfVoting();
+          },
+          error: (err) &#x3D;&gt; console.error(&#x27;Błąd podczas głosowania:&#x27;, err)
+        });
+      } else {
+        console.log(&#x27;Film odrzucony&#x27;);
+        this.currentFilmIndex++;
+        this.checkIfEndOfVoting();
+      }
+    } else {
+      console.error(&#x27;Błąd: Brak wymaganych danych (lobbyCode, userId lub filmId).&#x27;);
+    }
+  }
+
+  /**
+   * Sprawdza, czy użytkownik zakończył głosowanie na wszystkie filmy.
+   * Jeśli tak, informuje backend i przekierowuje na stronę wyników.
+   */
+  checkIfEndOfVoting(): void {
+    if (this.currentFilmIndex &gt;&#x3D; this.films.length) {
+      if (!this.lobbyCode) {
+        console.error(&#x27;Błąd: Brak kodu lobby.&#x27;);
+        return;
+      }
+
+      console.log(&#x27;Użytkownik zakończył głosowanie. Informowanie backendu...&#x27;);
+
+      this.drawService.finishVoting(this.lobbyCode, this.userId!).subscribe({
+        next: (response) &#x3D;&gt; console.log(&#x27;Zaktualizowano backend o zakończeniu głosowania:&#x27;, response),
+        error: (err) &#x3D;&gt; console.error(&#x27;Błąd podczas zgłaszania zakończenia głosowania:&#x27;, err),
+      });
+
+      console.log(&#x27;Przekierowanie na wyniki dla lobbyCode:&#x27;, this.lobbyCode);
+      this.router.navigate([&#x27;/results&#x27;, this.lobbyCode]);
+    }
+  }
+
+  /**
+   * Ładuje zapisany motyw aplikacji z pamięci lokalnej.
+   * @private
+   */
+  private loadTheme(): void {
+    const savedTheme &#x3D; localStorage.getItem(&#x27;theme&#x27;) as &#x27;light&#x27; | &#x27;dark&#x27;;
+    this.currentTheme &#x3D; savedTheme || &#x27;dark&#x27;;
+    this.applyTheme();
+  }
+
+  /**
+   * Zastosowuje aktualny motyw aplikacji do elementu DOM.
+   * @private
+   */
+  private applyTheme(): void {
+    const container &#x3D; document.querySelector(&#x27;.section-user2&#x27;) as HTMLElement;
+    if (!container) {
+      console.warn(&#x27;Element .section-user2 nie istnieje w DOM.&#x27;);
+      return;
+    }
+
+    if (this.currentTheme &#x3D;&#x3D;&#x3D; &#x27;dark&#x27;) {
+      this.renderer.addClass(container, &#x27;dark-theme&#x27;);
+      this.renderer.removeClass(container, &#x27;light-theme&#x27;);
+    } else {
+      this.renderer.addClass(container, &#x27;light-theme&#x27;);
+      this.renderer.removeClass(container, &#x27;dark-theme&#x27;);
+    }
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;section-user2&quot; *ngIf&#x3D;&quot;films.length &gt; currentFilmIndex&quot;&gt;
+  &lt;div class&#x3D;&quot;content&quot;&gt;
+    &lt;h1&gt;Film {{ currentFilmIndex + 1 }} z {{ films.length }}&lt;/h1&gt;
+    &lt;div class&#x3D;&quot;canvas&quot;&gt;
+      &lt;div class&#x3D;&quot;decline-button&quot;&gt;
+        &lt;button (click)&#x3D;&quot;declineFilm()&quot;&gt;X&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;cards&quot;&gt;
+        &lt;div
+          class&#x3D;&quot;draw-card&quot;
+          [class.swipe-left]&#x3D;&quot;isSwipingLeft&quot;
+          [class.swipe-right]&#x3D;&quot;isSwipingRight&quot;&gt;
+          &lt;h1&gt;{{ films[currentFilmIndex].filmName }}&lt;/h1&gt;
+          &lt;p&gt;{{ films[currentFilmIndex].filmDesc }}&lt;/p&gt;
+
+          &lt;div class&#x3D;&quot;info&quot;&gt;
+            &lt;div class&#x3D;&quot;director&quot;&gt;
+              &lt;h3&gt;Reżyser:&lt;/h3&gt;
+              &lt;p&gt;{{ films[currentFilmIndex].director.name }}&lt;/p&gt;
+            &lt;/div&gt;
+
+            &lt;div class&#x3D;&quot;production&quot;&gt;
+              &lt;h3&gt;Produkcja:&lt;/h3&gt;
+              &lt;p&gt;{{ films[currentFilmIndex].studio.studioName }}&lt;/p&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;info&quot;&gt;
+            &lt;div class&#x3D;&quot;source&quot;&gt;
+              &lt;h3&gt;Źródło:&lt;/h3&gt;
+              &lt;p&gt;{{ films[currentFilmIndex].source.sourceName }}&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;genre&quot;&gt;
+              &lt;h3&gt;Gatunek:&lt;/h3&gt;
+              &lt;p&gt;{{ films[currentFilmIndex].genre.genreName }}&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;type&quot;&gt;
+              &lt;h3&gt;Typ:&lt;/h3&gt;
+              &lt;p&gt;{{ films[currentFilmIndex].type.filmType }}&lt;/p&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;accept-button&quot;&gt;
+        &lt;button (click)&#x3D;&quot;acceptFilm()&quot;&gt;&amp;#x2713;&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="section-user2" *ngIf="films.length > currentFilmIndex">  <div class="content">    <h1>Film {{ currentFilmIndex + 1 }} z {{ films.length }}</h1>    <div class="canvas">      <div class="decline-button">        <button (click)="declineFilm()">X</button>      </div>      <div class="cards">        <div          class="draw-card"          [class.swipe-left]="isSwipingLeft"          [class.swipe-right]="isSwipingRight">          <h1>{{ films[currentFilmIndex].filmName }}</h1>          <p>{{ films[currentFilmIndex].filmDesc }}</p>          <div class="info">            <div class="director">              <h3>Reżyser:</h3>              <p>{{ films[currentFilmIndex].director.name }}</p>            </div>            <div class="production">              <h3>Produkcja:</h3>              <p>{{ films[currentFilmIndex].studio.studioName }}</p>            </div>          </div>          <div class="info">            <div class="source">              <h3>Źródło:</h3>              <p>{{ films[currentFilmIndex].source.sourceName }}</p>            </div>            <div class="genre">              <h3>Gatunek:</h3>              <p>{{ films[currentFilmIndex].genre.genreName }}</p>            </div>            <div class="type">              <h3>Typ:</h3>              <p>{{ films[currentFilmIndex].type.filmType }}</p>            </div>          </div>        </div>      </div>      <div class="accept-button">        <button (click)="acceptFilm()">&#x2713;</button>      </div>    </div>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AddMoviePopupComponent', 'selector': 'app-add-movie-popup'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'DrawComponent', 'selector': 'app-draw'},{'name': 'FriendsListComponent', 'selector': 'app-friends-list'},{'name': 'LibraryComponent', 'selector': 'app-library'},{'name': 'LobbyComponent', 'selector': 'app-lobby'},{'name': 'LoginPageComponent', 'selector': 'app-login-page'},{'name': 'MenuComponent', 'selector': 'app-menu'},{'name': 'MoviePopupComponent', 'selector': 'app-movie-popup'},{'name': 'PopUpComponent', 'selector': 'app-popup'},{'name': 'ResultsComponent', 'selector': 'app-results'},{'name': 'SectionOneComponent', 'selector': 'app-section-one'},{'name': 'UserProfileComponent', 'selector': 'app-user-profile'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'DrawComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'DrawComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
